@@ -1,12 +1,33 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { TextInput, Text, Button } from 'react-native-paper';
+import { requestURL } from '../../requestURL';
 
 export const SignInScreen = ({ navigation }: { navigation: any }) => {
   const [info, setInfo] = useState({
     id: '' as string,
     password: '' as string,
   });
+
+  const signInRequest = async () => {
+    try {
+      const response = await axios.post(
+        '/auth/login',
+        {
+          id: info.id,
+          password: info.password,
+        },
+        { baseURL: requestURL }
+      );
+      if (response.status === 201) {
+        console.error('로그인 성공!');
+        //   navigation.navigate('Calendar');
+      }
+    } catch (error) {
+      console.error('아이디 또는 비밀번호를 확인해주세요.');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -37,7 +58,12 @@ export const SignInScreen = ({ navigation }: { navigation: any }) => {
         />
       </View>
       <View style={styles.btnGroup}>
-        <Button mode="contained" style={styles.button} buttonColor="#FFD54A">
+        <Button
+          mode="contained"
+          style={styles.button}
+          buttonColor="#FFD54A"
+          onPress={signInRequest}
+        >
           로그인
         </Button>
         <Button
