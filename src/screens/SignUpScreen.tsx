@@ -3,8 +3,9 @@ import axios from 'axios';
 import { requestURL } from '../../requestURL';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Text, Button } from 'react-native-paper';
+import { SignUpScreenProps } from '../types/navigation/type';
 
-export const SignUpScreen = ({ navigation }: { navigation: any }) => {
+export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
   const [info, setInfo] = useState({
     id: '',
     verify_id: false,

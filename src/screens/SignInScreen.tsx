@@ -1,14 +1,28 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { TextInput, Text, Button } from 'react-native-paper';
 import { requestURL } from '../../requestURL';
+import { SignInScreenProps } from '../types/navigation/type';
 
-export const SignInScreen = ({ navigation }: { navigation: any }) => {
+export const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const [info, setInfo] = useState({
     id: '' as string,
     password: '' as string,
   });
+
+  const setOnStorage = async (value: {
+    accessToken: string;
+    refreshToken: string;
+  }) => {
+    try {
+      await AsyncStorage.setItem('accessToken', value.accessToken);
+      await AsyncStorage.setItem('refreshToken', value.refreshToken);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const signInRequest = async () => {
     try {
@@ -21,8 +35,12 @@ export const SignInScreen = ({ navigation }: { navigation: any }) => {
         { baseURL: requestURL }
       );
       if (response.status === 201) {
+        setOnStorage(response.data.data);
         console.error('로그인 성공!');
-        //   navigation.navigate('Calendar');
+        navigation.navigate('SelectEmotion', {
+          status: 'before',
+          date: 'today',
+        });
       }
     } catch (error) {
       console.error('아이디 또는 비밀번호를 확인해주세요.');
@@ -86,40 +104,39 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingTop: 30,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingTop: 40,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   image: {
-    width: 105,
-    height: 105,
+    width: 140,
+    height: 140,
   },
   form: {
     width: '100%',
-    paddingTop: 30,
   },
   btnGroup: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 12,
+    gap: 16,
     width: '100%',
-    marginTop: 18,
+    marginTop: 24,
   },
   button: {
-    height: 42,
+    height: 56,
   },
   outlineButton: {
     borderColor: '#FFD54A',
-    height: 42,
+    height: 56,
   },
   heading: {
     fontWeight: '700',
-    fontSize: 18,
-    paddingBottom: 18,
+    fontSize: 24,
+    marginBottom: 24,
   },
   input: {
     width: '100%',
-    height: 42,
-    paddingBottom: 12,
+    height: 56,
+    marginBottom: 16,
   },
 });

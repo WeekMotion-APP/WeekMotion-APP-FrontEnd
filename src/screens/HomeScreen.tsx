@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
+import { HomeScreenProps } from '../types/navigation/type';
 
-export const HomeScreen = ({ navigation }: { navigation: any }) => {
+export const HomeScreen = ({ navigation }: HomeScreenProps) => {
   useEffect(() => {
+    console.log('system start');
     setTimeout(() => {
       navigation.navigate('SignIn');
     }, 1500);
