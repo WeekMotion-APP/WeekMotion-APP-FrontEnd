@@ -1,0 +1,48 @@
+import { RouteProp } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+export type RootStackParamList = {
+  Home: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
+  Diary: { view: 'calendar' | 'list' };
+  SelectEmotion: { status: 'before' | 'after'; date: 'today' | 'selectedDay' };
+  Edit: { status: 'create' | 'update' };
+  Post: { location: 'calendar' | 'trash' };
+};
+
+export type HomeScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Home'
+>;
+export type SignInScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SignIn'
+>;
+export type SignUpScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SignUp'
+>;
+export type DiaryScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Diary'
+>;
+export type DiaryRouteProps = RouteProp<RootStackParamList, 'Diary'>;
+export type SelectEmotionScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SelectEmotion'
+>;
+export type SelectEmotionRouteProps = RouteProp<
+  RootStackParamList,
+  'SelectEmotion'
+>;
+export type EditScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Edit'
+>;
+export type EditRouteProps = RouteProp<RootStackParamList, 'Edit'>;
+export type PostScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Post'
+>;
+export type PostRouteProps = RouteProp<RootStackParamList, 'Post'>;
