@@ -2,10 +2,12 @@ import { AnyAction, configureStore, ThunkDispatch } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import emotionSlice from './slice/emotionSlice';
+import noteSlice from './slice/noteSlice';
 
 const store = configureStore({
   reducer: {
     emotion: emotionSlice.reducer,
+    note: noteSlice.reducer,
   },
   middleware: [thunkMiddleware],
 });

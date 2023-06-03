@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { requestEmotion } from '../../functions/asyncFunctions/requestEmotion';
-import { tag } from '../../types/data/type';
+import { emotion } from '../../types/data/type';
+
+const initialState: emotion = {
+  emotion: [],
+  checkedEmotion: [],
+  error: '',
+  status: '',
+};
 
 const emotionSlice = createSlice({
   name: 'emotion',
-  initialState: {
-    emotion: [] as tag[],
-    checkedEmotion: [] as tag[],
-    error: '' as string | undefined,
-    status: '' as string,
-  },
+  initialState: initialState,
   reducers: {
     setCheckedEmotion: (state, action) => {
       state.checkedEmotion = action.payload;
