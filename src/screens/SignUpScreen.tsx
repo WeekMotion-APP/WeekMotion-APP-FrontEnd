@@ -4,6 +4,7 @@ import { requestURL } from '../../requestURL';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Text, Button } from 'react-native-paper';
 import { SignUpScreenProps } from '../types/navigation/type';
+import { globalStyles } from '../styles/globalStyles';
 
 export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
   const [info, setInfo] = useState({
@@ -73,8 +74,8 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>회원가입</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.heading}>회원가입</Text>
       <View style={styles.verify_id_form}>
         <TextInput
           label={'ID'}
@@ -94,6 +95,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
           mode="contained"
           buttonColor="#FFD54A"
           style={styles.verify_id_form_button}
+          contentStyle={styles.verify_id_form_button_content}
           onPress={() => verifyIdRequest(info.id)}
         >
           확인
@@ -105,7 +107,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         placeholder="비밀번호를 입력하세요."
         secureTextEntry={true}
         onChangeText={(text) => setInfo({ ...info, ['password']: text })}
-        style={styles.input}
+        style={globalStyles.input}
         activeOutlineColor="#FFD54A"
         outlineColor="#DCDCDC"
       />
@@ -115,7 +117,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         placeholder="비밀번호를 다시 한번 입력하세요."
         secureTextEntry={true}
         onChangeText={(text) => setInfo({ ...info, ['verify_password']: text })}
-        style={styles.input}
+        style={globalStyles.input}
         activeOutlineColor="#FFD54A"
         outlineColor="#DCDCDC"
       />
@@ -129,7 +131,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
             console.error('이름 형식을 확인해주세요.');
           }
         }}
-        style={styles.input}
+        style={globalStyles.input}
         activeOutlineColor="#FFD54A"
         outlineColor="#DCDCDC"
       />
@@ -143,14 +145,15 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
             console.error('휴대폰 번호 형식을 확인해주세요.');
           }
         }}
-        style={styles.input}
+        style={globalStyles.input}
         activeOutlineColor="#FFD54A"
         outlineColor="#DCDCDC"
       />
-      <View style={styles.btnGroup}>
+      <View style={globalStyles.buttonGroup}>
         <Button
           mode="contained"
-          style={styles.button}
+          style={globalStyles.button}
+          contentStyle={globalStyles.buttonContent}
           buttonColor="#FFD54A"
           onPress={signUpRequest}
         >
@@ -158,7 +161,8 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         </Button>
         <Button
           mode="outlined"
-          style={styles.outlineButton}
+          style={globalStyles.outlineButton}
+          contentStyle={globalStyles.outlineButtonContent}
           textColor="#FFD54A"
           onPress={() => navigation.goBack()}
         >
@@ -170,57 +174,33 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    backgroundColor: 'white',
-    paddingTop: 30,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
   form: {
     width: '100%',
     paddingTop: 30,
-  },
-  btnGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 12,
-    width: '100%',
-    marginTop: 18,
-  },
-  button: {
-    height: 42,
-  },
-  outlineButton: {
-    borderColor: '#FFD54A',
-    height: 42,
-  },
-  heading: {
-    fontWeight: '700',
-    fontSize: 18,
-    paddingBottom: 18,
-  },
-  input: {
-    width: '100%',
-    height: 42,
-    paddingBottom: 12,
   },
   verify_id_form: {
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 16,
   },
   verify_id_form_input: {
     width: '70%',
     height: 42,
+    backgroundColor: 'white',
     paddingBottom: 12,
   },
   verify_id_form_button: {
     width: '28%',
-    height: 42,
+    height: 56,
     marginLeft: 6,
+    borderRadius: 28,
+  },
+  verify_id_form_button_content: {
+    height: '100%',
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 22,
   },
 });
