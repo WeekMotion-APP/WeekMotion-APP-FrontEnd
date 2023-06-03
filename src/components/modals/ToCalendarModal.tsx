@@ -1,17 +1,28 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Image, View } from 'react-native';
 import { Portal, Modal, Text, Button } from 'react-native-paper';
+import { requestCreateDiary } from '../../functions/asyncFunctions/requestDiary';
+import { useAppSelector } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
+import { PostScreenProps } from '../../types/navigation/type';
 
 export const ToCalendarModal = ({
   modalVisible,
   setModalVisible,
+  navigation,
 }: {
   modalVisible: { toCalendar: boolean; toTrash: boolean; cancel: boolean };
   setModalVisible: Dispatch<
     SetStateAction<{ toCalendar: boolean; toTrash: boolean; cancel: boolean }>
   >;
+  navigation: PostScreenProps['navigation'];
 }) => {
+  const note = useAppSelector((state) => {
+    return state.note;
+  });
+  const emotion = useAppSelector((state) => {
+    return state.emotion.checkedEmotion;
+  });
   return (
     <Portal>
       <Modal
@@ -50,7 +61,18 @@ export const ToCalendarModal = ({
           >
             취소
           </Button>
-          <Button buttonColor="#FFD54A" mode="contained">
+          <Button
+            buttonColor="#FFD54A"
+            mode="contained"
+            onPress={() =>
+              requestCreateDiary({
+                diary: note,
+                emotion: emotion,
+                category: 'calendar',
+                navigation: navigation,
+              })
+            }
+          >
             등록하기
           </Button>
         </View>
