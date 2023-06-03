@@ -64,10 +64,12 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
       <ToCalendarModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        navigation={navigation}
       />
       <ToTrashModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        navigation={navigation}
       />
     </PaperProvider>
   );

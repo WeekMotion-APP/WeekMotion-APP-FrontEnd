@@ -5,14 +5,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { SignInScreen } from './src/screens/SignInScreen';
 import { SignUpScreen } from './src/screens/SignUpScreen';
+import { EditScreen } from './src/screens/EditScreen';
+import { PostScreen } from './src/screens/PostScreen';
 
 import { Provider } from 'react-redux';
 import { PaperProvider } from 'react-native-paper';
 import { RootStackParamList } from './src/types/navigation/type';
 import { SelectEmotionScreen } from './src/screens/SelectEmotionScreen';
 import store from './src/redux';
-import { EditScreen } from './src/screens/EditScreen';
-import { PostScreen } from './src/screens/PostScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

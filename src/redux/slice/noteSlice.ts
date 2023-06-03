@@ -17,7 +17,6 @@ const noteSlice = createSlice({
       state.date = action.payload.date;
     },
   },
-  //   extraReducers: (builder) => {},
 });
 export const { setNote } = noteSlice.actions;
 export default noteSlice;
