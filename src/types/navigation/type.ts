@@ -6,9 +6,9 @@ export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
   Diary: { view: 'calendar' | 'list' };
-  SelectEmotion: { status: 'before' | 'after'; date: 'today' | 'selectedDay' };
+  SelectEmotion: { status: 'before' | 'after' };
   Edit: { status: 'create' | 'update' };
-  Post: { location: 'calendar' | 'trash' };
+  Post: { location: 'created' | 'calendar' | 'trash' };
 };
 
 export type HomeScreenProps = NativeStackScreenProps<

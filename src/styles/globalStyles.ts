@@ -1,0 +1,153 @@
+import { StyleSheet } from 'react-native';
+
+export const globalStyles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    backgroundColor: 'white',
+    paddingTop: 40,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 16,
+  },
+  main_image: {
+    width: 140,
+    height: 140,
+  },
+  icon: {
+    marginBottom: 16,
+  },
+  heading: {
+    fontWeight: '700',
+    fontSize: 24,
+    marginBottom: 16,
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  chipsBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    width: '100%',
+    marginBottom: 16,
+  },
+  chipPink: {
+    height: 28,
+    backgroundColor: '#FAACD2',
+    borderColor: '#FAACD2',
+    borderWidth: 1,
+    borderRadius: 16,
+  },
+  chipBlue: {
+    height: 28,
+    backgroundColor: '#AFBFFA',
+    borderColor: '#AFBFFA',
+    borderWidth: 1,
+    borderRadius: 16,
+  },
+  chipYellow: {
+    height: 28,
+    backgroundColor: '#FFE388',
+    borderColor: '#FFE388',
+    borderWidth: 1,
+    borderRadius: 16,
+  },
+  chipPinkBorder: {
+    height: 28,
+    borderColor: '#FF64AE',
+    borderRadius: 16,
+  },
+  chipBlueBorder: {
+    height: 28,
+    borderColor: '#6889FF',
+    borderRadius: 16,
+  },
+  chipYellowBorder: {
+    height: 28,
+    borderColor: '#FFD54A',
+    borderRadius: 16,
+  },
+  chipContent: {
+    height: '100%',
+    fontSize: 16,
+    lineHeight: 18,
+  },
+  button: {
+    width: '100%',
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#FFD54A',
+  },
+  buttonGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
+    width: '100%',
+    marginTop: 24,
+  },
+  buttonContent: {
+    height: '100%',
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 22,
+  },
+  outlineButton: {
+    width: '100%',
+    height: 56,
+    borderRadius: 28,
+    borderColor: '#FFD54A',
+  },
+  outlineButtonContent: {
+    height: '100%',
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 22,
+  },
+  modalHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalImageContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+  },
+  modal: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    padding: 20,
+  },
+  modalContent: {
+    width: '100%',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 16,
+  },
+  modalButtonGroup: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
+    gap: 8,
+    paddingTop: 16,
+  },
+  input: {
+    width: '100%',
+    height: 56,
+    marginBottom: 16,
+    borderRadius: 28,
+    backgroundColor: 'white',
+  },
+  inputContent: {
+    fontSize: 16,
+  },
+});

@@ -40,3 +40,18 @@ export interface diaryTag {
   tagSeq: string;
   writerSeq: number;
 }
+
+// redux data type
+
+export interface emotion {
+  emotion: tag[];
+  checkedEmotion: tag[];
+  error: string | undefined;
+  status: string;
+}
+
+export interface note {
+  title: string;
+  content: string;
+  date: string;
+}
