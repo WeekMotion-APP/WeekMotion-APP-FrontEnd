@@ -1,56 +1,116 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, View, StyleSheet } from 'react-native';
 import { Text, Chip } from 'react-native-paper';
 import { SelectEmotionScreenProps } from '../types/navigation/type';
-import { headingCondition } from '../functions/headingFunc';
-import { useThunkDispatch, useAppSelector } from '../redux';
+import { headingCondition } from '../functions/headingFunction';
+import { useThunkDispatch, useAppSelector, useAppDispatch } from '../redux';
 import { requestEmotion } from '../functions/asyncFunctions/requestEmotion';
 import { tag } from '../types/data/type';
+import { setCheckedEmotion } from '../redux/slice/emotionSlice';
+import { SelectEmotionButton } from '../components/buttons/SelectEmotionButton';
+import { globalStyles } from '../styles/globalStyles';
 
-export const SelectEmotionScreen = ({ route }: SelectEmotionScreenProps) => {
-  const thunkDispatch = useThunkDispatch();
+export const SelectEmotionScreen = ({
+  route,
+  navigation,
+}: SelectEmotionScreenProps) => {
   const emotion = useAppSelector((state) => {
-    return state.emotion.emotion;
+    return state.emotion;
   });
+  const dispatch = useAppDispatch();
+  const thunkDispatch = useThunkDispatch();
+  const [checked, setChecked] = useState<tag[]>(
+    route.params.status === 'before' ? [] : emotion.checkedEmotion
+  );
+
+  const onPressChip = (tag: tag) => {
+    if (!checked.includes(tag) && checked.length < 3) {
+      setChecked([...checked, tag]);
+    } else {
+      setChecked(
+        checked.filter((item: tag) => {
+          return item.tagName !== tag.tagName;
+        })
+      );
+    }
+  };
 
   useEffect(() => {
     thunkDispatch(requestEmotion());
   }, [thunkDispatch]);
 
+  useEffect(() => {
+    console.log(checked);
+    return () => {
+      dispatch(setCheckedEmotion(checked));
+    };
+  });
+
   return (
     <View style={styles.container}>
       <Image
         source={require('../assets/images/weekmotion.png')}
-        style={styles.image}
+        style={globalStyles.main_image}
       />
-      <Text>{headingCondition(route)}</Text>
-      <View style={styles.chipsBox}>
-        {emotion
+      <Text style={globalStyles.heading}>{headingCondition(route)}</Text>
+      <View style={globalStyles.chipsBox}>
+        {emotion.emotion
           .filter((tag: tag) => tag.tagCategory.seq === '1')
           .map((tag: tag, index) => (
-            <Chip mode="outlined" key={index} style={styles.chip}>
+            <Chip
+              mode={checked.includes(tag) ? 'flat' : 'outlined'}
+              key={index}
+              style={
+                checked.includes(tag)
+                  ? globalStyles.chipPink
+                  : globalStyles.chipPinkBorder
+              }
+              textStyle={globalStyles.chipContent}
+              onPress={() => onPressChip(tag)}
+            >
               {tag.tagName}
             </Chip>
           ))}
       </View>
-      <View style={styles.chipsBox}>
-        {emotion
+      <View style={globalStyles.chipsBox}>
+        {emotion.emotion
           .filter((tag: tag) => tag.tagCategory.seq === '2')
           .map((tag: tag, index) => (
-            <Chip mode="outlined" key={index} style={styles.chip}>
+            <Chip
+              mode={checked.includes(tag) ? 'flat' : 'outlined'}
+              key={index}
+              style={
+                checked.includes(tag)
+                  ? globalStyles.chipBlue
+                  : globalStyles.chipBlueBorder
+              }
+              textStyle={globalStyles.chipContent}
+              onPress={() => onPressChip(tag)}
+            >
               {tag.tagName}
             </Chip>
           ))}
       </View>
-      <View style={styles.chipsBox}>
-        {emotion
+      <View style={globalStyles.chipsBox}>
+        {emotion.emotion
           .filter((tag: tag) => tag.tagCategory.seq === '3')
           .map((tag: tag, index) => (
-            <Chip mode="outlined" key={index} style={styles.chip}>
+            <Chip
+              mode={checked.includes(tag) ? 'flat' : 'outlined'}
+              key={index}
+              style={
+                checked.includes(tag)
+                  ? globalStyles.chipYellow
+                  : globalStyles.chipYellowBorder
+              }
+              textStyle={globalStyles.chipContent}
+              onPress={() => onPressChip(tag)}
+            >
               {tag.tagName}
             </Chip>
           ))}
       </View>
+      <SelectEmotionButton navigation={navigation} route={route} />
     </View>
   );
 };
@@ -65,28 +125,5 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 20,
     paddingRight: 20,
-  },
-  image: {
-    width: 140,
-    height: 140,
-  },
-  chipsBox: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    width: '100%',
-  },
-  chip: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 69,
-    height: 28,
-    fontSize: 16,
-    backgroundColor: 'white',
-    // paddingTop: 6,
-    // paddingBottom: 6,
-    // paddingLeft: 12,
-    // paddingRight: 12,
   },
 });

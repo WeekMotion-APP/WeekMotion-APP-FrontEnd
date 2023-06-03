@@ -5,6 +5,7 @@ import { View, Image, StyleSheet } from 'react-native';
 import { TextInput, Text, Button } from 'react-native-paper';
 import { requestURL } from '../../requestURL';
 import { SignInScreenProps } from '../types/navigation/type';
+import { globalStyles } from '../styles/globalStyles';
 
 export const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const [info, setInfo] = useState({
@@ -39,7 +40,6 @@ export const SignInScreen = ({ navigation }: SignInScreenProps) => {
         console.error('로그인 성공!');
         navigation.navigate('SelectEmotion', {
           status: 'before',
-          date: 'today',
         });
       }
     } catch (error) {
@@ -51,16 +51,17 @@ export const SignInScreen = ({ navigation }: SignInScreenProps) => {
     <View style={styles.container}>
       <Image
         source={require('../assets/images/weekmotion.png')}
-        style={styles.image}
+        style={globalStyles.main_image}
       />
       <View style={styles.form}>
-        <Text style={styles.heading}>로그인</Text>
+        <Text style={globalStyles.heading}>로그인</Text>
         <TextInput
           label={'ID'}
           mode="outlined"
           placeholder="아이디를 입력하세요."
           onChangeText={(text) => setInfo({ ...info, ['id']: text })}
-          style={styles.input}
+          style={globalStyles.input}
+          contentStyle={globalStyles.inputContent}
           activeOutlineColor="#FFD54A"
           outlineColor="#DCDCDC"
         />
@@ -70,23 +71,24 @@ export const SignInScreen = ({ navigation }: SignInScreenProps) => {
           placeholder="비밀번호를 입력하세요."
           secureTextEntry={true}
           onChangeText={(text) => setInfo({ ...info, ['password']: text })}
-          style={styles.input}
+          style={globalStyles.input}
           activeOutlineColor="#FFD54A"
           outlineColor="#DCDCDC"
         />
       </View>
-      <View style={styles.btnGroup}>
+      <View style={globalStyles.buttonGroup}>
         <Button
           mode="contained"
-          style={styles.button}
-          buttonColor="#FFD54A"
+          style={globalStyles.button}
+          contentStyle={globalStyles.buttonContent}
           onPress={signInRequest}
         >
           로그인
         </Button>
         <Button
           mode="outlined"
-          style={styles.outlineButton}
+          style={globalStyles.outlineButton}
+          contentStyle={globalStyles.outlineButtonContent}
           textColor="#FFD54A"
           onPress={() => navigation.navigate('SignUp')}
         >
@@ -108,35 +110,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  image: {
-    width: 140,
-    height: 140,
-  },
   form: {
     width: '100%',
-  },
-  btnGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 16,
-    width: '100%',
-    marginTop: 24,
-  },
-  button: {
-    height: 56,
-  },
-  outlineButton: {
-    borderColor: '#FFD54A',
-    height: 56,
-  },
-  heading: {
-    fontWeight: '700',
-    fontSize: 24,
-    marginBottom: 24,
-  },
-  input: {
-    width: '100%',
-    height: 56,
-    marginBottom: 16,
   },
 });

@@ -11,6 +11,8 @@ import { PaperProvider } from 'react-native-paper';
 import { RootStackParamList } from './src/types/navigation/type';
 import { SelectEmotionScreen } from './src/screens/SelectEmotionScreen';
 import store from './src/redux';
+import { EditScreen } from './src/screens/EditScreen';
+import { PostScreen } from './src/screens/PostScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -38,6 +40,16 @@ function App(): JSX.Element {
             <Stack.Screen
               name="SelectEmotion"
               component={SelectEmotionScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Edit"
+              component={EditScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Post"
+              component={PostScreen}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
