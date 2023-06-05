@@ -6,6 +6,7 @@ import { setNote } from '../redux/slice/noteSlice';
 import { globalStyles } from '../styles/globalStyles';
 import { tag } from '../types/data/type';
 import { EditScreenProps } from '../types/navigation/type';
+import { chipColorPicker } from '../functions/chipColorPicker';
 
 export const EditScreen = ({ navigation }: EditScreenProps) => {
   const checkedEmotion = useAppSelector((state) => {
@@ -26,16 +27,6 @@ export const EditScreen = ({ navigation }: EditScreenProps) => {
       .slice(0, -1) as string,
   });
 
-  const chipColorPicker = (tag: tag) => {
-    if (tag.tagCategorySeq === '1') {
-      return globalStyles.chipPink;
-    } else if (tag.tagCategorySeq === '2') {
-      return globalStyles.chipBlue;
-    } else {
-      return globalStyles.chipYellow;
-    }
-  };
-
   useEffect(() => {
     return () => {
       dispatch(setNote(content));
@@ -54,7 +45,7 @@ export const EditScreen = ({ navigation }: EditScreenProps) => {
         {checkedEmotion.map((tag: tag, index) => (
           <Chip
             key={index}
-            style={chipColorPicker(tag)}
+            style={chipColorPicker(tag.tagCategorySeq)}
             textStyle={globalStyles.chipContent}
           >
             {tag.tagName}

@@ -27,6 +27,10 @@ export const globalStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  dateText: {
+    fontSize: 16,
+    color: '#666666',
+  },
   chipsBox: {
     display: 'flex',
     flexDirection: 'row',

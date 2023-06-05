@@ -1,3 +1,4 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import axios from 'axios';
 import { requestURL } from '../../../requestURL';
@@ -36,7 +37,9 @@ export const requestCreateDiary = async ({
     );
     if (response.status === 201) {
       if (category === 'calendar') {
+        console.log(response);
         console.error('캘린더에 감정이 등록되었어요!');
+        navigation.navigate('Diary', { view: 'calendar' });
       } else if (category === 'trash') {
         console.error('소각장에 감정이 등록되었어요!');
       }
@@ -45,3 +48,41 @@ export const requestCreateDiary = async ({
     console.error('Error!');
   }
 };
+
+// const currentMonth = new Date()
+//   .toLocaleDateString('ko-KR', {
+//     year: 'numeric',
+//     month: '2-digit',
+//     day: '2-digit',
+//   })
+//   .replaceAll('. ', '-')
+//   .slice(0, -4);
+
+// const currentDate = new Date()
+//   .toLocaleDateString('ko-KR', {
+//     year: 'numeric',
+//     month: '2-digit',
+//     day: '2-digit',
+//   })
+//   .replaceAll('. ', '-')
+//   .slice(0, -1);
+
+export const requestReadDiary = createAsyncThunk(
+  'requestReadDiary',
+  async (category: string = 'calendar') => {
+    try {
+      const accessToken = await EncryptedStorage.getItem('accessToken');
+      const response = await axios.get('/diary', {
+        baseURL: requestURL,
+        params: {
+          calenderYn: category === 'calendar' ? 'Y' : 'N',
+        },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      console.log(response);
+      return response.data.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);

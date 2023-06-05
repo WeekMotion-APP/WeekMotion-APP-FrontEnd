@@ -8,6 +8,7 @@ import { PostButton } from '../components/buttons/PostButton';
 import { PostScreenProps } from '../types/navigation/type';
 import { ToCalendarModal } from '../components/modals/ToCalendarModal';
 import { ToTrashModal } from '../components/modals/ToTrashModal';
+import { chipColorPicker } from '../functions/chipColorPicker';
 
 export const PostScreen = ({ route, navigation }: PostScreenProps) => {
   const [modalVisible, setModalVisible] = useState({
@@ -21,15 +22,6 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
   const checkedEmotion = useAppSelector((state) => {
     return state.emotion.checkedEmotion;
   });
-  const chipColorPicker = (tag: tag) => {
-    if (tag.tagCategorySeq === '1') {
-      return globalStyles.chipPink;
-    } else if (tag.tagCategorySeq === '2') {
-      return globalStyles.chipBlue;
-    } else {
-      return globalStyles.chipYellow;
-    }
-  };
 
   return (
     <PaperProvider>
@@ -45,7 +37,7 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
           {checkedEmotion.map((tag: tag, index) => (
             <Chip
               key={index}
-              style={chipColorPicker(tag)}
+              style={chipColorPicker(tag.tagCategorySeq)}
               textStyle={globalStyles.chipContent}
             >
               {tag.tagName}

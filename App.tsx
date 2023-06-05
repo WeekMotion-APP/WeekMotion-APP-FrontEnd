@@ -13,6 +13,7 @@ import { PaperProvider } from 'react-native-paper';
 import { RootStackParamList } from './src/types/navigation/type';
 import { SelectEmotionScreen } from './src/screens/SelectEmotionScreen';
 import store from './src/redux';
+import { DiaryScreen } from './src/screens/DiaryScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -50,6 +51,11 @@ function App(): JSX.Element {
             <Stack.Screen
               name="Post"
               component={PostScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Diary"
+              component={DiaryScreen}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

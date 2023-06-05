@@ -8,7 +8,7 @@ export type RootStackParamList = {
   Diary: { view: 'calendar' | 'list' };
   SelectEmotion: { status: 'before' | 'after' };
   Edit: { status: 'create' | 'update' };
-  Post: { location: 'created' | 'calendar' | 'trash' };
+  Post: { location: 'created' | 'calendar' | 'trash'; postId: string };
 };
 
 export type HomeScreenProps = NativeStackScreenProps<
