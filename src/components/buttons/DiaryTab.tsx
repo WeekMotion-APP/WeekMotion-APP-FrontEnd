@@ -21,7 +21,12 @@ export const DiaryTab = ({ route, navigation }: DiaryScreenProps) => {
               ? styles.buttonActiveText
               : styles.buttonText
           }
-          onPress={() => navigation.navigate('Diary', { view: 'calendar' })}
+          onPress={() =>
+            navigation.navigate('Diary', {
+              view: 'calendar',
+              location: 'calendar',
+            })
+          }
         >
           캘린더
         </Button>
@@ -41,7 +46,9 @@ export const DiaryTab = ({ route, navigation }: DiaryScreenProps) => {
               ? styles.buttonActiveText
               : styles.buttonText
           }
-          onPress={() => navigation.navigate('Diary', { view: 'list' })}
+          onPress={() =>
+            navigation.navigate('Diary', { view: 'list', location: 'calendar' })
+          }
         >
           목록
         </Button>
@@ -57,6 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     height: 56,
+    backgroundColor: 'white',
   },
   buttonActiveView: {
     width: '50%',
