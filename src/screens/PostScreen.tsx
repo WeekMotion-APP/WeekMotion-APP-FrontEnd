@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../redux';
-import { tag } from '../types/data/type';
+import { diary, diaryTag, tag } from '../types/data/type';
 import { Image, StyleSheet, View } from 'react-native';
 import { Text, Chip, PaperProvider } from 'react-native-paper';
 import { globalStyles } from '../styles/globalStyles';
@@ -8,13 +8,16 @@ import { PostButton } from '../components/buttons/PostButton';
 import { PostScreenProps } from '../types/navigation/type';
 import { ToCalendarModal } from '../components/modals/ToCalendarModal';
 import { ToTrashModal } from '../components/modals/ToTrashModal';
+import { _DeleteModal } from '../components/modals/_DeleteModal';
 import { chipColorPicker } from '../functions/chipColorPicker';
+import { BackCancelHeader } from '../components/headers/BackCancelHeader';
 
 export const PostScreen = ({ route, navigation }: PostScreenProps) => {
   const [modalVisible, setModalVisible] = useState({
     toCalendar: false,
     toTrash: false,
     cancel: false,
+    delete: false,
   });
   const note = useAppSelector((state) => {
     return state.note;
@@ -22,48 +25,85 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
   const checkedEmotion = useAppSelector((state) => {
     return state.emotion.checkedEmotion;
   });
+  const selectedCalendarNote = useAppSelector((state) => {
+    return state.diary.allDiary.find((post: diary) => {
+      return post.seq === route.params.postId;
+    });
+  });
+
+  useEffect(() => {
+    console.log(route.params);
+  }, [route]);
 
   return (
-    <PaperProvider>
-      <View style={globalStyles.container}>
-        <View style={styles.date}>
-          <Image
-            source={require('../assets/images/calendar.png')}
-            style={globalStyles.icon}
+    <>
+      <BackCancelHeader navigation={navigation} />
+      <PaperProvider>
+        <View style={globalStyles.container}>
+          <View style={styles.date}>
+            <Image
+              source={require('../assets/images/calendar.png')}
+              style={globalStyles.icon}
+            />
+            <Text style={globalStyles.heading}>{`${
+              route.params.postId
+                ? selectedCalendarNote?.modDate.slice(0, -14)
+                : note.date
+            } 의 감정`}</Text>
+          </View>
+          <View style={globalStyles.chipsBox}>
+            {route.params.postId
+              ? selectedCalendarNote?.tags.map((tag: diaryTag, index) => (
+                  <Chip
+                    key={index}
+                    style={chipColorPicker(tag.tag.tagCategorySeq)}
+                    textStyle={globalStyles.chipContent}
+                  >
+                    {tag.tag.tagName}
+                  </Chip>
+                ))
+              : checkedEmotion.map((tag: tag, index) => (
+                  <Chip
+                    key={index}
+                    style={chipColorPicker(tag.tagCategorySeq)}
+                    textStyle={globalStyles.chipContent}
+                  >
+                    {tag.tagName}
+                  </Chip>
+                ))}
+          </View>
+          <Text style={globalStyles.heading}>
+            {route.params.postId ? selectedCalendarNote?.title : note.title}
+          </Text>
+          <Text style={globalStyles.text}>
+            {route.params.postId
+              ? selectedCalendarNote?.contents
+              : note.content}
+          </Text>
+          <PostButton
+            route={route}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
           />
-          <Text style={globalStyles.heading}>{`${note.date} 의 감정`}</Text>
         </View>
-        <View style={globalStyles.chipsBox}>
-          {checkedEmotion.map((tag: tag, index) => (
-            <Chip
-              key={index}
-              style={chipColorPicker(tag.tagCategorySeq)}
-              textStyle={globalStyles.chipContent}
-            >
-              {tag.tagName}
-            </Chip>
-          ))}
-        </View>
-        <Text style={globalStyles.heading}>{note.title}</Text>
-        <Text style={globalStyles.text}>{note.content}</Text>
-        <PostButton
-          route={route}
-          navigation={navigation}
+        <ToCalendarModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          navigation={navigation}
         />
-      </View>
-      <ToCalendarModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        navigation={navigation}
-      />
-      <ToTrashModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        navigation={navigation}
-      />
-    </PaperProvider>
+        <ToTrashModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          navigation={navigation}
+        />
+        <_DeleteModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          route={route}
+          navigation={navigation}
+        />
+      </PaperProvider>
+    </>
   );
 };
 

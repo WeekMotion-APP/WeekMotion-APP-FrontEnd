@@ -7,6 +7,7 @@ import { globalStyles } from '../styles/globalStyles';
 import { tag } from '../types/data/type';
 import { EditScreenProps } from '../types/navigation/type';
 import { chipColorPicker } from '../functions/chipColorPicker';
+import { BackCancelHeader } from '../components/headers/BackCancelHeader';
 
 export const EditScreen = ({ navigation }: EditScreenProps) => {
   const checkedEmotion = useAppSelector((state) => {
@@ -33,71 +34,74 @@ export const EditScreen = ({ navigation }: EditScreenProps) => {
     };
   });
   return (
-    <View style={globalStyles.container}>
-      <View style={styles.date}>
-        <Image
-          source={require('../assets/images/calendar.png')}
-          style={globalStyles.icon}
-        />
-        <Text style={globalStyles.heading}>{content.date}</Text>
-      </View>
-      <View style={globalStyles.chipsBox}>
-        {checkedEmotion.map((tag: tag, index) => (
-          <Chip
-            key={index}
-            style={chipColorPicker(tag.tagCategorySeq)}
-            textStyle={globalStyles.chipContent}
-          >
-            {tag.tagName}
-          </Chip>
-        ))}
-      </View>
-      <View style={styles.form}>
-        <TextInput
-          label={'Title'}
-          mode="outlined"
-          placeholder="제목을 입력하세요."
-          style={globalStyles.input}
-          contentStyle={globalStyles.inputContent}
-          activeOutlineColor="#FFD54A"
-          outlineColor="#DCDCDC"
-          onChangeText={(text) =>
-            setContent({
-              ...content,
-              ['title']: text,
+    <>
+      <BackCancelHeader navigation={navigation} />
+      <View style={globalStyles.container}>
+        <View style={styles.date}>
+          <Image
+            source={require('../assets/images/calendar.png')}
+            style={globalStyles.icon}
+          />
+          <Text style={globalStyles.heading}>{content.date}</Text>
+        </View>
+        <View style={globalStyles.chipsBox}>
+          {checkedEmotion.map((tag: tag, index) => (
+            <Chip
+              key={index}
+              style={chipColorPicker(tag.tagCategorySeq)}
+              textStyle={globalStyles.chipContent}
+            >
+              {tag.tagName}
+            </Chip>
+          ))}
+        </View>
+        <View style={styles.form}>
+          <TextInput
+            label={'Title'}
+            mode="outlined"
+            placeholder="제목을 입력하세요."
+            style={globalStyles.input}
+            contentStyle={globalStyles.inputContent}
+            activeOutlineColor="#FFD54A"
+            outlineColor="#DCDCDC"
+            onChangeText={(text) =>
+              setContent({
+                ...content,
+                ['title']: text,
+              })
+            }
+          />
+          <TextInput
+            label={'Note'}
+            mode="outlined"
+            placeholder="일기 내용을 입력하세요."
+            style={styles.textarea}
+            activeOutlineColor="#FFD54A"
+            outlineColor="#DCDCDC"
+            multiline
+            onChangeText={(text) =>
+              setContent({
+                ...content,
+                ['content']: text,
+              })
+            }
+          />
+        </View>
+        <Button
+          mode="contained"
+          style={globalStyles.button}
+          contentStyle={globalStyles.buttonContent}
+          buttonColor="#FFD54A"
+          onPress={() =>
+            navigation.navigate('SelectEmotion', {
+              status: 'after',
             })
           }
-        />
-        <TextInput
-          label={'Note'}
-          mode="outlined"
-          placeholder="일기 내용을 입력하세요."
-          style={styles.textarea}
-          activeOutlineColor="#FFD54A"
-          outlineColor="#DCDCDC"
-          multiline
-          onChangeText={(text) =>
-            setContent({
-              ...content,
-              ['content']: text,
-            })
-          }
-        />
+        >
+          다음
+        </Button>
       </View>
-      <Button
-        mode="contained"
-        style={globalStyles.button}
-        contentStyle={globalStyles.buttonContent}
-        buttonColor="#FFD54A"
-        onPress={() =>
-          navigation.navigate('SelectEmotion', {
-            status: 'after',
-          })
-        }
-      >
-        다음
-      </Button>
-    </View>
+    </>
   );
 };
 
