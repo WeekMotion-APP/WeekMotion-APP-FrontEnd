@@ -5,10 +5,13 @@ export type RootStackParamList = {
   Home: undefined;
   SignIn: undefined;
   SignUp: undefined;
-  Diary: { view: 'calendar' | 'list' };
+  Diary: { view: 'calendar' | 'list'; location: 'calendar' | 'trash' };
   SelectEmotion: { status: 'before' | 'after' };
   Edit: { status: 'create' | 'update' };
-  Post: { location: 'created' | 'calendar' | 'trash'; postId: string };
+  Post: {
+    location: 'created' | 'calendar' | 'trash';
+    postId: string | undefined;
+  };
 };
 
 export type HomeScreenProps = NativeStackScreenProps<
