@@ -1,14 +1,14 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Image, View } from 'react-native';
 import { Portal, Modal, Text, Button } from 'react-native-paper';
-import { requestCreateDiary } from '../../functions/asyncFunctions/requestDiary';
-import { useAppSelector } from '../../redux';
+import { requestDeleteDiary } from '../../functions/asyncFunctions/requestDiary';
 import { globalStyles } from '../../styles/globalStyles';
 import { PostScreenProps } from '../../types/navigation/type';
 
-export const ToTrashModal = ({
+export const _DeleteModal = ({
   modalVisible,
   setModalVisible,
+  route,
   navigation,
 }: {
   modalVisible: {
@@ -25,39 +25,30 @@ export const ToTrashModal = ({
       delete: boolean;
     }>
   >;
+  route: PostScreenProps['route'];
   navigation: PostScreenProps['navigation'];
 }) => {
-  const note = useAppSelector((state) => {
-    return state.note;
-  });
-  const emotion = useAppSelector((state) => {
-    return state.emotion.checkedEmotion;
-  });
   return (
     <Portal>
       <Modal
-        visible={modalVisible.toTrash}
+        visible={modalVisible.delete}
         style={globalStyles.modal}
         contentContainerStyle={globalStyles.modalContent}
       >
         <View style={globalStyles.modalHeader}>
           <Text style={globalStyles.heading}>
-            감정을 소각장으로{'\n'}
-            보낼까요?
+            감정을 소각할까요?{'\n'}
+            완전 소각한 감정은 다시는
+            {'\n'}볼 수 없어요.
           </Text>
           <Button
             mode="text"
             onPress={() =>
-              setModalVisible({ ...modalVisible, ['toTrash']: false })
+              setModalVisible({ ...modalVisible, ['delete']: false })
             }
           >
             <Image source={require('../../assets/images/xIcon.png')} />
           </Button>
-        </View>
-        <View style={globalStyles.modalImageContainer}>
-          <Image
-            source={require('../../assets/images/toTrashWeekmotion.png')}
-          />
         </View>
         <View style={globalStyles.modalButtonGroup}>
           <Button
@@ -65,7 +56,7 @@ export const ToTrashModal = ({
             style={{ borderColor: '#FFD54A', borderWidth: 2 }}
             textColor="#FFD54A"
             onPress={() =>
-              setModalVisible({ ...modalVisible, ['toTrash']: false })
+              setModalVisible({ ...modalVisible, ['delete']: false })
             }
           >
             취소
@@ -73,16 +64,12 @@ export const ToTrashModal = ({
           <Button
             buttonColor="#FFD54A"
             mode="contained"
-            onPress={() =>
-              requestCreateDiary({
-                diary: note,
-                emotion: emotion,
-                category: 'trash',
-                navigation: navigation,
-              })
-            }
+            onPress={() => {
+              requestDeleteDiary(route.params.postId);
+              navigation.goBack();
+            }}
           >
-            보내기
+            소각하기
           </Button>
         </View>
       </Modal>

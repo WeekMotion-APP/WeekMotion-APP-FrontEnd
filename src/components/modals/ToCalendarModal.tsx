@@ -11,9 +11,19 @@ export const ToCalendarModal = ({
   setModalVisible,
   navigation,
 }: {
-  modalVisible: { toCalendar: boolean; toTrash: boolean; cancel: boolean };
+  modalVisible: {
+    toCalendar: boolean;
+    toTrash: boolean;
+    cancel: boolean;
+    delete: boolean;
+  };
   setModalVisible: Dispatch<
-    SetStateAction<{ toCalendar: boolean; toTrash: boolean; cancel: boolean }>
+    SetStateAction<{
+      toCalendar: boolean;
+      toTrash: boolean;
+      cancel: boolean;
+      delete: boolean;
+    }>
   >;
   navigation: PostScreenProps['navigation'];
 }) => {

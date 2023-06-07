@@ -27,7 +27,12 @@ export const SelectEmotionButton = ({
           style={globalStyles.button}
           contentStyle={globalStyles.buttonContent}
           buttonColor="#FFD54A"
-          onPress={() => navigation.navigate('Post', { location: 'created' })}
+          onPress={() =>
+            navigation.navigate('Post', {
+              location: 'created',
+              postId: undefined,
+            })
+          }
         >
           {'감정 선택하기'}
         </Button>
