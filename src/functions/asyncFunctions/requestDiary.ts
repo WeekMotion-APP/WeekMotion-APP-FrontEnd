@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import axios from 'axios';
 import { requestURL } from '../../../requestURL';
-import { note, tag } from '../../types/data/type';
+import { diary, note, tag } from '../../types/data/type';
 import { PostScreenProps } from '../../types/navigation/type';
 
 export const requestCreateDiary = async ({
@@ -39,7 +39,10 @@ export const requestCreateDiary = async ({
       if (category === 'calendar') {
         console.log(response);
         console.error('캘린더에 감정이 등록되었어요!');
-        navigation.navigate('Diary', { view: 'calendar' });
+        navigation.navigate('Diary', {
+          view: 'calendar',
+          location: 'calendar',
+        });
       } else if (category === 'trash') {
         console.error('소각장에 감정이 등록되었어요!');
       }
@@ -48,24 +51,6 @@ export const requestCreateDiary = async ({
     console.error('Error!');
   }
 };
-
-// const currentMonth = new Date()
-//   .toLocaleDateString('ko-KR', {
-//     year: 'numeric',
-//     month: '2-digit',
-//     day: '2-digit',
-//   })
-//   .replaceAll('. ', '-')
-//   .slice(0, -4);
-
-// const currentDate = new Date()
-//   .toLocaleDateString('ko-KR', {
-//     year: 'numeric',
-//     month: '2-digit',
-//     day: '2-digit',
-//   })
-//   .replaceAll('. ', '-')
-//   .slice(0, -1);
 
 export const requestReadDiary = createAsyncThunk(
   'requestReadDiary',
@@ -86,3 +71,43 @@ export const requestReadDiary = createAsyncThunk(
     }
   }
 );
+
+export const requestUpdateDiaryCategory = async (diary: diary | undefined) => {
+  try {
+    if (!diary) {
+      return;
+    } else {
+      const accessToken = await EncryptedStorage.getItem('accessToken');
+      const response = await axios.patch(
+        `/diary/${diary.seq}`,
+        {
+          calenderYn: diary.calenderYn === 'Y' ? 'N' : 'Y',
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+          baseURL: requestURL,
+        }
+      );
+      console.log(response);
+      return response.data.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const requestDeleteDiary = async (seq: string | undefined) => {
+  if (!seq) {
+    return;
+  }
+  try {
+    const accessToken = await EncryptedStorage.getItem('accessToken');
+    const response = axios.delete(`/diary/${seq}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      baseURL: requestURL,
+    });
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+};
