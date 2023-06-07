@@ -1,15 +1,27 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableHighlight,
+} from 'react-native';
 import { Text, Chip } from 'react-native-paper';
 import { chipColorPicker } from '../../functions/chipColorPicker';
-import { useAppDispatch, useAppSelector } from '../../redux';
-import { setSelectDateDiary } from '../../redux/slice/diarySlice';
+import { useAppSelector } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
 import { diary, diaryTag } from '../../types/data/type';
+import { DiaryScreenProps } from '../../types/navigation/type';
 
-export const List = () => {
-  const currentDateDiary = useAppSelector((state) => {
-    return state.diary.selectDateDiary;
+export const List = ({ route, navigation }: DiaryScreenProps) => {
+  const currentDiary = useAppSelector((state) => {
+    return state.diary.allDiary;
+  }).filter((diary: diary) => {
+    if (route.params.location === 'calendar') {
+      return diary.calenderYn === 'Y';
+    } else {
+      return diary.calenderYn === 'N';
+    }
   });
 
   const emotionIconPicker = (seq: string, index: number) => {
@@ -25,6 +37,7 @@ export const List = () => {
       return (
         <Image
           key={index}
+          style={styles.emotion}
           source={require('../../assets/images/negative_emotion.png')}
         />
       );
@@ -39,37 +52,48 @@ export const List = () => {
     }
   };
 
-  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(setSelectDateDiary(['2023-06-03', '2023-06-05']));
-  }, [dispatch]);
+    console.log(route.params);
+  }, [route]);
   return (
     <ScrollView style={globalStyles.container}>
-      {currentDateDiary.map((diary: diary, index) => (
-        <View key={index} style={styles.listItem}>
-          <View style={styles.listItemHeaderGroup}>
-            <Text style={globalStyles.dateText}>
-              {diary.modDate.slice(0, -14)}
-            </Text>
-            <View style={styles.emotionGroup}>
-              {diary.tags.map((tag: diaryTag, index) =>
-                emotionIconPicker(tag.tag.tagCategorySeq, index)
-              )}
+      {currentDiary.map((diary: diary, index) => (
+        <TouchableHighlight
+          key={index}
+          underlayColor={'white'}
+          onPress={() =>
+            navigation.navigate('Post', {
+              location:
+                route.params.location === 'calendar' ? 'calendar' : 'trash',
+              postId: diary.seq,
+            })
+          }
+        >
+          <View style={styles.listItem}>
+            <View style={styles.listItemHeaderGroup}>
+              <Text style={globalStyles.dateText}>
+                {diary.modDate.slice(0, -14)}
+              </Text>
+              <View style={styles.emotionGroup}>
+                {diary.tags.map((tag: diaryTag, index) =>
+                  emotionIconPicker(tag.tag.tagCategorySeq, index)
+                )}
+              </View>
+            </View>
+            <Text style={globalStyles.heading}>{diary.title}</Text>
+            <View style={styles.chipGroup}>
+              {diary.tags.map((tag: diaryTag, index) => (
+                <Chip
+                  key={index}
+                  style={chipColorPicker(tag.tag.tagCategorySeq)}
+                  textStyle={globalStyles.chipContent}
+                >
+                  {tag.tag.tagName}
+                </Chip>
+              ))}
             </View>
           </View>
-          <Text style={globalStyles.heading}>{diary.title}</Text>
-          <View style={styles.chipGroup}>
-            {diary.tags.map((tag: diaryTag, index) => (
-              <Chip
-                key={index}
-                style={chipColorPicker(tag.tag.tagCategorySeq)}
-                textStyle={globalStyles.chipContent}
-              >
-                {tag.tag.tagName}
-              </Chip>
-            ))}
-          </View>
-        </View>
+        </TouchableHighlight>
       ))}
     </ScrollView>
   );
