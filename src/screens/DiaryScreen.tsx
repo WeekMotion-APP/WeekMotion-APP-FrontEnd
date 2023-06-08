@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { DiaryTab } from '../components/buttons/DiaryTab';
 import { MainHeader } from '../components/headers/MainHeader';
+import { Calendar } from '../components/lists/Calendar';
 import { List } from '../components/lists/List';
 import { requestReadDiary } from '../functions/asyncFunctions/requestDiary';
 import { useThunkDispatch } from '../redux';
@@ -23,6 +24,7 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
         {route.params.location === 'calendar' && (
           <DiaryTab route={route} navigation={navigation} />
         )}
+        {route.params.view === 'calendar' && <Calendar />}
         {route.params.view === 'list' && (
           <List route={route} navigation={navigation} />
         )}
@@ -34,5 +36,7 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
   },
 });

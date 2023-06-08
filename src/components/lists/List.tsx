@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Image,
   ScrollView,
@@ -12,6 +12,7 @@ import { useAppSelector } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
 import { diary, diaryTag } from '../../types/data/type';
 import { DiaryScreenProps } from '../../types/navigation/type';
+import { TrashListHeader } from '../headers/TrashListHeader';
 
 export const List = ({ route, navigation }: DiaryScreenProps) => {
   const currentDiary = useAppSelector((state) => {
@@ -51,12 +52,11 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
       );
     }
   };
-
-  useEffect(() => {
-    console.log(route.params);
-  }, [route]);
   return (
     <ScrollView style={globalStyles.container}>
+      {route.params.location === 'trash' && (
+        <TrashListHeader navigation={navigation} />
+      )}
       {currentDiary.map((diary: diary, index) => (
         <TouchableHighlight
           key={index}

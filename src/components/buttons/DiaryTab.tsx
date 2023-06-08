@@ -15,6 +15,7 @@ export const DiaryTab = ({ route, navigation }: DiaryScreenProps) => {
       >
         <Button
           mode="text"
+          rippleColor={'white'}
           contentStyle={styles.buttonContent}
           labelStyle={
             route.params.view === 'calendar'
@@ -40,6 +41,7 @@ export const DiaryTab = ({ route, navigation }: DiaryScreenProps) => {
       >
         <Button
           mode="text"
+          rippleColor={'white'}
           contentStyle={styles.buttonContent}
           labelStyle={
             route.params.view === 'list'
