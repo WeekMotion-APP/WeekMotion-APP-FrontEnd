@@ -72,6 +72,41 @@ export const requestReadDiary = createAsyncThunk(
   }
 );
 
+export const requestUpdateDiary = async ({
+  targetDiary,
+  content,
+  updateEmotion,
+}: {
+  targetDiary: diary | undefined;
+  content: { title: string; content: string; date: string };
+  updateEmotion: any;
+}) => {
+  try {
+    if (!targetDiary) {
+      return;
+    } else {
+      const accessToken = await EncryptedStorage.getItem('accessToken');
+      const response = await axios.patch(
+        `/diary/${targetDiary.seq}`,
+        {
+          title: content.title,
+          contents: content.content,
+          calenderYn: targetDiary.calenderYn,
+          tags: updateEmotion,
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+          baseURL: requestURL,
+        }
+      );
+      console.log(response);
+      return response.data.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const requestUpdateDiaryCategory = async (diary: diary | undefined) => {
   try {
     if (!diary) {

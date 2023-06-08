@@ -20,7 +20,7 @@ export const SelectEmotionButton = ({
           {'일기 쓰러가기'}
         </Button>
       );
-    } else {
+    } else if (route.params.status === 'after') {
       return (
         <Button
           mode="contained"
@@ -35,6 +35,18 @@ export const SelectEmotionButton = ({
           }
         >
           {'감정 선택하기'}
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          mode="contained"
+          style={globalStyles.button}
+          contentStyle={globalStyles.buttonContent}
+          buttonColor="#FFD54A"
+          onPress={() => navigation.goBack()}
+        >
+          {'감정 수정하기'}
         </Button>
       );
     }

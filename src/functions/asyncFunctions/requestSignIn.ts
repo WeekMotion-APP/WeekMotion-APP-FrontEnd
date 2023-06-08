@@ -31,8 +31,9 @@ export const requestSignIn = async (
     if (response.status === 201) {
       setOnStorage(response.data.data);
       console.error('로그인 성공!');
-      navigation.navigate('SelectEmotion', {
-        status: 'before',
+      navigation.navigate('Diary', {
+        view: 'calendar',
+        location: 'calendar',
       });
     }
   } catch (error) {

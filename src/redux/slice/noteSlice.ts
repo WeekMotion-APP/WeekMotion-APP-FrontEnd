@@ -4,7 +4,16 @@ import { note } from '../../types/data/type';
 const initialState: note = {
   title: '',
   content: '',
-  date: '',
+  date: new Date()
+    .toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+    .split(' ')
+    .join('')
+    .slice(0, -1),
+  updateTarget: '',
 };
 
 const noteSlice = createSlice({
@@ -16,7 +25,10 @@ const noteSlice = createSlice({
       state.content = action.payload.content;
       state.date = action.payload.date;
     },
+    setUpdateTarget: (state, action) => {
+      state.updateTarget = action.payload;
+    },
   },
 });
-export const { setNote } = noteSlice.actions;
+export const { setNote, setUpdateTarget } = noteSlice.actions;
 export default noteSlice;
