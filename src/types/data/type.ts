@@ -54,4 +54,5 @@ export interface note {
   title: string;
   content: string;
   date: string;
+  updateTarget: string;
 }

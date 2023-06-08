@@ -6,7 +6,6 @@ export const globalStyles = StyleSheet.create({
     flexDirection: 'column',
     height: '100%',
     backgroundColor: 'white',
-    paddingTop: 40,
     paddingLeft: 20,
     paddingRight: 20,
     borderRadius: 16,

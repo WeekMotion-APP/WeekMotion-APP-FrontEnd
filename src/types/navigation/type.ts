@@ -6,7 +6,7 @@ export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
   Diary: { view: 'calendar' | 'list'; location: 'calendar' | 'trash' };
-  SelectEmotion: { status: 'before' | 'after' };
+  SelectEmotion: { status: 'before' | 'after' | 'update' };
   Edit: { status: 'create' | 'update' };
   Post: {
     location: 'created' | 'calendar' | 'trash';
