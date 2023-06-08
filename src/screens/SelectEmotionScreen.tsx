@@ -18,6 +18,9 @@ export const SelectEmotionScreen = ({
   const emotion = useAppSelector((state) => {
     return state.emotion;
   });
+  const date = useAppSelector((state) => {
+    return state.note.date;
+  });
   const dispatch = useAppDispatch();
   const thunkDispatch = useThunkDispatch();
   const [checked, setChecked] = useState<tag[]>(
@@ -42,6 +45,7 @@ export const SelectEmotionScreen = ({
 
   useEffect(() => {
     console.log(checked);
+
     return () => {
       dispatch(setCheckedEmotion(checked));
     };
@@ -55,7 +59,11 @@ export const SelectEmotionScreen = ({
           source={require('../assets/images/weekmotion.png')}
           style={globalStyles.main_image}
         />
-        <Text style={globalStyles.heading}>{headingCondition(route)}</Text>
+        <View style={styles.headingContainer}>
+          <Text style={globalStyles.heading}>
+            {headingCondition(route, date)}
+          </Text>
+        </View>
         <View style={globalStyles.chipsBox}>
           {emotion.emotion
             .filter((tag: tag) => tag.tagCategory.seq === '1')
@@ -129,5 +137,10 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 20,
     paddingRight: 20,
+  },
+  headingContainer: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'flex-start',
   },
 });

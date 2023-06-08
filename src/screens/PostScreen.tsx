@@ -11,6 +11,7 @@ import { ToTrashModal } from '../components/modals/ToTrashModal';
 import { _DeleteModal } from '../components/modals/_DeleteModal';
 import { chipColorPicker } from '../functions/chipColorPicker';
 import { BackCancelHeader } from '../components/headers/BackCancelHeader';
+import { BackEditHeader } from '../components/headers/BackEditHeader';
 
 export const PostScreen = ({ route, navigation }: PostScreenProps) => {
   const [modalVisible, setModalVisible] = useState({
@@ -37,7 +38,11 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
 
   return (
     <>
-      <BackCancelHeader navigation={navigation} />
+      {route.params.location === 'created' ? (
+        <BackCancelHeader navigation={navigation} />
+      ) : (
+        <BackEditHeader route={route} navigation={navigation} />
+      )}
       <PaperProvider>
         <View style={globalStyles.container}>
           <View style={styles.date}>

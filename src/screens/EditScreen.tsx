@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { Button, Chip, Text, TextInput } from 'react-native-paper';
+import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
+import { Chip, Text, TextInput } from 'react-native-paper';
 import { useAppDispatch, useAppSelector } from '../redux';
 import { setNote } from '../redux/slice/noteSlice';
 import { globalStyles } from '../styles/globalStyles';
@@ -8,25 +8,33 @@ import { tag } from '../types/data/type';
 import { EditScreenProps } from '../types/navigation/type';
 import { chipColorPicker } from '../functions/chipColorPicker';
 import { BackCancelHeader } from '../components/headers/BackCancelHeader';
+import { EditButton } from '../components/buttons/EditButton';
 
-export const EditScreen = ({ navigation }: EditScreenProps) => {
+export const EditScreen = ({ route, navigation }: EditScreenProps) => {
+  const note = useAppSelector((state) => {
+    return state.note;
+  });
   const checkedEmotion = useAppSelector((state) => {
     return state.emotion.checkedEmotion;
   });
   const dispatch = useAppDispatch();
-  const [content, setContent] = useState({
-    title: '' as string,
-    content: '' as string,
-    date: new Date()
-      .toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .split(' ')
-      .join('')
-      .slice(0, -1) as string,
-  });
+  const [content, setContent] = useState(
+    route.params.status === 'create'
+      ? {
+          title: '' as string,
+          content: '' as string,
+          date: new Date()
+            .toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })
+            .split(' ')
+            .join('')
+            .slice(0, -1) as string,
+        }
+      : note
+  );
 
   useEffect(() => {
     return () => {
@@ -54,6 +62,16 @@ export const EditScreen = ({ navigation }: EditScreenProps) => {
               {tag.tagName}
             </Chip>
           ))}
+          {route.params.status === 'update' && (
+            <TouchableHighlight
+              underlayColor={'white'}
+              onPress={() => {
+                navigation.navigate('SelectEmotion', { status: 'update' });
+              }}
+            >
+              <Image source={require('../assets/images/editIcon.png')} />
+            </TouchableHighlight>
+          )}
         </View>
         <View style={styles.form}>
           <TextInput
@@ -64,6 +82,7 @@ export const EditScreen = ({ navigation }: EditScreenProps) => {
             contentStyle={globalStyles.inputContent}
             activeOutlineColor="#FFD54A"
             outlineColor="#DCDCDC"
+            defaultValue={content.title}
             onChangeText={(text) =>
               setContent({
                 ...content,
@@ -79,6 +98,7 @@ export const EditScreen = ({ navigation }: EditScreenProps) => {
             activeOutlineColor="#FFD54A"
             outlineColor="#DCDCDC"
             multiline
+            defaultValue={content.content}
             onChangeText={(text) =>
               setContent({
                 ...content,
@@ -87,19 +107,7 @@ export const EditScreen = ({ navigation }: EditScreenProps) => {
             }
           />
         </View>
-        <Button
-          mode="contained"
-          style={globalStyles.button}
-          contentStyle={globalStyles.buttonContent}
-          buttonColor="#FFD54A"
-          onPress={() =>
-            navigation.navigate('SelectEmotion', {
-              status: 'after',
-            })
-          }
-        >
-          다음
-        </Button>
+        <EditButton content={content} route={route} navigation={navigation} />
       </View>
     </>
   );
