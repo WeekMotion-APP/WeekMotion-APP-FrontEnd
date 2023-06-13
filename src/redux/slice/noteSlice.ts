@@ -21,14 +21,28 @@ const noteSlice = createSlice({
   initialState: initialState,
   reducers: {
     setNote: (state, action) => {
-      state.title = action.payload.title;
-      state.content = action.payload.content;
-      state.date = action.payload.date;
+      state.title =
+        action.payload.title === undefined
+          ? initialState.title
+          : action.payload.title;
+      state.content =
+        action.payload.content === undefined
+          ? initialState.content
+          : action.payload.content;
+      state.date =
+        action.payload.date === undefined
+          ? initialState.date
+          : action.payload.date;
     },
     setUpdateTarget: (state, action) => {
       state.updateTarget = action.payload;
     },
+    reset: (state) => {
+      state.title = initialState.title;
+      state.content = initialState.content;
+      state.date = initialState.date;
+    },
   },
 });
-export const { setNote, setUpdateTarget } = noteSlice.actions;
+export const { setNote, setUpdateTarget, reset } = noteSlice.actions;
 export default noteSlice;

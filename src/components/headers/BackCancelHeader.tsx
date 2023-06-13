@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { View, Image, TouchableHighlight } from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
 import {
@@ -8,8 +8,33 @@ import {
 } from '../../types/navigation/type';
 
 export const BackCancelHeader = ({
+  modalVisible,
+  setModalVisible,
+  route,
   navigation,
 }: {
+  modalVisible:
+    | {
+        toCalendar: boolean;
+        toTrash: boolean;
+        cancel: boolean;
+        delete: boolean;
+      }
+    | undefined;
+  setModalVisible:
+    | Dispatch<
+        SetStateAction<{
+          toCalendar: boolean;
+          toTrash: boolean;
+          cancel: boolean;
+          delete: boolean;
+        }>
+      >
+    | undefined;
+  route:
+    | SelectEmotionScreenProps['route']
+    | EditScreenProps['route']
+    | PostScreenProps['route'];
   navigation:
     | SelectEmotionScreenProps['navigation']
     | EditScreenProps['navigation']
@@ -25,12 +50,21 @@ export const BackCancelHeader = ({
       </TouchableHighlight>
       <TouchableHighlight
         underlayColor={'white'}
-        onPress={() =>
+        onPress={() => {
+          if (
+            modalVisible &&
+            setModalVisible &&
+            route.name === 'Post' &&
+            route.params.location === 'created'
+          ) {
+            setModalVisible({ ...modalVisible, ['cancel']: true });
+            return;
+          }
           navigation.navigate('Diary', {
             view: 'calendar',
             location: 'calendar',
-          })
-        }
+          });
+        }}
       >
         <Image source={require('../../assets/images/xIcon.png')} />
       </TouchableHighlight>
