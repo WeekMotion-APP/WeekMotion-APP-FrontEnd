@@ -23,15 +23,7 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
       ? {
           title: '' as string,
           content: '' as string,
-          date: new Date()
-            .toLocaleDateString('ko-KR', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-            })
-            .split(' ')
-            .join('')
-            .slice(0, -1) as string,
+          date: note.date,
         }
       : note
   );
@@ -43,7 +35,12 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
   });
   return (
     <>
-      <BackCancelHeader navigation={navigation} />
+      <BackCancelHeader
+        route={route}
+        navigation={navigation}
+        modalVisible={undefined}
+        setModalVisible={undefined}
+      />
       <View style={globalStyles.container}>
         <View style={styles.date}>
           <Image
@@ -66,7 +63,10 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
             <TouchableHighlight
               underlayColor={'white'}
               onPress={() => {
-                navigation.navigate('SelectEmotion', { status: 'update' });
+                navigation.navigate('SelectEmotion', {
+                  status: 'update',
+                  date: 'selectedDay',
+                });
               }}
             >
               <Image source={require('../assets/images/editIcon.png')} />

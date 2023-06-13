@@ -15,7 +15,12 @@ export const SelectEmotionButton = ({
           style={globalStyles.button}
           contentStyle={globalStyles.buttonContent}
           buttonColor="#FFD54A"
-          onPress={() => navigation.navigate('Edit', { status: 'create' })}
+          onPress={() =>
+            navigation.navigate('Edit', {
+              status: 'create',
+              date: route.params.date === 'today' ? 'today' : 'selectedDay',
+            })
+          }
         >
           {'일기 쓰러가기'}
         </Button>

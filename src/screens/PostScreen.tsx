@@ -12,6 +12,7 @@ import { _DeleteModal } from '../components/modals/_DeleteModal';
 import { chipColorPicker } from '../functions/chipColorPicker';
 import { BackCancelHeader } from '../components/headers/BackCancelHeader';
 import { BackEditHeader } from '../components/headers/BackEditHeader';
+import { ResetModal } from '../components/modals/ResetModal';
 
 export const PostScreen = ({ route, navigation }: PostScreenProps) => {
   const [modalVisible, setModalVisible] = useState({
@@ -34,16 +35,22 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
 
   useEffect(() => {
     console.log(route.params);
-  }, [route]);
+    console.log(note);
+  }, [route, note]);
 
   return (
     <>
-      {route.params.location === 'created' ? (
-        <BackCancelHeader navigation={navigation} />
-      ) : (
-        <BackEditHeader route={route} navigation={navigation} />
-      )}
       <PaperProvider>
+        {route.params.location === 'created' ? (
+          <BackCancelHeader
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            route={route}
+            navigation={navigation}
+          />
+        ) : (
+          <BackEditHeader route={route} navigation={navigation} />
+        )}
         <View style={globalStyles.container}>
           <View style={styles.date}>
             <Image
@@ -52,7 +59,9 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
             />
             <Text style={globalStyles.heading}>{`${
               route.params.postId
-                ? selectedCalendarNote?.modDate.slice(0, -14)
+                ? selectedCalendarNote?.modDate
+                    .slice(0, -14)
+                    .replaceAll('-', '.')
                 : note.date
             } 의 감정`}</Text>
           </View>
@@ -105,6 +114,11 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
           route={route}
+          navigation={navigation}
+        />
+        <ResetModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
           navigation={navigation}
         />
       </PaperProvider>

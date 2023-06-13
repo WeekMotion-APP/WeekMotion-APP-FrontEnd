@@ -54,7 +54,10 @@ export const BackEditHeader = ({
             )
           );
           dispatch(setUpdateTarget(route.params.postId));
-          navigation.navigate('Edit', { status: 'update' });
+          navigation.navigate('Edit', {
+            status: 'update',
+            date: 'selectedDay',
+          });
         }}
       >
         <Image source={require('../../assets/images/editIcon.png')} />

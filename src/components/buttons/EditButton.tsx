@@ -42,6 +42,7 @@ export const EditButton = ({
           onPress={() =>
             navigation.navigate('SelectEmotion', {
               status: 'after',
+              date: route.params.date === 'today' ? 'today' : 'selectedDay',
             })
           }
         >
