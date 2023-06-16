@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   ScrollView,
@@ -6,6 +6,7 @@ import {
   View,
   TouchableHighlight,
 } from 'react-native';
+import { SelectDatesModal } from '../modals/SelectDatesModal';
 import { Text, Chip } from 'react-native-paper';
 import { chipColorPicker } from '../../functions/chipColorPicker';
 import { useAppSelector } from '../../redux';
@@ -13,6 +14,7 @@ import { globalStyles } from '../../styles/globalStyles';
 import { diary, diaryTag } from '../../types/data/type';
 import { DiaryScreenProps } from '../../types/navigation/type';
 import { TrashListHeader } from '../headers/TrashListHeader';
+import { SelectDateHeader } from '../headers/SelectDateHeader';
 
 export const List = ({ route, navigation }: DiaryScreenProps) => {
   const currentDiary = useAppSelector((state) => {
@@ -24,6 +26,31 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
       return diary.calenderYn === 'N';
     }
   });
+
+  //dates picker state
+  const nowDate = new Date();
+  const [selectedDates, setSelectedDates] = useState<{
+    startingDay: string;
+    endingDay: string;
+  }>({
+    startingDay: new Date(nowDate.getFullYear(), nowDate.getMonth(), 1)
+      .toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replaceAll('. ', '.')
+      .slice(0, -1),
+    endingDay: new Date()
+      .toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replaceAll('. ', '.')
+      .slice(0, -1),
+  });
+  const [datesPickerVisible, setDatesPickerVisible] = useState(false);
 
   const emotionIconPicker = (seq: string, index: number) => {
     if (seq === '1') {
@@ -52,50 +79,62 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
       );
     }
   };
+
   return (
-    <ScrollView style={globalStyles.container}>
+    <>
       {route.params.location === 'trash' && (
         <TrashListHeader navigation={navigation} />
       )}
-      {currentDiary.map((diary: diary, index) => (
-        <TouchableHighlight
-          key={index}
-          underlayColor={'white'}
-          onPress={() =>
-            navigation.navigate('Post', {
-              location:
-                route.params.location === 'calendar' ? 'calendar' : 'trash',
-              postId: diary.seq,
-            })
-          }
-        >
-          <View style={styles.listItem}>
-            <View style={styles.listItemHeaderGroup}>
-              <Text style={globalStyles.dateText}>
-                {diary.modDate.slice(0, -14)}
-              </Text>
-              <View style={styles.emotionGroup}>
-                {diary.tags.map((tag: diaryTag, index) =>
-                  emotionIconPicker(tag.tag.tagCategorySeq, index)
-                )}
+      <SelectDateHeader
+        selected={selectedDates}
+        setDatesPickerVisible={setDatesPickerVisible}
+      />
+      <ScrollView style={globalStyles.container}>
+        {currentDiary.map((diary: diary, index) => (
+          <TouchableHighlight
+            key={index}
+            underlayColor={'white'}
+            onPress={() =>
+              navigation.navigate('Post', {
+                location:
+                  route.params.location === 'calendar' ? 'calendar' : 'trash',
+                postId: diary.seq,
+              })
+            }
+          >
+            <View style={styles.listItem}>
+              <View style={styles.listItemHeaderGroup}>
+                <Text style={globalStyles.dateText}>
+                  {diary.modDate.slice(0, -14).replaceAll('-', '.')}
+                </Text>
+                <View style={styles.emotionGroup}>
+                  {diary.tags.map((tag: diaryTag, index) =>
+                    emotionIconPicker(tag.tag.tagCategorySeq, index)
+                  )}
+                </View>
+              </View>
+              <Text style={globalStyles.heading}>{diary.title}</Text>
+              <View style={styles.chipGroup}>
+                {diary.tags.map((tag: diaryTag, index) => (
+                  <Chip
+                    key={index}
+                    style={chipColorPicker(tag.tag.tagCategorySeq)}
+                    textStyle={globalStyles.chipContent}
+                  >
+                    {tag.tag.tagName}
+                  </Chip>
+                ))}
               </View>
             </View>
-            <Text style={globalStyles.heading}>{diary.title}</Text>
-            <View style={styles.chipGroup}>
-              {diary.tags.map((tag: diaryTag, index) => (
-                <Chip
-                  key={index}
-                  style={chipColorPicker(tag.tag.tagCategorySeq)}
-                  textStyle={globalStyles.chipContent}
-                >
-                  {tag.tag.tagName}
-                </Chip>
-              ))}
-            </View>
-          </View>
-        </TouchableHighlight>
-      ))}
-    </ScrollView>
+          </TouchableHighlight>
+        ))}
+        <SelectDatesModal
+          setSelectedDates={setSelectedDates}
+          visible={datesPickerVisible}
+          setVisible={setDatesPickerVisible}
+        />
+      </ScrollView>
+    </>
   );
 };
 
