@@ -19,6 +19,16 @@ export const CalendarTitle = ({ date }: { date: string }) => {
   );
 };
 
+export const ModalCalendarHeader = ({ date }: { date: string }) => {
+  return (
+    <View style={styles.titleContainer}>
+      <Text style={styles.calendarTitle}>{`${new Date(date).getFullYear()}년 ${
+        new Date(date).getMonth() + 1
+      }월`}</Text>
+    </View>
+  );
+};
+
 export const CalendarArrow = ({ direction }: { direction: string }) => {
   if (direction === 'left') {
     return <Image source={require('../../assets/images/backIcon.png')} />;
@@ -42,5 +52,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '700',
     lineHeight: 30,
+    color: 'black',
   },
 });
