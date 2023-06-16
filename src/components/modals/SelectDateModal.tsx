@@ -10,7 +10,7 @@ import { View } from 'react-native';
 import { Calendar as RNCalendar } from 'react-native-calendars';
 import { globalStyles } from '../../styles/globalStyles';
 import { CalendarArrow, ModalCalendarHeader } from '../headers/CalendarHeader';
-import { useAppDispatch } from '../../redux';
+import { useAppDispatch, useAppSelector } from '../../redux';
 import { setNote } from '../../redux/slice/noteSlice';
 import { DiaryScreenProps } from '../../types/navigation/type';
 
@@ -25,6 +25,10 @@ export const SelectDateModal = ({
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const diary = useAppSelector((state) => {
+    return state.diary.allDiary.map((diary) => diary.modDate.slice(0, -14));
+  });
+  const dispatch = useAppDispatch();
   const INITIAL_DATE = new Date()
     .toLocaleDateString('ko-KR', {
       year: 'numeric',
@@ -46,10 +50,13 @@ export const SelectDateModal = ({
       },
     };
   }, [selected]);
-  const dispatch = useAppDispatch();
+  const disabled = [...new Set(diary)].reduce((acc: any, cur: string) => {
+    acc[cur] = { disabled: true };
+    return acc;
+  }, {});
   useEffect(() => {
-    console.log(selected);
-  }, [selected]);
+    console.log(disabled);
+  });
   return (
     <Portal>
       <Modal
@@ -64,7 +71,7 @@ export const SelectDateModal = ({
           renderHeader={(date) => <ModalCalendarHeader date={date} />}
           renderArrow={(direction) => <CalendarArrow direction={direction} />}
           onDayPress={(date) => setSelected(date.dateString)}
-          markedDates={marked}
+          markedDates={{ ...marked, ...disabled }}
         />
         <View style={globalStyles.modalButtonGroup}>
           <Button
