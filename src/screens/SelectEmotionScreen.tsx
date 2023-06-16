@@ -44,16 +44,17 @@ export const SelectEmotionScreen = ({
   }, [thunkDispatch]);
 
   useEffect(() => {
-    console.log(checked);
-
-    return () => {
-      dispatch(setCheckedEmotion(checked));
-    };
-  });
+    dispatch(setCheckedEmotion(checked));
+  }, [dispatch, checked]);
 
   return (
     <>
-      <BackCancelHeader navigation={navigation} />
+      <BackCancelHeader
+        navigation={navigation}
+        modalVisible={undefined}
+        setModalVisible={undefined}
+        route={route}
+      />
       <View style={styles.container}>
         <Image
           source={require('../assets/images/weekmotion.png')}
