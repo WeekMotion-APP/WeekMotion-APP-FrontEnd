@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { View, Image, TouchableHighlight, StyleSheet } from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
 import { DiaryScreenProps } from '../../types/navigation/type';
@@ -6,9 +6,13 @@ import { DiaryScreenProps } from '../../types/navigation/type';
 export const MainHeader = ({
   route,
   navigation,
+  visible,
+  setVisible,
 }: {
   route: DiaryScreenProps['route'];
   navigation: DiaryScreenProps['navigation'];
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
     <View style={globalStyles.headerContainer}>
@@ -39,9 +43,7 @@ export const MainHeader = ({
         )}
         <TouchableHighlight
           underlayColor={'white'}
-          onPress={() =>
-            navigation.navigate('SelectEmotion', { status: 'before' })
-          }
+          onPress={() => setVisible(!visible)}
         >
           <Image source={require('../../assets/images/addIcon.png')} />
         </TouchableHighlight>

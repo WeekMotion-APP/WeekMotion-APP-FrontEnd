@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from 'react-native-paper';
 import { requestUpdateDiary } from '../../functions/asyncFunctions/requestDiary';
 import { filterUpdateEmotion } from '../../functions/filterUpdateEmotion';
@@ -26,10 +26,6 @@ export const EditButton = ({
     return state.diary.allDiary.find((post: diary) => {
       return post.seq === target;
     });
-  });
-  useEffect(() => {
-    const result = filterUpdateEmotion(targetDiary?.tags, emotion);
-    console.log(result);
   });
   const filterEditButton = () => {
     if (route.params.status === 'create') {

@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 56,
     backgroundColor: 'white',
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   heading: {
     fontWeight: '400',
