@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { View, Image, StyleSheet, TouchableHighlight } from 'react-native';
 import { Text } from 'react-native-paper';
 
-export const CalendarTitle = ({ date }: { date: string }) => {
+export const CalendarTitle = ({
+  date,
+  setVisible,
+}: {
+  date: string;
+  setVisible: Dispatch<SetStateAction<boolean>>;
+}) => {
   return (
-    <TouchableHighlight>
+    <TouchableHighlight
+      underlayColor={'white'}
+      onPress={() => setVisible(true)}
+    >
       <View style={styles.titleContainer}>
         <Image
           style={styles.calendarLogo}
@@ -21,11 +30,13 @@ export const CalendarTitle = ({ date }: { date: string }) => {
 
 export const ModalCalendarHeader = ({ date }: { date: string }) => {
   return (
-    <View style={styles.titleContainer}>
-      <Text style={styles.calendarTitle}>{`${new Date(date).getFullYear()}년 ${
-        new Date(date).getMonth() + 1
-      }월`}</Text>
-    </View>
+    <>
+      <View style={styles.titleContainer}>
+        <Text style={styles.calendarTitle}>{`${new Date(
+          date
+        ).getFullYear()}년 ${new Date(date).getMonth() + 1}월`}</Text>
+      </View>
+    </>
   );
 };
 
