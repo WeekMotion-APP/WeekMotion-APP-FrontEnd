@@ -50,7 +50,11 @@ export const CalendarTile = ({
           date.state === 'disabled' ? styles.disableContainer : styles.container
         }
       >
-        <Text>{`${date.date?.day}`}</Text>
+        <Text
+          style={
+            new Date(date.date!.dateString).getDay() === 0 && styles.holidayText
+          }
+        >{`${date.date?.day}`}</Text>
         <View style={styles.iconContainer}>
           {date.marking &&
             date.marking.dots?.map((dot, index) => {
@@ -117,5 +121,8 @@ const styles = StyleSheet.create({
   icon: {
     width: 12,
     height: 12,
+  },
+  holidayText: {
+    color: '#E20823',
   },
 });
