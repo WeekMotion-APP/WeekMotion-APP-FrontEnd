@@ -23,6 +23,7 @@ export interface tag {
 export interface diary {
   calenderYn: string;
   contents: string;
+  diaryDate: string;
   modDate: string;
   regDate: string;
   seq: string;

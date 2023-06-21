@@ -38,7 +38,9 @@ export const CalendarTile = ({
             navigation.navigate('Post', {
               location: 'calendar',
               postId: diary.find((diary: diary) => {
-                return diary.modDate.slice(0, -14) === date.date!.dateString;
+                return (
+                  diary.diaryDate.replaceAll('.', '-') === date.date!.dateString
+                );
               })?.seq,
             });
           }

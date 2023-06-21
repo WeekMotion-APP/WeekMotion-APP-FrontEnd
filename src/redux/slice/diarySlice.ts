@@ -23,8 +23,8 @@ const diarySlice = createSlice({
       const toDate = new Date(action.payload[1]);
       const includeDateDiary = state.allDiary.filter((diary: diary) => {
         return (
-          new Date(diary.modDate) >= fromDate &&
-          new Date(diary.modDate) <= toDate
+          new Date(diary.diaryDate) >= fromDate &&
+          new Date(diary.diaryDate) <= toDate
         );
       });
       state.selectDateDiary = includeDateDiary;

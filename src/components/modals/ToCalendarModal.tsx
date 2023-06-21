@@ -4,6 +4,7 @@ import { Portal, Modal, Text, Button } from 'react-native-paper';
 import { requestCreateDiary } from '../../functions/asyncFunctions/requestDiary';
 import { useAppSelector } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
+import { diary } from '../../types/data/type';
 import { PostScreenProps } from '../../types/navigation/type';
 
 export const ToCalendarModal = ({
@@ -33,6 +34,18 @@ export const ToCalendarModal = ({
   const emotion = useAppSelector((state) => {
     return state.emotion.checkedEmotion;
   });
+  const duplicated =
+    useAppSelector((state) => {
+      return state.diary.allDiary.find((diary: diary) => {
+        return (
+          diary.calenderYn === 'Y' &&
+          new Date(diary.diaryDate).toDateString() ===
+            new Date(note.date).toDateString()
+        );
+      });
+    }) === undefined
+      ? false
+      : true;
   return (
     <Portal>
       <Modal
@@ -79,6 +92,7 @@ export const ToCalendarModal = ({
                 diary: note,
                 emotion: emotion,
                 category: 'calendar',
+                duplicated: duplicated,
                 navigation: navigation,
               })
             }

@@ -35,7 +35,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
       } else {
         throw new Error('중복된 아이디가 존재합니다.');
       }
-    } catch (error) {
+    } catch (error: any) {
       Toast.show({
         type: 'errorToast',
         text1: `${error.message}`,
@@ -82,7 +82,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         });
         console.log(response);
       }
-    } catch (error) {
+    } catch (error: any) {
       Toast.show({
         type: 'errorToast',
         text1: `${error.message}`,

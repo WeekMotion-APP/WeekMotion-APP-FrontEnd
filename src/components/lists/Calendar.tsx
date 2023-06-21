@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Calendar as RNCalendar, LocaleConfig } from 'react-native-calendars';
 import { useAppSelector } from '../../redux';
@@ -63,16 +63,13 @@ export const Calendar = () => {
       return post.calenderYn === 'Y';
     })
     .reduce((acc: any, cur: diary) => {
-      acc[cur.modDate.slice(0, -14)] = {
+      acc[cur.diaryDate.replaceAll('.', '-')] = {
         ['dots']: cur.tags.map((tag: diaryTag) => {
           return { ['color']: tag.tag.tagCategory.tagCategoryName };
         }),
       };
       return acc;
     }, {});
-  useEffect(() => {
-    console.log(currentDate);
-  });
   return (
     <View style={styles.container}>
       <RNCalendar

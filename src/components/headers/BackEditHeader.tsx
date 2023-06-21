@@ -35,7 +35,7 @@ export const BackEditHeader = ({
             setNote({
               title: currentDiary?.title,
               content: currentDiary?.contents,
-              date: new Date(currentDiary?.modDate || '')
+              date: new Date(currentDiary?.diaryDate || '')
                 .toLocaleDateString('ko-KR', {
                   year: 'numeric',
                   month: '2-digit',
