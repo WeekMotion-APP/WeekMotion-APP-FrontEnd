@@ -15,9 +15,14 @@ export const filterUpdateEmotion = (
   const filteredArray = mixedArray
     .map((seq) => {
       if (existingArray.includes(seq) && !updatingArray.includes(seq)) {
-        return { seq: seq, type: 'D' };
+        return {
+          seq: Number(
+            existingEmotion.find((diaryTag) => diaryTag.tagSeq === seq)?.seq
+          ),
+          type: 'D',
+        };
       } else if (!existingArray.includes(seq) && updatingArray.includes(seq)) {
-        return { tagSeq: seq };
+        return { tagSeq: Number(seq) };
       }
     })
     .filter((data) => {
