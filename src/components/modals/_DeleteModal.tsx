@@ -1,7 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Image, View } from 'react-native';
 import { Portal, Modal, Text, Button } from 'react-native-paper';
-import { requestDeleteDiary } from '../../functions/asyncFunctions/requestDiary';
+import {
+  requestDeleteDiary,
+  requestReadDiary,
+} from '../../functions/asyncFunctions/requestDiary';
+import { useThunkDispatch } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
 import { PostScreenProps } from '../../types/navigation/type';
 
@@ -28,6 +32,14 @@ export const _DeleteModal = ({
   route: PostScreenProps['route'];
   navigation: PostScreenProps['navigation'];
 }) => {
+  const thunkDispatch = useThunkDispatch();
+
+  const handleDelete = async () => {
+    await requestDeleteDiary(route.params.postId);
+    await thunkDispatch(requestReadDiary('trash'));
+    navigation.goBack();
+  };
+
   return (
     <Portal>
       <Modal
@@ -61,14 +73,7 @@ export const _DeleteModal = ({
           >
             취소
           </Button>
-          <Button
-            buttonColor="#FFD54A"
-            mode="contained"
-            onPress={() => {
-              requestDeleteDiary(route.params.postId);
-              navigation.goBack();
-            }}
-          >
+          <Button buttonColor="#FFD54A" mode="contained" onPress={handleDelete}>
             소각하기
           </Button>
         </View>

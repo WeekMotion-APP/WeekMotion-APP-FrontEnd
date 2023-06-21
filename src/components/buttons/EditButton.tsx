@@ -1,8 +1,11 @@
 import React from 'react';
 import { Button } from 'react-native-paper';
-import { requestUpdateDiary } from '../../functions/asyncFunctions/requestDiary';
+import {
+  requestReadDiary,
+  requestUpdateDiary,
+} from '../../functions/asyncFunctions/requestDiary';
 import { filterUpdateEmotion } from '../../functions/filterUpdateEmotion';
-import { useAppSelector } from '../../redux';
+import { useAppSelector, useThunkDispatch } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
 import { diary } from '../../types/data/type';
 import { EditScreenProps } from '../../types/navigation/type';
@@ -16,6 +19,7 @@ export const EditButton = ({
   route: EditScreenProps['route'];
   navigation: EditScreenProps['navigation'];
 }) => {
+  const thunkDispatch = useThunkDispatch();
   const emotion = useAppSelector((state) => {
     return state.emotion.checkedEmotion;
   });
@@ -27,6 +31,17 @@ export const EditButton = ({
       return post.seq === target;
     });
   });
+  const handleUpdate = async () => {
+    await requestUpdateDiary({
+      targetDiary: targetDiary,
+      content: content,
+      updateEmotion: filterUpdateEmotion(targetDiary?.tags, emotion),
+    });
+    await thunkDispatch(
+      requestReadDiary(targetDiary?.calenderYn === 'Y' ? 'calendar' : 'trash')
+    );
+    navigation.goBack();
+  };
   const filterEditButton = () => {
     if (route.params.status === 'create') {
       return (
@@ -52,14 +67,7 @@ export const EditButton = ({
           style={globalStyles.button}
           contentStyle={globalStyles.buttonContent}
           buttonColor="#FFD54A"
-          onPress={() => {
-            requestUpdateDiary({
-              targetDiary: targetDiary,
-              content: content,
-              updateEmotion: filterUpdateEmotion(targetDiary?.tags, emotion),
-            });
-            navigation.goBack();
-          }}
+          onPress={handleUpdate}
         >
           수정하기
         </Button>

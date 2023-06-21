@@ -3,16 +3,21 @@ import { Button } from 'react-native-paper';
 import { PostScreenProps } from '../../types/navigation/type';
 import { globalStyles } from '../../styles/globalStyles';
 import { View } from 'react-native';
-import { useAppSelector } from '../../redux';
+import { useAppSelector, useThunkDispatch } from '../../redux';
 import { diary } from '../../types/data/type';
-import { requestUpdateDiaryCategory } from '../../functions/asyncFunctions/requestDiary';
+import {
+  requestReadDiary,
+  requestUpdateDiaryCategory,
+} from '../../functions/asyncFunctions/requestDiary';
 
 export const PostButton = ({
   route,
+  navigation,
   modalVisible,
   setModalVisible,
 }: {
   route: PostScreenProps['route'];
+  navigation: PostScreenProps['navigation'];
   modalVisible: {
     toCalendar: boolean;
     toTrash: boolean;
@@ -33,6 +38,13 @@ export const PostButton = ({
       return diary.seq === route.params.postId;
     });
   });
+  const thunkDispatch = useThunkDispatch();
+
+  const handleFromCalendarToTrash = async () => {
+    await requestUpdateDiaryCategory(updateTarget);
+    await thunkDispatch(requestReadDiary('calendar'));
+    navigation.goBack();
+  };
   const filterPostButton = () => {
     if (route.params.location === 'created') {
       return (
@@ -69,9 +81,7 @@ export const PostButton = ({
             style={globalStyles.outlineButton}
             contentStyle={globalStyles.outlineButtonContent}
             textColor="#FFD54A"
-            onPress={() => {
-              requestUpdateDiaryCategory(updateTarget);
-            }}
+            onPress={handleFromCalendarToTrash}
           >
             감정을 소각장으로 보내기
           </Button>
