@@ -70,10 +70,14 @@ export const SelectEmotionScreen = ({
             .filter((tag: tag) => tag.tagCategory.seq === '1')
             .map((tag: tag, index) => (
               <Chip
-                mode={checked.includes(tag) ? 'flat' : 'outlined'}
+                mode={
+                  checked.map(({ seq }) => seq).includes(tag.seq)
+                    ? 'flat'
+                    : 'outlined'
+                }
                 key={index}
                 style={
-                  checked.includes(tag)
+                  checked.map(({ seq }) => seq).includes(tag.seq)
                     ? globalStyles.chipPink
                     : globalStyles.chipPinkBorder
                 }
@@ -89,10 +93,14 @@ export const SelectEmotionScreen = ({
             .filter((tag: tag) => tag.tagCategory.seq === '2')
             .map((tag: tag, index) => (
               <Chip
-                mode={checked.includes(tag) ? 'flat' : 'outlined'}
+                mode={
+                  checked.map(({ seq }) => seq).includes(tag.seq)
+                    ? 'flat'
+                    : 'outlined'
+                }
                 key={index}
                 style={
-                  checked.includes(tag)
+                  checked.map(({ seq }) => seq).includes(tag.seq)
                     ? globalStyles.chipBlue
                     : globalStyles.chipBlueBorder
                 }
@@ -108,10 +116,14 @@ export const SelectEmotionScreen = ({
             .filter((tag: tag) => tag.tagCategory.seq === '3')
             .map((tag: tag, index) => (
               <Chip
-                mode={checked.includes(tag) ? 'flat' : 'outlined'}
+                mode={
+                  checked.map(({ seq }) => seq).includes(tag.seq)
+                    ? 'flat'
+                    : 'outlined'
+                }
                 key={index}
                 style={
-                  checked.includes(tag)
+                  checked.map(({ seq }) => seq).includes(tag.seq)
                     ? globalStyles.chipYellow
                     : globalStyles.chipYellowBorder
                 }
