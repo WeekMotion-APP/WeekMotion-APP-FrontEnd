@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Text, Button } from 'react-native-paper';
 import { SignUpScreenProps } from '../types/navigation/type';
 import { globalStyles } from '../styles/globalStyles';
+import Toast from 'react-native-toast-message';
 
 export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
   const [info, setInfo] = useState({
@@ -26,11 +27,20 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
       });
       if (response.data.data.duplication === false) {
         setInfo({ ...info, ['verify_id']: true });
+        Toast.show({
+          type: 'successToast',
+          text1: '사용 가능한 ID입니다.',
+          position: 'bottom',
+        });
       } else {
         throw new Error('중복된 아이디가 존재합니다.');
       }
     } catch (error) {
-      console.error(error);
+      Toast.show({
+        type: 'errorToast',
+        text1: `${error.message}`,
+        position: 'bottom',
+      });
       throw error;
     }
   };
@@ -51,7 +61,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         throw new Error('작성하지 않은 항목이 있습니다.');
       }
       if (!info.verify_id || info.password !== info.verify_password) {
-        throw new Error('아이디 또는 비밀번호를 확인해주세요.');
+        throw new Error('ID 또는 비밀번호를 확인해주세요.');
       }
       const response = await axios.post(
         '/user',
@@ -65,11 +75,19 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         { baseURL: requestURL }
       );
       if (response.status === 201) {
-        console.error('회원가입 성공!');
+        Toast.show({
+          type: 'successToast',
+          text1: '회원가입 성공!',
+          position: 'bottom',
+        });
         console.log(response);
       }
     } catch (error) {
-      console.error(error);
+      Toast.show({
+        type: 'errorToast',
+        text1: `${error.message}`,
+        position: 'bottom',
+      });
     }
   };
 
@@ -84,7 +102,11 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
           onChangeText={(text) => setInfo({ ...info, ['id']: text })}
           onBlur={() => {
             if (info.id.length > 0 && !validationId.test(info.id)) {
-              console.error('아이디 형식을 확인해주세요.');
+              Toast.show({
+                type: 'errorToast',
+                text1: '아이디 형식을 확인해주세요.',
+                position: 'bottom',
+              });
             }
           }}
           style={styles.verify_id_form_input}
@@ -128,7 +150,11 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         onChangeText={(text) => setInfo({ ...info, ['name']: text })}
         onBlur={() => {
           if (info.name.length > 0 && !validationName.test(info.name)) {
-            console.error('이름 형식을 확인해주세요.');
+            Toast.show({
+              type: 'errorToast',
+              text1: '이름 형식을 확인해주세요.',
+              position: 'bottom',
+            });
           }
         }}
         style={globalStyles.input}
@@ -142,7 +168,11 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         onChangeText={(text) => setInfo({ ...info, ['phone']: text })}
         onBlur={() => {
           if (info.phone.length > 0 && !validationPhone.test(info.phone)) {
-            console.error('휴대폰 번호 형식을 확인해주세요.');
+            Toast.show({
+              type: 'errorToast',
+              text1: '휴대폰 번호 형식을 확인해주세요.',
+              position: 'bottom',
+            });
           }
         }}
         style={globalStyles.input}

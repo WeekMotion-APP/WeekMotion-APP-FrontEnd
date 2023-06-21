@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
 import { requestURL } from '../../../requestURL';
 import { diary, note, tag } from '../../types/data/type';
 import { PostScreenProps } from '../../types/navigation/type';
@@ -9,20 +10,26 @@ export const requestCreateDiary = async ({
   diary,
   emotion,
   category,
+  duplicated = false,
   navigation,
 }: {
   diary: note;
   emotion: tag[];
   category: string;
+  duplicated: boolean;
   navigation: PostScreenProps['navigation'];
 }) => {
   try {
+    if (duplicated) {
+      throw new Error('캘린더에 이미 일기가 있어요.');
+    }
     const accessToken = await EncryptedStorage.getItem('accessToken');
     const response = await axios.post(
       '/diary',
       {
         title: diary.title,
         contents: diary.content,
+        diaryDate: diary.date,
         calenderYn: category === 'calendar' ? 'Y' : 'N',
         tagSeq: emotion.map((item: tag) => {
           return item.seq;
@@ -37,18 +44,30 @@ export const requestCreateDiary = async ({
     );
     if (response.status === 201) {
       if (category === 'calendar') {
-        console.log(response);
-        console.error('캘린더에 감정이 등록되었어요!');
+        Toast.show({
+          type: 'successToast',
+          text1: '캘린더에 감정이 등록되었어요!',
+          position: 'bottom',
+        });
         navigation.navigate('Diary', {
           view: 'calendar',
           location: 'calendar',
         });
       } else if (category === 'trash') {
-        console.error('소각장에 감정이 등록되었어요!');
+        Toast.show({
+          type: 'successToast',
+          text1: '소각장에 감정이 등록되었어요!',
+          position: 'bottom',
+        });
+        navigation.navigate('Diary', { view: 'list', location: 'trash' });
       }
     }
-  } catch (error) {
-    console.error('Error!');
+  } catch (error: any) {
+    Toast.show({
+      type: 'errorToast',
+      text1: error.message ? error.message : '일기 등록에 실패했어요.',
+      position: 'bottom',
+    });
   }
 };
 
@@ -64,10 +83,13 @@ export const requestReadDiary = createAsyncThunk(
         },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      console.log(response);
       return response.data.data;
     } catch (error) {
-      console.error(error);
+      Toast.show({
+        type: 'errorToast',
+        text1: '일기 목록을 불러오지 못했어요.',
+        position: 'bottom',
+      });
     }
   }
 );
@@ -99,11 +121,19 @@ export const requestUpdateDiary = async ({
           baseURL: requestURL,
         }
       );
-      console.log(response);
+      Toast.show({
+        type: 'successToast',
+        text1: '업데이트 성공!',
+        position: 'bottom',
+      });
       return response.data.data;
     }
   } catch (error) {
-    console.error(error);
+    Toast.show({
+      type: 'errorToast',
+      text1: 'Error!',
+      position: 'bottom',
+    });
   }
 };
 
@@ -123,11 +153,19 @@ export const requestUpdateDiaryCategory = async (diary: diary | undefined) => {
           baseURL: requestURL,
         }
       );
-      console.log(response);
+      Toast.show({
+        type: 'successToast',
+        text1: '업데이트 성공!',
+        position: 'bottom',
+      });
       return response.data.data;
     }
   } catch (error) {
-    console.error(error);
+    Toast.show({
+      type: 'errorToast',
+      text1: 'Error!',
+      position: 'bottom',
+    });
   }
 };
 
@@ -137,12 +175,21 @@ export const requestDeleteDiary = async (seq: string | undefined) => {
   }
   try {
     const accessToken = await EncryptedStorage.getItem('accessToken');
-    const response = axios.delete(`/diary/${seq}`, {
+    const response = await axios.delete(`/diary/${seq}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
       baseURL: requestURL,
     });
-    console.log(response);
+    Toast.show({
+      type: 'successToast',
+      text1: '감정이 완전히 소각되었어요!',
+      position: 'bottom',
+    });
+    return response.data.data;
   } catch (error) {
-    console.error(error);
+    Toast.show({
+      type: 'errorToast',
+      text1: 'Error!',
+      position: 'bottom',
+    });
   }
 };
