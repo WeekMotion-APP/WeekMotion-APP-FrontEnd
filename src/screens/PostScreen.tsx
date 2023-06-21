@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAppSelector } from '../redux';
 import { diary, diaryTag, tag } from '../types/data/type';
 import { Image, StyleSheet, View } from 'react-native';
@@ -32,12 +32,6 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
       return post.seq === route.params.postId;
     });
   });
-
-  useEffect(() => {
-    console.log(route.params);
-    console.log(note);
-  }, [route, note]);
-
   return (
     <>
       <PaperProvider>
@@ -58,11 +52,7 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
               style={globalStyles.icon}
             />
             <Text style={globalStyles.heading}>{`${
-              route.params.postId
-                ? selectedCalendarNote?.modDate
-                    .slice(0, -14)
-                    .replaceAll('-', '.')
-                : note.date
+              route.params.postId ? selectedCalendarNote?.diaryDate : note.date
             } 의 감정`}</Text>
           </View>
           <View style={globalStyles.chipsBox}>
@@ -96,6 +86,7 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
           </Text>
           <PostButton
             route={route}
+            navigation={navigation}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
           />

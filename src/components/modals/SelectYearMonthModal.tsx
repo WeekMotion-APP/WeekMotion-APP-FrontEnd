@@ -78,8 +78,9 @@ export const SelectYearMonthModal = ({
         </View>
         <ScrollView style={styles.dateContainer}>
           {currentCategory === 'year'
-            ? yearData.map((year: number) => (
+            ? yearData.map((year: number, index) => (
                 <TouchableHighlight
+                  key={index}
                   onPress={() =>
                     setSelectedDate({ ...selectedDate, ['year']: year })
                   }
@@ -100,8 +101,9 @@ export const SelectYearMonthModal = ({
                   </View>
                 </TouchableHighlight>
               ))
-            : monthData.map((month: number) => (
+            : monthData.map((month: number, index) => (
                 <TouchableHighlight
+                  key={index}
                   onPress={() =>
                     setSelectedDate({
                       ...selectedDate,

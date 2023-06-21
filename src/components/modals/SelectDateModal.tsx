@@ -1,10 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { Button, Modal, Portal } from 'react-native-paper';
 import { View } from 'react-native';
 import { Calendar as RNCalendar } from 'react-native-calendars';
@@ -47,9 +41,6 @@ export const SelectDateModal = ({
       },
     };
   }, [selected]);
-  useEffect(() => {
-    console.log(route);
-  });
   return (
     <Portal>
       <Modal

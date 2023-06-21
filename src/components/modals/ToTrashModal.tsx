@@ -78,6 +78,7 @@ export const ToTrashModal = ({
                 diary: note,
                 emotion: emotion,
                 category: 'trash',
+                duplicated: false,
                 navigation: navigation,
               })
             }
