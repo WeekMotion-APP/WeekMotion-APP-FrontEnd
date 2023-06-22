@@ -29,8 +29,6 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
   );
 
   useEffect(() => {
-    console.log(checkedEmotion);
-
     return () => {
       dispatch(setNote(content));
     };

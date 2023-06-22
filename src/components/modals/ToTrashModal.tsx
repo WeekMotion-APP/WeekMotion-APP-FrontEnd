@@ -37,6 +37,9 @@ export const ToTrashModal = ({
     <Portal>
       <Modal
         visible={modalVisible.toTrash}
+        onDismiss={() =>
+          setModalVisible({ ...modalVisible, ['toTrash']: false })
+        }
         style={globalStyles.modal}
         contentContainerStyle={globalStyles.modalContent}
       >

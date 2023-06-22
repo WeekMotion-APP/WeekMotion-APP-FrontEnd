@@ -44,6 +44,7 @@ export const SelectDateModal = ({
     <Portal>
       <Modal
         visible={visible}
+        onDismiss={() => setVisible(false)}
         style={globalStyles.modal}
         contentContainerStyle={globalStyles.modalContent}
       >

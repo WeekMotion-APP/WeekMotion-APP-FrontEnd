@@ -32,6 +32,9 @@ export const ResetModal = ({
     <Portal>
       <Modal
         visible={modalVisible.cancel}
+        onDismiss={() =>
+          setModalVisible({ ...modalVisible, ['cancel']: false })
+        }
         style={globalStyles.modal}
         contentContainerStyle={globalStyles.modalContent}
       >

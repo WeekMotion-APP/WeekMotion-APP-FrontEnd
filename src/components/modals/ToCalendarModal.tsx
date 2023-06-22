@@ -50,6 +50,9 @@ export const ToCalendarModal = ({
     <Portal>
       <Modal
         visible={modalVisible.toCalendar}
+        onDismiss={() =>
+          setModalVisible({ ...modalVisible, ['toCalendar']: false })
+        }
         style={globalStyles.modal}
         contentContainerStyle={globalStyles.modalContent}
       >

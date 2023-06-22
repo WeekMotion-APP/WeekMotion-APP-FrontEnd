@@ -44,6 +44,9 @@ export const _DeleteModal = ({
     <Portal>
       <Modal
         visible={modalVisible.delete}
+        onDismiss={() =>
+          setModalVisible({ ...modalVisible, ['delete']: false })
+        }
         style={globalStyles.modal}
         contentContainerStyle={globalStyles.modalContent}
       >
