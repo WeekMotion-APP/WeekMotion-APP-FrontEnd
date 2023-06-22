@@ -20,7 +20,7 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
   const currentDiary = useAppSelector((state) => {
     return state.diary.allDiary;
   });
-  const [selectedDiary, setSelectedDiary] = useState<diary[]>([]);
+  const [selectedDiary, setSelectedDiary] = useState<diary[]>(currentDiary);
 
   //dates picker state
   const nowDate = new Date();
@@ -48,20 +48,8 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
   const [datesPickerVisible, setDatesPickerVisible] = useState(false);
 
   useEffect(() => {
-    if (route.params.location === 'calendar') {
-      setSelectedDiary(
-        currentDiary.filter((diary: diary) => {
-          return diary.calenderYn === 'Y';
-        })
-      );
-    } else {
-      setSelectedDiary(
-        currentDiary.filter((diary: diary) => {
-          return diary.calenderYn === 'N';
-        })
-      );
-    }
-  }, [currentDiary, route.params.location]);
+    setSelectedDiary(currentDiary);
+  }, [currentDiary]);
 
   useEffect(() => {
     setSelectedDates({
@@ -126,9 +114,10 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
         {selectedDiary
           .filter((diary: diary) => {
             return (
-              new Date(diary.diaryDate) >=
-                new Date(selectedDates.startingDay) &&
-              new Date(diary.diaryDate) <= new Date(selectedDates.endingDay)
+              Number(diary.diaryDate.replaceAll('.', '')) >=
+                Number(selectedDates.startingDay.replaceAll('.', '')) &&
+              Number(diary.diaryDate.replaceAll('.', '')) <=
+                Number(selectedDates.endingDay.replaceAll('.', ''))
             );
           })
           .map((diary: diary, index) => (

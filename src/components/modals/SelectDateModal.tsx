@@ -9,7 +9,6 @@ import { setNote } from '../../redux/slice/noteSlice';
 import { DiaryScreenProps } from '../../types/navigation/type';
 
 export const SelectDateModal = ({
-  route,
   navigation,
   visible,
   setVisible,
