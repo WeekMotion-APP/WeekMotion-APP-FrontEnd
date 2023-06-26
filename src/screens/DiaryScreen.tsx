@@ -6,11 +6,14 @@ import { MainHeader } from '../components/headers/MainHeader';
 import { Calendar } from '../components/lists/Calendar';
 import { List } from '../components/lists/List';
 import { SelectDateModal } from '../components/modals/SelectDateModal';
+import { WriteTodayModal } from '../components/modals/WriteTodayModal';
 import { requestReadDiary } from '../functions/asyncFunctions/requestDiary';
+import { requestUserInfo } from '../functions/asyncFunctions/requestUserInfo';
 import { useThunkDispatch } from '../redux';
 import { DiaryScreenProps } from '../types/navigation/type';
 
 export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
+  const [writeTodayModalVisible, setWriteTodayModalVisible] = useState(true);
   const [selectDateModalVisible, setSelectDateModalVisible] = useState(false);
   const thunkDispatch = useThunkDispatch();
   useEffect(() => {
@@ -20,6 +23,10 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
       thunkDispatch(requestReadDiary('trash'));
     }
   }, [thunkDispatch, route, navigation]);
+
+  useEffect(() => {
+    requestUserInfo();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <PaperProvider>
@@ -38,6 +45,10 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
             <List route={route} navigation={navigation} />
           )}
         </>
+        <WriteTodayModal
+          visible={writeTodayModalVisible}
+          setVisible={setWriteTodayModalVisible}
+        />
         <SelectDateModal
           route={route}
           navigation={navigation}
