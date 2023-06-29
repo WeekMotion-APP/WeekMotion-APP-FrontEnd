@@ -9,6 +9,7 @@ import { useAppSelector, useThunkDispatch } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
 import { diary } from '../../types/data/type';
 import { EditScreenProps } from '../../types/navigation/type';
+import Toast from 'react-native-toast-message';
 
 export const EditButton = ({
   content,
@@ -37,6 +38,14 @@ export const EditButton = ({
       content: content,
       updateEmotion: filterUpdateEmotion(targetDiary?.tags, emotion),
     });
+    if (content.title.length === 0 || content.content.length === 0) {
+      Toast.show({
+        type: 'errorToast',
+        text1: '작성하지 않은 항목이 있습니다.',
+        position: 'bottom',
+      });
+      return;
+    }
     await thunkDispatch(
       requestReadDiary(targetDiary?.calenderYn === 'Y' ? 'calendar' : 'trash')
     );
@@ -50,12 +59,20 @@ export const EditButton = ({
           style={globalStyles.button}
           contentStyle={globalStyles.buttonContent}
           buttonColor="#FFD54A"
-          onPress={() =>
+          onPress={() => {
+            if (content.title.length === 0 || content.content.length === 0) {
+              Toast.show({
+                type: 'errorToast',
+                text1: '작성하지 않은 항목이 있습니다.',
+                position: 'bottom',
+              });
+              return;
+            }
             navigation.navigate('SelectEmotion', {
               status: 'after',
               date: route.params.date === 'today' ? 'today' : 'selectedDay',
-            })
-          }
+            });
+          }}
         >
           다음
         </Button>
