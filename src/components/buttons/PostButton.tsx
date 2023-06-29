@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button } from 'react-native-paper';
 import { PostScreenProps } from '../../types/navigation/type';
 import { globalStyles } from '../../styles/globalStyles';
@@ -6,6 +6,7 @@ import { View } from 'react-native';
 import { useAppSelector, useThunkDispatch } from '../../redux';
 import { diary } from '../../types/data/type';
 import {
+  requestCheckDiaryInCalendar,
   requestReadDiary,
   requestUpdateDiaryCategory,
 } from '../../functions/asyncFunctions/requestDiary';
@@ -33,6 +34,7 @@ export const PostButton = ({
     }>
   >;
 }) => {
+  const [isDateInCalendar, setIsDateInCalendar] = useState<boolean>(false);
   const updateTarget = useAppSelector((state) => {
     return state.diary.allDiary.find((diary: diary) => {
       return diary.seq === route.params.postId;
@@ -45,6 +47,15 @@ export const PostButton = ({
     await thunkDispatch(requestReadDiary('calendar'));
     navigation.goBack();
   };
+
+  useEffect(() => {
+    const renderToCalendarButtonYn = async () => {
+      const renderYn = await requestCheckDiaryInCalendar(updateTarget!);
+      setIsDateInCalendar(renderYn!);
+    };
+    renderToCalendarButtonYn();
+  }, [updateTarget]);
+
   const filterPostButton = () => {
     if (route.params.location === 'created') {
       return (
@@ -90,26 +101,42 @@ export const PostButton = ({
     } else {
       return (
         <View style={globalStyles.buttonGroup}>
-          <Button
-            mode="contained"
-            style={globalStyles.button}
-            contentStyle={globalStyles.buttonContent}
-            buttonColor="#FFD54A"
-            onPress={() => requestUpdateDiaryCategory(updateTarget)}
-          >
-            감정을 캘린더로 보내기
-          </Button>
-          <Button
-            mode="outlined"
-            style={globalStyles.outlineButton}
-            contentStyle={globalStyles.outlineButtonContent}
-            textColor="#FFD54A"
-            onPress={() =>
-              setModalVisible({ ...modalVisible, ['delete']: true })
-            }
-          >
-            감정을 완전 소각하기
-          </Button>
+          {isDateInCalendar ? (
+            <>
+              <Button
+                mode="contained"
+                style={globalStyles.button}
+                contentStyle={globalStyles.buttonContent}
+                buttonColor="#FFD54A"
+                onPress={() => requestUpdateDiaryCategory(updateTarget)}
+              >
+                감정을 캘린더로 보내기
+              </Button>
+              <Button
+                mode="outlined"
+                style={globalStyles.outlineButton}
+                contentStyle={globalStyles.outlineButtonContent}
+                textColor="#FFD54A"
+                onPress={() =>
+                  setModalVisible({ ...modalVisible, ['delete']: true })
+                }
+              >
+                감정을 완전 소각하기
+              </Button>
+            </>
+          ) : (
+            <Button
+              mode="outlined"
+              style={globalStyles.outlineButton}
+              contentStyle={globalStyles.outlineButtonContent}
+              textColor="#FFD54A"
+              onPress={() =>
+                setModalVisible({ ...modalVisible, ['delete']: true })
+              }
+            >
+              감정을 완전 소각하기
+            </Button>
+          )}
         </View>
       );
     }
