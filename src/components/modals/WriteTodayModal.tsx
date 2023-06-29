@@ -2,11 +2,15 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Modal, Portal, Text } from 'react-native-paper';
 import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
+import { DiaryScreenProps } from '../../types/navigation/type';
+import { setWriteToday } from '../../functions/asyncFunctions/requestUserInfo';
 
 export const WriteTodayModal = ({
+  navigation,
   visible,
   setVisible,
 }: {
+  navigation: DiaryScreenProps['navigation'];
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -15,6 +19,9 @@ export const WriteTodayModal = ({
     <Portal>
       <Modal
         visible={visible}
+        onDismiss={() => {
+          setVisible(false);
+        }}
         style={globalStyles.modal}
         contentContainerStyle={globalStyles.modalContent}
       >
@@ -23,9 +30,12 @@ export const WriteTodayModal = ({
             오늘의 감정을{'\n'}
             기록하러 갈까요?
           </Text>
-          <Button mode="text" onPress={() => setVisible(false)}>
+          <TouchableHighlight
+            underlayColor={'white'}
+            onPress={() => setVisible(false)}
+          >
             <Image source={require('../../assets/images/xIcon.png')} />
-          </Button>
+          </TouchableHighlight>
         </View>
         <View style={globalStyles.modalImageContainer}>
           <Image source={require('../../assets/images/isWriteToday.png')} />
@@ -34,7 +44,9 @@ export const WriteTodayModal = ({
           <Text>오늘 하루 보지않기</Text>
           <TouchableHighlight
             underlayColor={'white'}
-            onPress={() => setIsChecked(!isChecked)}
+            onPress={() => {
+              setIsChecked(!isChecked);
+            }}
           >
             {isChecked ? (
               <Image source={require('../../assets/images/checkedBox.png')} />
@@ -48,11 +60,24 @@ export const WriteTodayModal = ({
             mode="outlined"
             style={{ borderColor: '#FFD54A', borderWidth: 2 }}
             textColor="#FFD54A"
-            onPress={() => setVisible(false)}
+            onPress={() => {
+              setWriteToday(isChecked ? 'Y' : 'N');
+              setVisible(false);
+            }}
           >
             안할래요
           </Button>
-          <Button buttonColor="#FFD54A" mode="contained">
+          <Button
+            buttonColor="#FFD54A"
+            mode="contained"
+            onPress={() => {
+              setWriteToday(isChecked ? 'Y' : 'N');
+              navigation.navigate('SelectEmotion', {
+                status: 'before',
+                date: 'today',
+              });
+            }}
+          >
             기록하기
           </Button>
         </View>

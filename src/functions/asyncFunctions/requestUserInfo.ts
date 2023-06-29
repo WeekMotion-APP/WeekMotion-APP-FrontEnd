@@ -4,17 +4,6 @@ import { requestURL } from '../../../requestURL';
 import Toast from 'react-native-toast-message';
 
 export const requestUserInfo = async () => {
-  function tryOnce<T>(func: () => Promise<T>): () => Promise<T> {
-    let hasExecuted = false;
-    let result: Promise<T> | undefined;
-    return () => {
-      if (!hasExecuted) {
-        hasExecuted = true;
-        result = func();
-      }
-      return result!;
-    };
-  }
   try {
     const accessToken = await EncryptedStorage.getItem('accessToken');
     const response = await axios.get('/user', {
@@ -28,16 +17,29 @@ export const requestUserInfo = async () => {
       await updateAccessToken;
       await tryOnce(requestUserInfo);
     } else {
-      console.log(response);
+      return response;
     }
   } catch (error: any) {
     Toast.show({
       type: 'errorToast',
-      text1: '로그인 정보가 만료되었습니다.',
+      text1: '로그인 정보가 없습니다.',
       position: 'bottom',
     });
+    throw new Error(error);
   }
 };
+
+function tryOnce<T>(func: () => Promise<T>): () => Promise<T> {
+  let hasExecuted = false;
+  let result: Promise<T> | undefined;
+  return () => {
+    if (!hasExecuted) {
+      hasExecuted = true;
+      result = func();
+    }
+    return result!;
+  };
+}
 
 export const updateAccessToken = async () => {
   try {
@@ -54,8 +56,51 @@ export const updateAccessToken = async () => {
       'accessToken',
       response.data.data.accessToken
     );
-    console.log('updated');
   } catch (error) {
     throw new Error('로그인 정보가 만료되었습니다.');
+  }
+};
+
+export const setWriteToday = async (value: string) => {
+  const nowDate = new Date();
+  const nextDay = new Date(
+    nowDate.getFullYear(),
+    nowDate.getMonth(),
+    nowDate.getDate()
+  );
+  const writeToday = {
+    value: value,
+    expires: `${nextDay.getFullYear()}-${
+      String(nextDay.getMonth() + 1).length === 1
+        ? '0' + String(nextDay.getMonth() + 1)
+        : String(nextDay.getMonth() + 1)
+    }-${
+      String(nextDay.getDate()).length === 1
+        ? '0' + String(nextDay.getDate())
+        : String(nextDay.getDate())
+    }T10:00:00.00-05:00`,
+  };
+  await EncryptedStorage.setItem('isWriteToday', JSON.stringify(writeToday));
+};
+
+export const clearWriteToday = async () => {
+  const storageValue = await EncryptedStorage.getItem('isWriteToday');
+  if (!storageValue) {
+    // console.log('nothing on storage');
+    return;
+  }
+  const resultObject = JSON.parse(storageValue);
+  const currentDateTime = new Date();
+  if (currentDateTime > new Date(resultObject.expires)) {
+    await EncryptedStorage.removeItem('isWriteToday');
+    // console.log('storage item is removed');
+    // console.log(
+    //   `time : ${currentDateTime} vs ${new Date(resultObject.expires)} `
+    // );
+    // } else {
+    //   console.log('Not Yet!');
+    //   console.log(
+    //     `time : ${currentDateTime} vs ${new Date(resultObject.expires)}`
+    //   );
   }
 };

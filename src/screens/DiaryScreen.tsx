@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
 import { PaperProvider } from 'react-native-paper';
 import { DiaryTab } from '../components/buttons/DiaryTab';
 import { MainHeader } from '../components/headers/MainHeader';
@@ -8,14 +9,29 @@ import { List } from '../components/lists/List';
 import { SelectDateModal } from '../components/modals/SelectDateModal';
 import { WriteTodayModal } from '../components/modals/WriteTodayModal';
 import { requestReadDiary } from '../functions/asyncFunctions/requestDiary';
-import { requestUserInfo } from '../functions/asyncFunctions/requestUserInfo';
+import {
+  clearWriteToday,
+  requestUserInfo,
+} from '../functions/asyncFunctions/requestUserInfo';
 import { useThunkDispatch } from '../redux';
 import { DiaryScreenProps } from '../types/navigation/type';
 
 export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
-  const [writeTodayModalVisible, setWriteTodayModalVisible] = useState(true);
+  const [writeTodayModalVisible, setWriteTodayModalVisible] = useState(false);
   const [selectDateModalVisible, setSelectDateModalVisible] = useState(false);
   const thunkDispatch = useThunkDispatch();
+
+  const checkWriteToday = async () => {
+    const writeTodayOnStorage = await EncryptedStorage.getItem('isWriteToday');
+    console.log(writeTodayOnStorage);
+
+    setWriteTodayModalVisible(
+      writeTodayOnStorage && JSON.parse(writeTodayOnStorage).value === 'Y'
+        ? false
+        : true
+    );
+  };
+
   useEffect(() => {
     if (route.params.location === 'calendar') {
       thunkDispatch(requestReadDiary('calendar'));
@@ -25,8 +41,11 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
   }, [thunkDispatch, route, navigation]);
 
   useEffect(() => {
+    checkWriteToday();
+    clearWriteToday();
     requestUserInfo();
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <PaperProvider>
@@ -46,6 +65,7 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
           )}
         </>
         <WriteTodayModal
+          navigation={navigation}
           visible={writeTodayModalVisible}
           setVisible={setWriteTodayModalVisible}
         />
