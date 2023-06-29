@@ -80,7 +80,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
           text1: '회원가입 성공!',
           position: 'bottom',
         });
-        console.log(response);
+        navigation.navigate('SignIn');
       }
     } catch (error: any) {
       Toast.show({

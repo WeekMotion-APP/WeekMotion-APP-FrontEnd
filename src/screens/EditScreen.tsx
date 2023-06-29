@@ -18,15 +18,7 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
     return state.emotion.checkedEmotion;
   });
   const dispatch = useAppDispatch();
-  const [content, setContent] = useState(
-    route.params.status === 'create'
-      ? {
-          title: '' as string,
-          content: '' as string,
-          date: note.date,
-        }
-      : note
-  );
+  const [content, setContent] = useState(note);
 
   useEffect(() => {
     return () => {
