@@ -44,7 +44,28 @@ export const BackCancelHeader = ({
     <View style={globalStyles.headerContainer}>
       <TouchableHighlight
         underlayColor={'white'}
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          if (
+            route.name === 'SelectEmotion' &&
+            route.params.status === 'after'
+          ) {
+            navigation.navigate('Edit', {
+              status: 'create',
+              date: 'selectedDay',
+            });
+            return;
+          } else if (
+            route.name === 'Edit' &&
+            route.params.status === 'create'
+          ) {
+            navigation.navigate('SelectEmotion', {
+              status: 'before',
+              date: 'selectedDay',
+            });
+            return;
+          }
+          navigation.goBack();
+        }}
       >
         <Image source={require('../../assets/images/backIcon.png')} />
       </TouchableHighlight>
