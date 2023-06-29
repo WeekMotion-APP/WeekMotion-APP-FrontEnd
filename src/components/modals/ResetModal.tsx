@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Button, Modal, Portal, Text } from 'react-native-paper';
-import { Image, View } from 'react-native';
+import { Image, TouchableHighlight, View } from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
 import { useAppDispatch } from '../../redux';
 import { PostScreenProps } from '../../types/navigation/type';
@@ -43,14 +43,14 @@ export const ResetModal = ({
             감정을 저장하지않고{'\n'}
             그만둘까요?
           </Text>
-          <Button
-            mode="text"
+          <TouchableHighlight
+            underlayColor={'white'}
             onPress={() => {
               setModalVisible({ ...modalVisible, ['cancel']: false });
             }}
           >
             <Image source={require('../../assets/images/xIcon.png')} />
-          </Button>
+          </TouchableHighlight>
         </View>
         <View style={globalStyles.modalButtonGroup}>
           <Button

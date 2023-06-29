@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Image, View } from 'react-native';
+import { Image, TouchableHighlight, View } from 'react-native';
 import { Portal, Modal, Text, Button } from 'react-native-paper';
 import { requestCreateDiary } from '../../functions/asyncFunctions/requestDiary';
 import { useAppSelector } from '../../redux';
@@ -39,8 +39,8 @@ export const ToCalendarModal = ({
       return state.diary.allDiary.find((diary: diary) => {
         return (
           diary.calenderYn === 'Y' &&
-          new Date(diary.diaryDate).toDateString() ===
-            new Date(note.date).toDateString()
+          new Date(diary.diaryDate).toLocaleDateString() ===
+            new Date(note.date).toLocaleDateString()
         );
       });
     }) === undefined
@@ -62,14 +62,14 @@ export const ToCalendarModal = ({
             등록한 감정은 캘린더에서
             {'\n'}확인할 수 있어요!
           </Text>
-          <Button
-            mode="text"
+          <TouchableHighlight
+            underlayColor={'white'}
             onPress={() =>
               setModalVisible({ ...modalVisible, ['toCalendar']: false })
             }
           >
             <Image source={require('../../assets/images/xIcon.png')} />
-          </Button>
+          </TouchableHighlight>
         </View>
         <View style={globalStyles.modalImageContainer}>
           <Image

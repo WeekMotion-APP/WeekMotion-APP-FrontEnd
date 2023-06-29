@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Image, View } from 'react-native';
+import { Image, TouchableHighlight, View } from 'react-native';
 import { Portal, Modal, Text, Button } from 'react-native-paper';
 import { requestCreateDiary } from '../../functions/asyncFunctions/requestDiary';
 import { useAppSelector } from '../../redux';
@@ -48,14 +48,14 @@ export const ToTrashModal = ({
             감정을 소각장으로{'\n'}
             보낼까요?
           </Text>
-          <Button
-            mode="text"
+          <TouchableHighlight
+            underlayColor={'white'}
             onPress={() =>
               setModalVisible({ ...modalVisible, ['toTrash']: false })
             }
           >
             <Image source={require('../../assets/images/xIcon.png')} />
-          </Button>
+          </TouchableHighlight>
         </View>
         <View style={globalStyles.modalImageContainer}>
           <Image

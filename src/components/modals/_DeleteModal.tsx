@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Image, View } from 'react-native';
+import { Image, TouchableHighlight, View } from 'react-native';
 import { Portal, Modal, Text, Button } from 'react-native-paper';
 import {
   requestDeleteDiary,
@@ -56,14 +56,14 @@ export const _DeleteModal = ({
             완전 소각한 감정은 다시는
             {'\n'}볼 수 없어요.
           </Text>
-          <Button
-            mode="text"
+          <TouchableHighlight
+            underlayColor={'white'}
             onPress={() =>
               setModalVisible({ ...modalVisible, ['delete']: false })
             }
           >
             <Image source={require('../../assets/images/xIcon.png')} />
-          </Button>
+          </TouchableHighlight>
         </View>
         <View style={globalStyles.modalButtonGroup}>
           <Button
