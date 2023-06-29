@@ -53,8 +53,11 @@ export const PostButton = ({
       const renderYn = await requestCheckDiaryInCalendar(updateTarget!);
       setIsDateInCalendar(renderYn!);
     };
-    renderToCalendarButtonYn();
-  }, [updateTarget]);
+    if (route.params.location !== 'created') {
+      renderToCalendarButtonYn();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filterPostButton = () => {
     if (route.params.location === 'created') {
