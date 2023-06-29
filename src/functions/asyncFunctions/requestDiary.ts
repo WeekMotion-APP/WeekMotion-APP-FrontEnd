@@ -218,3 +218,28 @@ export const requestCheckDiaryInCalendar = async (diary: diary) => {
     });
   }
 };
+
+export const requestIsNoteDuplicated = async (note: note) => {
+  try {
+    const accessToken = await EncryptedStorage.getItem('accessToken');
+    const response = await axios.get('/diary', {
+      baseURL: requestURL,
+      params: {
+        calenderYn: 'Y',
+      },
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    const data: diary[] = response.data.data;
+    return data.find((post: diary) => {
+      return post.diaryDate === note.date;
+    }) === undefined
+      ? false
+      : true;
+  } catch (error) {
+    Toast.show({
+      type: 'errorToast',
+      text1: '일기 목록을 불러오지 못했어요.',
+      position: 'bottom',
+    });
+  }
+};

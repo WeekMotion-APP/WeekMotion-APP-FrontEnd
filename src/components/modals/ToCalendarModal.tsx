@@ -1,10 +1,12 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Image, TouchableHighlight, View } from 'react-native';
 import { Portal, Modal, Text, Button } from 'react-native-paper';
-import { requestCreateDiary } from '../../functions/asyncFunctions/requestDiary';
+import {
+  requestCreateDiary,
+  requestIsNoteDuplicated,
+} from '../../functions/asyncFunctions/requestDiary';
 import { useAppSelector } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
-import { diary } from '../../types/data/type';
 import { PostScreenProps } from '../../types/navigation/type';
 
 export const ToCalendarModal = ({
@@ -34,18 +36,15 @@ export const ToCalendarModal = ({
   const emotion = useAppSelector((state) => {
     return state.emotion.checkedEmotion;
   });
-  const duplicated =
-    useAppSelector((state) => {
-      return state.diary.allDiary.find((diary: diary) => {
-        return (
-          diary.calenderYn === 'Y' &&
-          new Date(diary.diaryDate).toLocaleDateString() ===
-            new Date(note.date).toLocaleDateString()
-        );
-      });
-    }) === undefined
-      ? false
-      : true;
+  const [duplicated, setDuplicated] = useState<boolean>(true);
+
+  useEffect(() => {
+    const checkDuplicated = async () => {
+      const isDuplicated = await requestIsNoteDuplicated(note);
+      setDuplicated(isDuplicated!);
+    };
+    checkDuplicated();
+  }, [note]);
   return (
     <Portal>
       <Modal
