@@ -91,27 +91,33 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
             setModalVisible={setModalVisible}
           />
         </View>
-        <ToCalendarModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          navigation={navigation}
-        />
-        <ToTrashModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          navigation={navigation}
-        />
-        <_DeleteModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          route={route}
-          navigation={navigation}
-        />
-        <ResetModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          navigation={navigation}
-        />
+        {route.params.location === 'created' && (
+          <>
+            <ToCalendarModal
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              navigation={navigation}
+            />
+            <ToTrashModal
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              navigation={navigation}
+            />
+            <ResetModal
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              navigation={navigation}
+            />
+          </>
+        )}
+        {route.params.location === 'trash' && (
+          <_DeleteModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            route={route}
+            navigation={navigation}
+          />
+        )}
       </PaperProvider>
     </>
   );
