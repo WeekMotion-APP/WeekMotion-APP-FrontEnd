@@ -1,13 +1,25 @@
 import React, { useEffect } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
+import { requestUserInfo } from '../functions/asyncFunctions/requestUserInfo';
 import { HomeScreenProps } from '../types/navigation/type';
 
 export const HomeScreen = ({ navigation }: HomeScreenProps) => {
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('SignIn');
-    }, 1500);
-  });
+    const entryNavigation = async () => {
+      try {
+        const response = await requestUserInfo();
+        if (response?.data?.data) {
+          navigation.navigate('Diary', {
+            view: 'calendar',
+            location: 'calendar',
+          });
+        }
+      } catch (error) {
+        navigation.navigate('SignIn');
+      }
+    };
+    entryNavigation();
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
