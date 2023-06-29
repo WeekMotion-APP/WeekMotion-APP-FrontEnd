@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native-paper';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableHighlight } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export const toastConfig = {
   successToast: (props: any) => {
@@ -10,7 +11,12 @@ export const toastConfig = {
         <View style={styles.toastTextView}>
           <Text style={styles.toastText}>{props.text1}</Text>
         </View>
-        <Image source={require('../assets/images/toastHide.png')} />
+        <TouchableHighlight
+          underlayColor={'#9FECB1'}
+          onPress={() => Toast.hide()}
+        >
+          <Image source={require('../assets/images/toastHide.png')} />
+        </TouchableHighlight>
       </View>
     );
   },
@@ -21,7 +27,12 @@ export const toastConfig = {
         <View style={styles.toastTextView}>
           <Text style={styles.toastText}>{props.text1}</Text>
         </View>
-        <Image source={require('../assets/images/toastHide.png')} />
+        <TouchableHighlight
+          underlayColor={'#FFBFC3'}
+          onPress={() => Toast.hide()}
+        >
+          <Image source={require('../assets/images/toastHide.png')} />
+        </TouchableHighlight>
       </View>
     );
   },
