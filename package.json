@@ -39,6 +39,7 @@
     "metro-react-native-babel-preset": "0.73.9",
     "prettier": "^2.4.1",
     "react-native-calendars": "^1.1298.0",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^13.9.0",
     "react-native-toast-message": "^2.1.6",
     "react-test-renderer": "18.2.0",
