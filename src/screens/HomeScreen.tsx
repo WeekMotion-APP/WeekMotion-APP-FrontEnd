@@ -23,7 +23,10 @@ export const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/weekmotion.png')} />
+      <Image
+        style={styles.image}
+        source={require('../assets/images/weekmotion.png')}
+      />
     </View>
   );
 };
@@ -34,5 +37,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
+  },
+  image: {
+    width: 160,
+    height: 160,
   },
 });
