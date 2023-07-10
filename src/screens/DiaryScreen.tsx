@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, SafeAreaView, BackHandler } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { PaperProvider } from 'react-native-paper';
 import { DiaryTab } from '../components/buttons/DiaryTab';
@@ -45,6 +46,25 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
     clearWriteToday();
     requestUserInfo();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (route.params.view === 'list') {
+          navigation.navigate('Diary', {
+            view: 'calendar',
+            location: 'calendar',
+          });
+        }
+        return true;
+      };
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress
+      );
+      return () => subscription.remove();
+    }, [route, navigation])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
