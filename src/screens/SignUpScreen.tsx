@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { requestURL } from '../../requestURL';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Text, Button } from 'react-native-paper';
+import { Text, Button } from 'react-native-paper';
 import { SignUpScreenProps } from '../types/navigation/type';
 import { globalStyles } from '../styles/globalStyles';
 import Toast from 'react-native-toast-message';
+import { Input } from '../components/input/Input';
 
 export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
   const [info, setInfo] = useState({
@@ -95,23 +96,12 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
     <View style={globalStyles.container}>
       <Text style={globalStyles.heading}>회원가입</Text>
       <View style={styles.verify_id_form}>
-        <TextInput
+        <Input
           label={'ID'}
-          mode="outlined"
+          text={info.id}
           placeholder="아이디를 입력하세요."
           onChangeText={(text) => setInfo({ ...info, ['id']: text })}
-          onBlur={() => {
-            if (info.id.length > 0 && !validationId.test(info.id)) {
-              Toast.show({
-                type: 'errorToast',
-                text1: '아이디 형식을 확인해주세요.',
-                position: 'bottom',
-              });
-            }
-          }}
-          style={styles.verify_id_form_input}
-          activeOutlineColor="#FFD54A"
-          outlineColor="#DCDCDC"
+          secure={false}
         />
         <Button
           mode="contained"
@@ -123,61 +113,33 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
           확인
         </Button>
       </View>
-      <TextInput
+      <Input
         label={'PASSWORD'}
-        mode="outlined"
+        text={info.password}
         placeholder="비밀번호를 입력하세요."
-        secureTextEntry={true}
+        secure={true}
         onChangeText={(text) => setInfo({ ...info, ['password']: text })}
-        style={globalStyles.input}
-        activeOutlineColor="#FFD54A"
-        outlineColor="#DCDCDC"
       />
-      <TextInput
+      <Input
         label={'PASSWORD'}
-        mode="outlined"
+        text={info.verify_password}
         placeholder="비밀번호를 다시 한번 입력하세요."
-        secureTextEntry={true}
+        secure={true}
         onChangeText={(text) => setInfo({ ...info, ['verify_password']: text })}
-        style={globalStyles.input}
-        activeOutlineColor="#FFD54A"
-        outlineColor="#DCDCDC"
       />
-      <TextInput
+      <Input
         label={'이름'}
-        mode="outlined"
+        text={info.name}
         placeholder="이름을 입력하세요."
         onChangeText={(text) => setInfo({ ...info, ['name']: text })}
-        onBlur={() => {
-          if (info.name.length > 0 && !validationName.test(info.name)) {
-            Toast.show({
-              type: 'errorToast',
-              text1: '이름 형식을 확인해주세요.',
-              position: 'bottom',
-            });
-          }
-        }}
-        style={globalStyles.input}
-        activeOutlineColor="#FFD54A"
-        outlineColor="#DCDCDC"
+        secure={false}
       />
-      <TextInput
+      <Input
         label={'휴대폰 번호'}
-        mode="outlined"
+        text={info.phone}
         placeholder="휴대폰 번호를 '-'을 제외한 숫자만 입력해주세요."
         onChangeText={(text) => setInfo({ ...info, ['phone']: text })}
-        onBlur={() => {
-          if (info.phone.length > 0 && !validationPhone.test(info.phone)) {
-            Toast.show({
-              type: 'errorToast',
-              text1: '휴대폰 번호 형식을 확인해주세요.',
-              position: 'bottom',
-            });
-          }
-        }}
-        style={globalStyles.input}
-        activeOutlineColor="#FFD54A"
-        outlineColor="#DCDCDC"
+        secure={false}
       />
       <View style={globalStyles.buttonGroup}>
         <Button
@@ -209,7 +171,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   verify_id_form: {
-    width: '100%',
+    width: '75%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

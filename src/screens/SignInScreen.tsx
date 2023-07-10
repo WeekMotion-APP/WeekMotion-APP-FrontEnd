@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { TextInput, Text, Button } from 'react-native-paper';
+import { Text, Button } from 'react-native-paper';
 import { SignInScreenProps } from '../types/navigation/type';
 import { globalStyles } from '../styles/globalStyles';
 import { requestSignIn } from '../functions/asyncFunctions/requestSignIn';
+import { Input } from '../components/input/Input';
 
 export const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const [info, setInfo] = useState({
@@ -19,25 +20,19 @@ export const SignInScreen = ({ navigation }: SignInScreenProps) => {
       />
       <View style={styles.form}>
         <Text style={globalStyles.heading}>로그인</Text>
-        <TextInput
-          label={'ID'}
-          mode="outlined"
+        <Input
+          label="ID"
+          text={info.id}
           placeholder="아이디를 입력하세요."
           onChangeText={(text) => setInfo({ ...info, ['id']: text })}
-          style={globalStyles.input}
-          contentStyle={globalStyles.inputContent}
-          activeOutlineColor="#FFD54A"
-          outlineColor="#DCDCDC"
+          secure={false}
         />
-        <TextInput
+        <Input
           label={'PASSWORD'}
-          mode="outlined"
+          text={info.password}
           placeholder="비밀번호를 입력하세요."
-          secureTextEntry={true}
+          secure={true}
           onChangeText={(text) => setInfo({ ...info, ['password']: text })}
-          style={globalStyles.input}
-          activeOutlineColor="#FFD54A"
-          outlineColor="#DCDCDC"
         />
       </View>
       <View style={globalStyles.buttonGroup}>

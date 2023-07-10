@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
-import { Chip, Text, TextInput } from 'react-native-paper';
+import { Chip, Text } from 'react-native-paper';
 import { useAppDispatch, useAppSelector } from '../redux';
 import { setNote } from '../redux/slice/noteSlice';
 import { globalStyles } from '../styles/globalStyles';
@@ -9,6 +9,7 @@ import { EditScreenProps } from '../types/navigation/type';
 import { chipColorPicker } from '../functions/chipColorPicker';
 import { BackCancelHeader } from '../components/headers/BackCancelHeader';
 import { EditButton } from '../components/buttons/EditButton';
+import { Input, TextArea } from '../components/input/Input';
 
 export const EditScreen = ({ route, navigation }: EditScreenProps) => {
   const note = useAppSelector((state) => {
@@ -66,31 +67,22 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
           )}
         </View>
         <View style={styles.form}>
-          <TextInput
+          <Input
             label={'Title'}
-            mode="outlined"
+            text={content.title}
             placeholder="제목을 입력하세요."
-            style={globalStyles.input}
-            contentStyle={globalStyles.inputContent}
-            activeOutlineColor="#FFD54A"
-            outlineColor="#DCDCDC"
-            defaultValue={content.title}
             onChangeText={(text) =>
               setContent({
                 ...content,
                 ['title']: text,
               })
             }
+            secure={false}
           />
-          <TextInput
+          <TextArea
             label={'Note'}
-            mode="outlined"
             placeholder="일기 내용을 입력하세요."
-            style={styles.textarea}
-            activeOutlineColor="#FFD54A"
-            outlineColor="#DCDCDC"
-            multiline
-            defaultValue={content.content}
+            text={content.content}
             onChangeText={(text) =>
               setContent({
                 ...content,
