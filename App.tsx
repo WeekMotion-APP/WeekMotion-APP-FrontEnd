@@ -14,39 +14,40 @@ import { RootStackParamList } from './src/types/navigation/type';
 import { SelectEmotionScreen } from './src/screens/SelectEmotionScreen';
 import store from './src/redux';
 import { DiaryScreen } from './src/screens/DiaryScreen';
-import SplashScreen from 'react-native-splash-screen';
 import { toastConfig } from './src/styles/toastConfig';
+import SplashScreen from 'react-native-splash-screen';
 import { requestUserInfo } from './src/functions/asyncFunctions/requestUserInfo';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
-  const [initialRoute, setInitialRoute] = useState<
-    keyof RootStackParamList | undefined
-  >();
+  const [initialRoute, setInitialRoute] = useState<keyof RootStackParamList>();
   useEffect(() => {
     const entryNavigation = async () => {
       try {
         const response = await requestUserInfo();
         if (response?.data?.data) {
           setInitialRoute('Diary');
-          SplashScreen.hide();
+        } else {
+          setInitialRoute('SignIn');
         }
       } catch (error) {
         setInitialRoute('SignIn');
-        SplashScreen.hide();
       }
     };
     entryNavigation();
+    SplashScreen.hide();
   }, []);
-  if (initialRoute === undefined) {
+  if (!initialRoute) {
     return <></>;
   }
   return (
     <Provider store={store}>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName={initialRoute}>
+          <Stack.Navigator
+            initialRouteName={initialRoute ? initialRoute : 'SignIn'}
+          >
             <Stack.Screen
               name="SignIn"
               component={SignInScreen}
