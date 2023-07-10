@@ -25,7 +25,6 @@ export const CalendarTile = ({
         if (new Date(date.date!.dateString) > new Date()) {
           return;
         } else {
-          console.log(date);
           if (!date.marking) {
             dispatch(
               setNote({ date: date.date?.dateString.replaceAll('-', '.') })

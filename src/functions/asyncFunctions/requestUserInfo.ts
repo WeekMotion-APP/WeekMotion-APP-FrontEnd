@@ -1,7 +1,6 @@
 import EncryptedStorage from 'react-native-encrypted-storage';
 import axios from 'axios';
 import { requestURL } from '../../../requestURL';
-import Toast from 'react-native-toast-message';
 
 export const requestUserInfo = async () => {
   try {
@@ -20,11 +19,6 @@ export const requestUserInfo = async () => {
       return response;
     }
   } catch (error: any) {
-    Toast.show({
-      type: 'errorToast',
-      text1: '로그인 정보가 없습니다.',
-      position: 'bottom',
-    });
     throw new Error(error);
   }
 };
