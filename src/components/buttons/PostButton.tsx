@@ -47,6 +47,12 @@ export const PostButton = ({
     navigation.goBack();
   };
 
+  const handleFromTrashToCalendar = async () => {
+    await requestUpdateDiaryCategory(updateTarget);
+    await thunkDispatch(requestReadDiary('trash'));
+    navigation.goBack();
+  };
+
   useEffect(() => {
     const renderToCalendarButtonYn = async () => {
       const renderYn = await requestCheckDiaryInCalendar(updateTarget!);
@@ -104,7 +110,7 @@ export const PostButton = ({
             <>
               <Pressable
                 style={globalStyles.button}
-                onPress={() => requestUpdateDiaryCategory(updateTarget)}
+                onPress={handleFromTrashToCalendar}
               >
                 <Text style={globalStyles.buttonContent}>
                   감정을 캘린더로 보내기
