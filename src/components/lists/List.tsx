@@ -5,9 +5,9 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
+  Text,
 } from 'react-native';
 import { SelectDatesModal } from '../modals/SelectDatesModal';
-import { Text, Chip } from 'react-native-paper';
 import { chipColorPicker } from '../../functions/chipColorPicker';
 import { useAppSelector } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
@@ -144,13 +144,14 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
                 <Text style={globalStyles.heading}>{diary.title}</Text>
                 <View style={styles.chipGroup}>
                   {diary.tags.map((tag: diaryTag, index) => (
-                    <Chip
+                    <View
                       key={index}
                       style={chipColorPicker(tag.tag.tagCategorySeq)}
-                      textStyle={globalStyles.chipContent}
                     >
-                      {tag.tag.tagName}
-                    </Chip>
+                      <Text style={globalStyles.chipContent}>
+                        {tag.tag.tagName}
+                      </Text>
+                    </View>
                   ))}
                 </View>
               </View>

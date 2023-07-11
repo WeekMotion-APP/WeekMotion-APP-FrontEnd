@@ -41,11 +41,17 @@ export const WriteTodayModal = ({
             underlayColor={'white'}
             onPress={() => setVisible(false)}
           >
-            <Image source={require('../../assets/images/xIcon.png')} />
+            <Image
+              style={globalStyles.icon}
+              source={require('../../assets/images/xIcon.png')}
+            />
           </TouchableHighlight>
         </View>
         <View style={globalStyles.modalImageContainer}>
-          <Image source={require('../../assets/images/isWriteToday.png')} />
+          <Image
+            style={globalStyles.modalImg}
+            source={require('../../assets/images/isWriteToday.png')}
+          />
         </View>
         <View style={styles.checkboxView}>
           <Text>오늘 하루 보지않기</Text>
@@ -56,9 +62,15 @@ export const WriteTodayModal = ({
             }}
           >
             {isChecked ? (
-              <Image source={require('../../assets/images/checkedBox.png')} />
+              <Image
+                style={globalStyles.icon}
+                source={require('../../assets/images/checkedBox.png')}
+              />
             ) : (
-              <Image source={require('../../assets/images/unCheckedBox.png')} />
+              <Image
+                style={globalStyles.icon}
+                source={require('../../assets/images/unCheckedBox.png')}
+              />
             )}
           </TouchableHighlight>
         </View>

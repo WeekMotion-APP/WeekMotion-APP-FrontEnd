@@ -1,6 +1,12 @@
 import React from 'react';
-import { View, Image, TouchableHighlight, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import {
+  View,
+  Image,
+  TouchableHighlight,
+  StyleSheet,
+  Text,
+} from 'react-native';
+import { globalStyles } from '../../styles/globalStyles';
 import { DiaryScreenProps } from '../../types/navigation/type';
 
 export const TrashListHeader = ({
@@ -19,7 +25,10 @@ export const TrashListHeader = ({
           });
         }}
       >
-        <Image source={require('../../assets/images/backIcon.png')} />
+        <Image
+          style={globalStyles.icon}
+          source={require('../../assets/images/backIcon.png')}
+        />
       </TouchableHighlight>
       <Text style={styles.heading}>소각장</Text>
     </View>

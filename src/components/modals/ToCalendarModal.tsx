@@ -68,11 +68,15 @@ export const ToCalendarModal = ({
               setModalVisible({ ...modalVisible, ['toCalendar']: false })
             }
           >
-            <Image source={require('../../assets/images/xIcon.png')} />
+            <Image
+              style={globalStyles.icon}
+              source={require('../../assets/images/xIcon.png')}
+            />
           </TouchableHighlight>
         </View>
         <View style={globalStyles.modalImageContainer}>
           <Image
+            style={globalStyles.modalImg}
             source={require('../../assets/images/toCalendarWeekmotion.png')}
           />
         </View>

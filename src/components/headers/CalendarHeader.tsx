@@ -1,6 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { View, Image, StyleSheet, TouchableHighlight } from 'react-native';
-import { Text } from 'react-native-paper';
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  Text,
+} from 'react-native';
+import { globalStyles } from '../../styles/globalStyles';
 
 export const CalendarTitle = ({
   date,
@@ -22,7 +28,10 @@ export const CalendarTitle = ({
         <Text style={styles.calendarTitle}>{`${new Date(
           date
         ).getFullYear()}년 ${new Date(date).getMonth() + 1}월`}</Text>
-        <Image source={require('../../assets/images/calendarDropdown.png')} />
+        <Image
+          style={globalStyles.icon}
+          source={require('../../assets/images/calendarDropdown.png')}
+        />
       </View>
     </TouchableHighlight>
   );
@@ -42,9 +51,19 @@ export const ModalCalendarHeader = ({ date }: { date: string }) => {
 
 export const CalendarArrow = ({ direction }: { direction: string }) => {
   if (direction === 'left') {
-    return <Image source={require('../../assets/images/backIcon.png')} />;
+    return (
+      <Image
+        style={globalStyles.icon}
+        source={require('../../assets/images/backIcon.png')}
+      />
+    );
   } else {
-    return <Image source={require('../../assets/images/forwardIcon.png')} />;
+    return (
+      <Image
+        style={globalStyles.icon}
+        source={require('../../assets/images/forwardIcon.png')}
+      />
+    );
   }
 };
 

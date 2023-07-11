@@ -55,11 +55,15 @@ export const ToTrashModal = ({
               setModalVisible({ ...modalVisible, ['toTrash']: false })
             }
           >
-            <Image source={require('../../assets/images/xIcon.png')} />
+            <Image
+              style={globalStyles.icon}
+              source={require('../../assets/images/xIcon.png')}
+            />
           </TouchableHighlight>
         </View>
         <View style={globalStyles.modalImageContainer}>
           <Image
+            style={globalStyles.modalImg}
             source={require('../../assets/images/toTrashWeekmotion.png')}
           />
         </View>

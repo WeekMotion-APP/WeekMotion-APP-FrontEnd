@@ -1,6 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import {
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  Text,
+} from 'react-native';
+import { globalStyles } from '../../styles/globalStyles';
 
 export const SelectDateHeader = ({
   selected,
@@ -19,7 +25,10 @@ export const SelectDateHeader = ({
         <Text
           style={styles.dates}
         >{`${selected.startingDay} - ${selected.endingDay}`}</Text>
-        <Image source={require('../../assets/images/calendarDropdown.png')} />
+        <Image
+          style={globalStyles.icon}
+          source={require('../../assets/images/calendarDropdown.png')}
+        />
       </View>
     </TouchableHighlight>
   );

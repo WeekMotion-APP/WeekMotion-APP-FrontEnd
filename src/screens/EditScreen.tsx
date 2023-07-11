@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
-import { Chip, Text } from 'react-native-paper';
+import {
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  Text,
+} from 'react-native';
 import { useAppDispatch, useAppSelector } from '../redux';
 import { setNote } from '../redux/slice/noteSlice';
 import { globalStyles } from '../styles/globalStyles';
@@ -40,17 +45,13 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
             source={require('../assets/images/calendar.png')}
             style={globalStyles.icon}
           />
-          <Text style={globalStyles.heading}>{content.date}</Text>
+          <Text style={styles.heading}>{content.date}</Text>
         </View>
         <View style={globalStyles.chipsBox}>
           {checkedEmotion.map((tag: tag, index) => (
-            <Chip
-              key={index}
-              style={chipColorPicker(tag.tagCategorySeq)}
-              textStyle={globalStyles.chipContent}
-            >
-              {tag.tagName}
-            </Chip>
+            <View key={index} style={chipColorPicker(tag.tagCategorySeq)}>
+              <Text style={globalStyles.chipContent}>{tag.tagName}</Text>
+            </View>
           ))}
           {route.params.status === 'update' && (
             <TouchableHighlight
@@ -62,7 +63,10 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
                 });
               }}
             >
-              <Image source={require('../assets/images/editIcon.png')} />
+              <Image
+                style={globalStyles.icon}
+                source={require('../assets/images/editIcon.png')}
+              />
             </TouchableHighlight>
           )}
         </View>
@@ -107,9 +111,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  textarea: {
-    width: '100%',
-    height: 370,
-    marginBottom: 16,
+  heading: {
+    fontWeight: '700',
+    fontSize: 24,
+    lineHeight: 36,
+    marginBottom: 4,
+    color: 'black',
   },
 });

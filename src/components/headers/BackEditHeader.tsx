@@ -26,7 +26,10 @@ export const BackEditHeader = ({
         underlayColor={'white'}
         onPress={() => navigation.goBack()}
       >
-        <Image source={require('../../assets/images/backIcon.png')} />
+        <Image
+          style={globalStyles.icon}
+          source={require('../../assets/images/backIcon.png')}
+        />
       </TouchableHighlight>
       <TouchableHighlight
         underlayColor={'white'}
@@ -60,7 +63,10 @@ export const BackEditHeader = ({
           });
         }}
       >
-        <Image source={require('../../assets/images/editIcon.png')} />
+        <Image
+          style={globalStyles.icon}
+          source={require('../../assets/images/editIcon.png')}
+        />
       </TouchableHighlight>
     </View>
   );

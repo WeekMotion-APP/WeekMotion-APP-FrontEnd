@@ -63,7 +63,10 @@ export const _DeleteModal = ({
               setModalVisible({ ...modalVisible, ['delete']: false })
             }
           >
-            <Image source={require('../../assets/images/xIcon.png')} />
+            <Image
+              style={globalStyles.icon}
+              source={require('../../assets/images/xIcon.png')}
+            />
           </TouchableHighlight>
         </View>
         <View style={globalStyles.modalButtonGroup}>

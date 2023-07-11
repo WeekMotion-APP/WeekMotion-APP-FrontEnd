@@ -1,13 +1,21 @@
 import React from 'react';
-import { Text } from 'react-native-paper';
-import { StyleSheet, View, Image, TouchableHighlight } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableHighlight,
+  Text,
+} from 'react-native';
 import Toast from 'react-native-toast-message';
 
 export const toastConfig = {
   successToast: (props: any) => {
     return (
       <View style={styles.successToastContainer}>
-        <Image source={require('../assets/images/toastSuccess.png')} />
+        <Image
+          style={styles.toastIcon}
+          source={require('../assets/images/toastSuccess.png')}
+        />
         <View style={styles.toastTextView}>
           <Text style={styles.toastText}>{props.text1}</Text>
         </View>
@@ -15,7 +23,10 @@ export const toastConfig = {
           underlayColor={'#9FECB1'}
           onPress={() => Toast.hide()}
         >
-          <Image source={require('../assets/images/toastHide.png')} />
+          <Image
+            style={styles.toastIcon}
+            source={require('../assets/images/toastHide.png')}
+          />
         </TouchableHighlight>
       </View>
     );
@@ -23,7 +34,10 @@ export const toastConfig = {
   errorToast: (props: any) => {
     return (
       <View style={styles.errorToastContainer}>
-        <Image source={require('../assets/images/toastError.png')} />
+        <Image
+          style={styles.toastIcon}
+          source={require('../assets/images/toastError.png')}
+        />
         <View style={styles.toastTextView}>
           <Text style={styles.toastText}>{props.text1}</Text>
         </View>
@@ -31,7 +45,32 @@ export const toastConfig = {
           underlayColor={'#FFBFC3'}
           onPress={() => Toast.hide()}
         >
-          <Image source={require('../assets/images/toastHide.png')} />
+          <Image
+            style={styles.toastIcon}
+            source={require('../assets/images/toastHide.png')}
+          />
+        </TouchableHighlight>
+      </View>
+    );
+  },
+  warningToast: (props: any) => {
+    return (
+      <View style={styles.errorToastContainer}>
+        <Image
+          style={styles.toastIcon}
+          source={require('../assets/images/toastError.png')}
+        />
+        <View style={styles.toastTextView}>
+          <Text style={styles.toastText}>{props.text1}</Text>
+        </View>
+        <TouchableHighlight
+          underlayColor={'#FFEB82'}
+          onPress={() => Toast.hide()}
+        >
+          <Image
+            style={styles.toastIcon}
+            source={require('../assets/images/toastHide.png')}
+          />
         </TouchableHighlight>
       </View>
     );

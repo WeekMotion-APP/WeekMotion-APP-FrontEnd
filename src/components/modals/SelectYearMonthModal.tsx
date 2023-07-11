@@ -51,6 +51,7 @@ export const SelectYearMonthModal = ({
                 {`${currentDate.year}년`}
               </Text>
               <Image
+                style={globalStyles.icon}
                 source={require('../../assets/images/calendarDropdown.png')}
               />
             </View>
@@ -74,6 +75,7 @@ export const SelectYearMonthModal = ({
                 }월`}
               </Text>
               <Image
+                style={globalStyles.icon}
                 source={require('../../assets/images/calendarDropdown.png')}
               />
             </View>
@@ -98,6 +100,7 @@ export const SelectYearMonthModal = ({
                     <Text>{`${year}년`}</Text>
                     {selectedDate.year === year && (
                       <Image
+                        style={globalStyles.icon}
                         source={require('../../assets/images/checkIcon.png')}
                       />
                     )}
@@ -124,6 +127,7 @@ export const SelectYearMonthModal = ({
                     <Text>{`${month}월`}</Text>
                     {selectedDate.month === String(month) && (
                       <Image
+                        style={globalStyles.icon}
                         source={require('../../assets/images/checkIcon.png')}
                       />
                     )}

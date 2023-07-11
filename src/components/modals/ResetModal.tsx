@@ -50,7 +50,10 @@ export const ResetModal = ({
               setModalVisible({ ...modalVisible, ['cancel']: false });
             }}
           >
-            <Image source={require('../../assets/images/xIcon.png')} />
+            <Image
+              style={globalStyles.icon}
+              source={require('../../assets/images/xIcon.png')}
+            />
           </TouchableHighlight>
         </View>
         <View style={globalStyles.modalButtonGroup}>

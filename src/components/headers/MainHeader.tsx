@@ -25,7 +25,10 @@ export const MainHeader = ({
           })
         }
       >
-        <Image source={require('../../assets/images/weekmotion_text.png')} />
+        <Image
+          style={styles.textLogo}
+          source={require('../../assets/images/weekmotion_text.png')}
+        />
       </TouchableHighlight>
       <View style={styles.iconGroup}>
         {route.params.location === 'calendar' && (
@@ -38,14 +41,20 @@ export const MainHeader = ({
               })
             }
           >
-            <Image source={require('../../assets/images/fireIcon.png')} />
+            <Image
+              style={globalStyles.icon}
+              source={require('../../assets/images/fireIcon.png')}
+            />
           </TouchableHighlight>
         )}
         <TouchableHighlight
           underlayColor={'white'}
           onPress={() => setVisible(!visible)}
         >
-          <Image source={require('../../assets/images/addIcon.png')} />
+          <Image
+            style={globalStyles.icon}
+            source={require('../../assets/images/addIcon.png')}
+          />
         </TouchableHighlight>
       </View>
     </View>
@@ -57,5 +66,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 22,
+  },
+  textLogo: {
+    width: 160,
+    height: 28,
   },
 });

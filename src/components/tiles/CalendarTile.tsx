@@ -1,9 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  Text,
+} from 'react-native';
 import { DateData } from 'react-native-calendars';
 import { DayProps } from 'react-native-calendars/src/calendar/day';
-import { Text } from 'react-native-paper';
 import { useAppDispatch, useAppSelector } from '../../redux';
 import { setNote } from '../../redux/slice/noteSlice';
 import { diary } from '../../types/data/type';
