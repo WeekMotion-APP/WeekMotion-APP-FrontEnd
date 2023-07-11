@@ -1,13 +1,15 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Button, Modal, Portal, Text } from 'react-native-paper';
+import { Modal, Portal } from 'react-native-paper';
 import {
   Image,
   ScrollView,
   StyleSheet,
   TouchableHighlight,
   View,
+  Text,
 } from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
+import { ModalButton } from '../buttons/ModalButton';
 
 export const SelectYearMonthModal = ({
   visible,
@@ -130,24 +132,19 @@ export const SelectYearMonthModal = ({
               ))}
         </ScrollView>
         <View style={styles.modalButtonGroup}>
-          <Button
-            mode="outlined"
-            style={{ borderColor: '#FFD54A', borderWidth: 2 }}
-            textColor="#FFD54A"
+          <ModalButton
+            mode="outline"
+            text="취소"
             onPress={() => setVisible(false)}
-          >
-            취소
-          </Button>
-          <Button
-            buttonColor="#FFD54A"
-            mode="contained"
+          />
+          <ModalButton
+            mode="contain"
+            text="확인"
             onPress={() => {
               setCurrentDate(selectedDate);
               setVisible(false);
             }}
-          >
-            확인
-          </Button>
+          />
         </View>
       </Modal>
     </Portal>

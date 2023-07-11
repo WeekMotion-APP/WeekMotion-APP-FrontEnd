@@ -1,9 +1,16 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Button, Modal, Portal, Text } from 'react-native-paper';
-import { Image, StyleSheet, TouchableHighlight, View } from 'react-native';
+import { Modal, Portal } from 'react-native-paper';
+import {
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  Text,
+} from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
 import { DiaryScreenProps } from '../../types/navigation/type';
 import { setWriteToday } from '../../functions/asyncFunctions/requestUserInfo';
+import { ModalButton } from '../buttons/ModalButton';
 
 export const WriteTodayModal = ({
   navigation,
@@ -56,20 +63,17 @@ export const WriteTodayModal = ({
           </TouchableHighlight>
         </View>
         <View style={globalStyles.modalButtonGroup}>
-          <Button
-            mode="outlined"
-            style={{ borderColor: '#FFD54A', borderWidth: 2 }}
-            textColor="#FFD54A"
+          <ModalButton
+            mode="outline"
+            text="안할래요"
             onPress={() => {
               setWriteToday(isChecked ? 'Y' : 'N');
               setVisible(false);
             }}
-          >
-            안할래요
-          </Button>
-          <Button
-            buttonColor="#FFD54A"
-            mode="contained"
+          />
+          <ModalButton
+            mode="contain"
+            text="기록하기"
             onPress={() => {
               setWriteToday(isChecked ? 'Y' : 'N');
               navigation.navigate('SelectEmotion', {
@@ -77,9 +81,7 @@ export const WriteTodayModal = ({
                 date: 'today',
               });
             }}
-          >
-            기록하기
-          </Button>
+          />
         </View>
       </Modal>
     </Portal>

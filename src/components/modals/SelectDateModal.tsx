@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import { Button, Modal, Portal } from 'react-native-paper';
+import { Modal, Portal } from 'react-native-paper';
 import { View } from 'react-native';
 import { Calendar as RNCalendar } from 'react-native-calendars';
 import { globalStyles } from '../../styles/globalStyles';
@@ -7,6 +7,7 @@ import { CalendarArrow, ModalCalendarHeader } from '../headers/CalendarHeader';
 import { useAppDispatch } from '../../redux';
 import { setNote } from '../../redux/slice/noteSlice';
 import { DiaryScreenProps } from '../../types/navigation/type';
+import { ModalButton } from '../buttons/ModalButton';
 
 export const SelectDateModal = ({
   navigation,
@@ -61,19 +62,16 @@ export const SelectDateModal = ({
           markedDates={marked}
         />
         <View style={globalStyles.modalButtonGroup}>
-          <Button
-            mode="outlined"
-            style={{ borderColor: '#FFD54A', borderWidth: 2 }}
-            textColor="#FFD54A"
+          <ModalButton
+            mode="outline"
+            text="취소"
             onPress={() => {
               setVisible(!visible);
             }}
-          >
-            취소
-          </Button>
-          <Button
-            buttonColor="#FFD54A"
-            mode="contained"
+          />
+          <ModalButton
+            mode="contain"
+            text="확인"
             onPress={() => {
               dispatch(setNote({ date: selected.replaceAll('-', '.') }));
               navigation.navigate('SelectEmotion', {
@@ -82,9 +80,7 @@ export const SelectDateModal = ({
               });
               setVisible(false);
             }}
-          >
-            확인
-          </Button>
+          />
         </View>
       </Modal>
     </Portal>

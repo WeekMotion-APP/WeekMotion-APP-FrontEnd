@@ -1,10 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Button, Modal, Portal, Text } from 'react-native-paper';
-import { Image, TouchableHighlight, View } from 'react-native';
+import { Modal, Portal } from 'react-native-paper';
+import { Image, TouchableHighlight, View, Text } from 'react-native';
 import { globalStyles } from '../../styles/globalStyles';
 import { useAppDispatch } from '../../redux';
 import { PostScreenProps } from '../../types/navigation/type';
 import { reset } from '../../redux/slice/noteSlice';
+import { ModalButton } from '../buttons/ModalButton';
 
 export const ResetModal = ({
   modalVisible,
@@ -53,19 +54,16 @@ export const ResetModal = ({
           </TouchableHighlight>
         </View>
         <View style={globalStyles.modalButtonGroup}>
-          <Button
-            mode="outlined"
-            style={{ borderColor: '#FFD54A', borderWidth: 2 }}
-            textColor="#FFD54A"
+          <ModalButton
+            mode="outline"
+            text="계속 작성"
             onPress={() => {
               setModalVisible({ ...modalVisible, ['cancel']: false });
             }}
-          >
-            계속 작성
-          </Button>
-          <Button
-            buttonColor="#FFD54A"
-            mode="contained"
+          />
+          <ModalButton
+            mode="contain"
+            text="그만두기"
             onPress={() => {
               dispatch(reset());
               navigation.navigate('Diary', {
@@ -73,9 +71,7 @@ export const ResetModal = ({
                 location: 'calendar',
               });
             }}
-          >
-            그만두기
-          </Button>
+          />
         </View>
       </Modal>
     </Portal>

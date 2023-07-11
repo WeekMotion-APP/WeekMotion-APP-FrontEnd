@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Image, TouchableHighlight, View } from 'react-native';
-import { Portal, Modal, Text, Button } from 'react-native-paper';
+import { Image, TouchableHighlight, View, Text } from 'react-native';
+import { Portal, Modal } from 'react-native-paper';
 import {
   requestCreateDiary,
   requestIsNoteDuplicated,
@@ -8,6 +8,7 @@ import {
 import { useAppSelector } from '../../redux';
 import { globalStyles } from '../../styles/globalStyles';
 import { PostScreenProps } from '../../types/navigation/type';
+import { ModalButton } from '../buttons/ModalButton';
 
 export const ToCalendarModal = ({
   modalVisible,
@@ -76,19 +77,16 @@ export const ToCalendarModal = ({
           />
         </View>
         <View style={globalStyles.modalButtonGroup}>
-          <Button
-            mode="outlined"
-            style={{ borderColor: '#FFD54A', borderWidth: 2 }}
-            textColor="#FFD54A"
+          <ModalButton
+            mode="outline"
+            text="취소"
             onPress={() =>
               setModalVisible({ ...modalVisible, ['toCalendar']: false })
             }
-          >
-            취소
-          </Button>
-          <Button
-            buttonColor="#FFD54A"
-            mode="contained"
+          />
+          <ModalButton
+            mode="contain"
+            text="등록하기"
             onPress={() =>
               requestCreateDiary({
                 diary: note,
@@ -98,9 +96,7 @@ export const ToCalendarModal = ({
                 navigation: navigation,
               })
             }
-          >
-            등록하기
-          </Button>
+          />
         </View>
       </Modal>
     </Portal>

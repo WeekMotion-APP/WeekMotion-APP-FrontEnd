@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import { Button, Modal, Portal } from 'react-native-paper';
+import { Modal, Portal } from 'react-native-paper';
 import { View } from 'react-native';
 import { Calendar as RNCalendar, CalendarUtils } from 'react-native-calendars';
 import { globalStyles } from '../../styles/globalStyles';
 import { CalendarArrow, ModalCalendarHeader } from '../headers/CalendarHeader';
+import { ModalButton } from '../buttons/ModalButton';
 
 export const SelectDatesModal = ({
   setSelectedDates,
@@ -105,17 +106,14 @@ export const SelectDatesModal = ({
           }}
         />
         <View style={globalStyles.modalButtonGroup}>
-          <Button
-            mode="outlined"
-            style={{ borderColor: '#FFD54A', borderWidth: 2 }}
-            textColor="#FFD54A"
+          <ModalButton
+            mode="outline"
+            text="취소"
             onPress={() => setVisible(false)}
-          >
-            취소
-          </Button>
-          <Button
-            buttonColor="#FFD54A"
-            mode="contained"
+          />
+          <ModalButton
+            mode="contain"
+            text="확인"
             onPress={() => {
               if (selected.startingDay && !selected.endingDay) {
                 setSelectedDates({
@@ -135,9 +133,7 @@ export const SelectDatesModal = ({
                 return;
               }
             }}
-          >
-            확인
-          </Button>
+          />
         </View>
       </Modal>
     </Portal>
