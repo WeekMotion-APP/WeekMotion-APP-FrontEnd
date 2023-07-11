@@ -1,8 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Button } from 'react-native-paper';
 import { PostScreenProps } from '../../types/navigation/type';
 import { globalStyles } from '../../styles/globalStyles';
-import { View } from 'react-native';
+import { View, Pressable, Text } from 'react-native';
 import { useAppSelector, useThunkDispatch } from '../../redux';
 import { diary } from '../../types/data/type';
 import {
@@ -63,42 +62,39 @@ export const PostButton = ({
     if (route.params.location === 'created') {
       return (
         <View style={globalStyles.buttonGroup}>
-          <Button
-            mode="contained"
+          <Pressable
             style={globalStyles.button}
-            contentStyle={globalStyles.buttonContent}
-            buttonColor="#FFD54A"
             onPress={() =>
               setModalVisible({ ...modalVisible, ['toCalendar']: true })
             }
           >
-            감정을 캘린더에 등록하기
-          </Button>
-          <Button
-            mode="outlined"
+            <Text style={globalStyles.buttonContent}>
+              감정을 캘린더에 등록하기
+            </Text>
+          </Pressable>
+          <Pressable
             style={globalStyles.outlineButton}
-            contentStyle={globalStyles.outlineButtonContent}
-            textColor="#FFD54A"
             onPress={() =>
               setModalVisible({ ...modalVisible, ['toTrash']: true })
             }
           >
-            감정을 소각장으로 보내기
-          </Button>
+            <Text style={globalStyles.outlineButtonContent}>
+              감정을 소각장으로 보내기
+            </Text>
+          </Pressable>
         </View>
       );
     } else if (route.params.location === 'calendar') {
       return (
         <View style={globalStyles.buttonGroup}>
-          <Button
-            mode="outlined"
+          <Pressable
             style={globalStyles.outlineButton}
-            contentStyle={globalStyles.outlineButtonContent}
-            textColor="#FFD54A"
             onPress={handleFromCalendarToTrash}
           >
-            감정을 소각장으로 보내기
-          </Button>
+            <Text style={globalStyles.outlineButtonContent}>
+              감정을 소각장으로 보내기
+            </Text>
+          </Pressable>
         </View>
       );
     } else {
@@ -106,39 +102,36 @@ export const PostButton = ({
         <View style={globalStyles.buttonGroup}>
           {isDateInCalendar ? (
             <>
-              <Button
-                mode="contained"
+              <Pressable
                 style={globalStyles.button}
-                contentStyle={globalStyles.buttonContent}
-                buttonColor="#FFD54A"
                 onPress={() => requestUpdateDiaryCategory(updateTarget)}
               >
-                감정을 캘린더로 보내기
-              </Button>
-              <Button
-                mode="outlined"
+                <Text style={globalStyles.buttonContent}>
+                  감정을 캘린더로 보내기
+                </Text>
+              </Pressable>
+              <Pressable
                 style={globalStyles.outlineButton}
-                contentStyle={globalStyles.outlineButtonContent}
-                textColor="#FFD54A"
                 onPress={() =>
                   setModalVisible({ ...modalVisible, ['delete']: true })
                 }
               >
-                감정을 완전 소각하기
-              </Button>
+                <Text style={globalStyles.outlineButtonContent}>
+                  감정을 완전 소각하기
+                </Text>
+              </Pressable>
             </>
           ) : (
-            <Button
-              mode="outlined"
+            <Pressable
               style={globalStyles.outlineButton}
-              contentStyle={globalStyles.outlineButtonContent}
-              textColor="#FFD54A"
               onPress={() =>
                 setModalVisible({ ...modalVisible, ['delete']: true })
               }
             >
-              감정을 완전 소각하기
-            </Button>
+              <Text style={globalStyles.outlineButtonContent}>
+                감정을 완전 소각하기
+              </Text>
+            </Pressable>
           )}
         </View>
       );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-native-paper';
+import { Pressable, Text } from 'react-native';
 import {
   requestReadDiary,
   requestUpdateDiary,
@@ -54,11 +54,8 @@ export const EditButton = ({
   const filterEditButton = () => {
     if (route.params.status === 'create') {
       return (
-        <Button
-          mode="contained"
+        <Pressable
           style={globalStyles.button}
-          contentStyle={globalStyles.buttonContent}
-          buttonColor="#FFD54A"
           onPress={() => {
             if (content.title.length === 0 || content.content.length === 0) {
               Toast.show({
@@ -74,20 +71,14 @@ export const EditButton = ({
             });
           }}
         >
-          다음
-        </Button>
+          <Text style={globalStyles.buttonContent}>다음</Text>
+        </Pressable>
       );
     } else {
       return (
-        <Button
-          mode="contained"
-          style={globalStyles.button}
-          contentStyle={globalStyles.buttonContent}
-          buttonColor="#FFD54A"
-          onPress={handleUpdate}
-        >
-          수정하기
-        </Button>
+        <Pressable style={globalStyles.button} onPress={handleUpdate}>
+          <Text style={globalStyles.buttonContent}>수정하기</Text>
+        </Pressable>
       );
     }
   };

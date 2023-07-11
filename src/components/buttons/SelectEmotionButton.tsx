@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button } from 'react-native-paper';
 import { SelectEmotionScreenProps } from '../../types/navigation/type';
 import { globalStyles } from '../../styles/globalStyles';
 import { useAppDispatch, useAppSelector } from '../../redux';
 import Toast from 'react-native-toast-message';
 import { setNote } from '../../redux/slice/noteSlice';
+import { Pressable, Text } from 'react-native';
 
 export const SelectEmotionButton = ({
   route,
@@ -17,11 +17,8 @@ export const SelectEmotionButton = ({
   const filterSelectEmotionButton = () => {
     if (route.params.status === 'before') {
       return (
-        <Button
-          mode="contained"
+        <Pressable
           style={globalStyles.button}
-          contentStyle={globalStyles.buttonContent}
-          buttonColor="#FFD54A"
           onPress={() => {
             if (selectedEmotion.length === 0) {
               Toast.show({
@@ -38,16 +35,13 @@ export const SelectEmotionButton = ({
             });
           }}
         >
-          {'일기 쓰러가기'}
-        </Button>
+          <Text style={globalStyles.buttonContent}>일기 쓰러가기</Text>
+        </Pressable>
       );
     } else if (route.params.status === 'after') {
       return (
-        <Button
-          mode="contained"
+        <Pressable
           style={globalStyles.button}
-          contentStyle={globalStyles.buttonContent}
-          buttonColor="#FFD54A"
           onPress={() => {
             if (selectedEmotion.length === 0) {
               Toast.show({
@@ -63,16 +57,13 @@ export const SelectEmotionButton = ({
             });
           }}
         >
-          {'감정 선택하기'}
-        </Button>
+          <Text style={globalStyles.buttonContent}>감정 선택하기</Text>
+        </Pressable>
       );
     } else {
       return (
-        <Button
-          mode="contained"
+        <Pressable
           style={globalStyles.button}
-          contentStyle={globalStyles.buttonContent}
-          buttonColor="#FFD54A"
           onPress={() => {
             if (selectedEmotion.length === 0) {
               Toast.show({
@@ -85,8 +76,8 @@ export const SelectEmotionButton = ({
             navigation.goBack();
           }}
         >
-          {'감정 수정하기'}
-        </Button>
+          <Text style={globalStyles.buttonContent}>감정 수정하기</Text>
+        </Pressable>
       );
     }
   };
