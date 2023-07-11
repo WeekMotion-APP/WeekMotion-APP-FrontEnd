@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAppSelector } from '../redux';
 import { diary, diaryTag, tag } from '../types/data/type';
-import { Image, StyleSheet, View } from 'react-native';
-import { Text, Chip, PaperProvider } from 'react-native-paper';
+import { Image, StyleSheet, View, Text } from 'react-native';
+import { PaperProvider } from 'react-native-paper';
 import { globalStyles } from '../styles/globalStyles';
 import { PostButton } from '../components/buttons/PostButton';
 import { PostScreenProps } from '../types/navigation/type';
@@ -51,29 +51,26 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
               source={require('../assets/images/calendar.png')}
               style={globalStyles.icon}
             />
-            <Text style={globalStyles.heading}>{`${
+            <Text style={styles.heading}>{`${
               route.params.postId ? selectedCalendarNote?.diaryDate : note.date
             } 의 감정`}</Text>
           </View>
           <View style={globalStyles.chipsBox}>
             {route.params.postId
               ? selectedCalendarNote?.tags.map((tag: diaryTag, index) => (
-                  <Chip
+                  <View
                     key={index}
                     style={chipColorPicker(tag.tag.tagCategorySeq)}
-                    textStyle={globalStyles.chipContent}
                   >
-                    {tag.tag.tagName}
-                  </Chip>
+                    <Text style={globalStyles.chipContent}>
+                      {tag.tag.tagName}
+                    </Text>
+                  </View>
                 ))
               : checkedEmotion.map((tag: tag, index) => (
-                  <Chip
-                    key={index}
-                    style={chipColorPicker(tag.tagCategorySeq)}
-                    textStyle={globalStyles.chipContent}
-                  >
-                    {tag.tagName}
-                  </Chip>
+                  <View key={index} style={chipColorPicker(tag.tagCategorySeq)}>
+                    <Text style={globalStyles.chipContent}>{tag.tagName}</Text>
+                  </View>
                 ))}
           </View>
           <Text style={globalStyles.heading}>
@@ -129,5 +126,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
+  },
+  heading: {
+    fontWeight: '700',
+    fontSize: 24,
+    lineHeight: 36,
+    marginBottom: 4,
+    color: 'black',
   },
 });

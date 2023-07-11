@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { requestURL } from '../../requestURL';
-import { View, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { SignUpScreenProps } from '../types/navigation/type';
 import { globalStyles } from '../styles/globalStyles';
 import Toast from 'react-native-toast-message';
@@ -103,15 +102,12 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
           onChangeText={(text) => setInfo({ ...info, ['id']: text })}
           secure={false}
         />
-        <Button
-          mode="contained"
-          buttonColor="#FFD54A"
+        <Pressable
           style={styles.verify_id_form_button}
-          contentStyle={styles.verify_id_form_button_content}
           onPress={() => verifyIdRequest(info.id)}
         >
-          확인
-        </Button>
+          <Text style={styles.verify_id_form_button_content}>확인</Text>
+        </Pressable>
       </View>
       <Input
         label={'PASSWORD'}
@@ -142,24 +138,15 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
         secure={false}
       />
       <View style={globalStyles.buttonGroup}>
-        <Button
-          mode="contained"
-          style={globalStyles.button}
-          contentStyle={globalStyles.buttonContent}
-          buttonColor="#FFD54A"
-          onPress={signUpRequest}
-        >
-          가입하기
-        </Button>
-        <Button
-          mode="outlined"
+        <Pressable style={globalStyles.button} onPress={signUpRequest}>
+          <Text style={globalStyles.buttonContent}>가입하기</Text>
+        </Pressable>
+        <Pressable
           style={globalStyles.outlineButton}
-          contentStyle={globalStyles.outlineButtonContent}
-          textColor="#FFD54A"
           onPress={() => navigation.goBack()}
         >
-          돌아가기
-        </Button>
+          <Text style={globalStyles.outlineButtonContent}>돌아가기</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -175,24 +162,20 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
-  },
-  verify_id_form_input: {
-    width: '70%',
-    height: 42,
-    backgroundColor: 'white',
-    paddingBottom: 12,
+    gap: 8,
   },
   verify_id_form_button: {
-    width: '28%',
-    height: 56,
-    marginLeft: 6,
-    borderRadius: 28,
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    marginBottom: 16,
+    borderRadius: 20,
+    backgroundColor: '#FFD54A',
   },
   verify_id_form_button_content: {
-    height: '100%',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '700',
-    lineHeight: 22,
+    lineHeight: 20,
+    letterSpacing: 1,
+    color: 'white',
   },
 });

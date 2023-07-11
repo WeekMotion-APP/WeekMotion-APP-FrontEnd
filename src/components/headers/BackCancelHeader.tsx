@@ -67,7 +67,10 @@ export const BackCancelHeader = ({
           navigation.goBack();
         }}
       >
-        <Image source={require('../../assets/images/backIcon.png')} />
+        <Image
+          style={globalStyles.icon}
+          source={require('../../assets/images/backIcon.png')}
+        />
       </TouchableHighlight>
       <TouchableHighlight
         underlayColor={'white'}
@@ -87,7 +90,10 @@ export const BackCancelHeader = ({
           });
         }}
       >
-        <Image source={require('../../assets/images/xIcon.png')} />
+        <Image
+          style={globalStyles.icon}
+          source={require('../../assets/images/xIcon.png')}
+        />
       </TouchableHighlight>
     </View>
   );

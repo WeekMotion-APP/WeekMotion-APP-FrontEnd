@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, StyleSheet } from 'react-native';
-import { Text, Chip } from 'react-native-paper';
+import { Image, View, StyleSheet, Text, Pressable } from 'react-native';
 import { SelectEmotionScreenProps } from '../types/navigation/type';
 import { headingCondition } from '../functions/headingFunction';
 import { useThunkDispatch, useAppSelector, useAppDispatch } from '../redux';
@@ -69,69 +68,75 @@ export const SelectEmotionScreen = ({
           {emotion.emotion
             .filter((tag: tag) => tag.tagCategory.seq === '1')
             .map((tag: tag, index) => (
-              <Chip
-                mode={
-                  checked.map(({ seq }) => seq).includes(tag.seq)
-                    ? 'flat'
-                    : 'outlined'
-                }
+              <Pressable
                 key={index}
                 style={
                   checked.map(({ seq }) => seq).includes(tag.seq)
                     ? globalStyles.chipPink
                     : globalStyles.chipPinkBorder
                 }
-                textStyle={globalStyles.chipContent}
                 onPress={() => onPressChip(tag)}
               >
-                {tag.tagName}
-              </Chip>
+                <Text
+                  style={
+                    checked.map(({ seq }) => seq).includes(tag.seq)
+                      ? globalStyles.chipContent
+                      : globalStyles.chipBorderContent
+                  }
+                >
+                  {tag.tagName}
+                </Text>
+              </Pressable>
             ))}
         </View>
         <View style={globalStyles.chipsBox}>
           {emotion.emotion
             .filter((tag: tag) => tag.tagCategory.seq === '2')
             .map((tag: tag, index) => (
-              <Chip
-                mode={
-                  checked.map(({ seq }) => seq).includes(tag.seq)
-                    ? 'flat'
-                    : 'outlined'
-                }
+              <Pressable
                 key={index}
                 style={
                   checked.map(({ seq }) => seq).includes(tag.seq)
                     ? globalStyles.chipBlue
                     : globalStyles.chipBlueBorder
                 }
-                textStyle={globalStyles.chipContent}
                 onPress={() => onPressChip(tag)}
               >
-                {tag.tagName}
-              </Chip>
+                <Text
+                  style={
+                    checked.map(({ seq }) => seq).includes(tag.seq)
+                      ? globalStyles.chipContent
+                      : globalStyles.chipBorderContent
+                  }
+                >
+                  {tag.tagName}
+                </Text>
+              </Pressable>
             ))}
         </View>
         <View style={globalStyles.chipsBox}>
           {emotion.emotion
             .filter((tag: tag) => tag.tagCategory.seq === '3')
             .map((tag: tag, index) => (
-              <Chip
-                mode={
-                  checked.map(({ seq }) => seq).includes(tag.seq)
-                    ? 'flat'
-                    : 'outlined'
-                }
+              <Pressable
                 key={index}
                 style={
                   checked.map(({ seq }) => seq).includes(tag.seq)
                     ? globalStyles.chipYellow
                     : globalStyles.chipYellowBorder
                 }
-                textStyle={globalStyles.chipContent}
                 onPress={() => onPressChip(tag)}
               >
-                {tag.tagName}
-              </Chip>
+                <Text
+                  style={
+                    checked.map(({ seq }) => seq).includes(tag.seq)
+                      ? globalStyles.chipContent
+                      : globalStyles.chipBorderContent
+                  }
+                >
+                  {tag.tagName}
+                </Text>
+              </Pressable>
             ))}
         </View>
         <SelectEmotionButton navigation={navigation} route={route} />

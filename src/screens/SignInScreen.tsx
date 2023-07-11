@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import { View, Image, StyleSheet, Pressable, Text } from 'react-native';
 import { SignInScreenProps } from '../types/navigation/type';
 import { globalStyles } from '../styles/globalStyles';
 import { requestSignIn } from '../functions/asyncFunctions/requestSignIn';
@@ -36,23 +35,18 @@ export const SignInScreen = ({ navigation }: SignInScreenProps) => {
         />
       </View>
       <View style={globalStyles.buttonGroup}>
-        <Button
-          mode="contained"
+        <Pressable
           style={globalStyles.button}
-          contentStyle={globalStyles.buttonContent}
           onPress={() => requestSignIn(info, navigation)}
         >
-          로그인
-        </Button>
-        <Button
-          mode="outlined"
+          <Text style={globalStyles.buttonContent}>로그인</Text>
+        </Pressable>
+        <Pressable
           style={globalStyles.outlineButton}
-          contentStyle={globalStyles.outlineButtonContent}
-          textColor="#FFD54A"
           onPress={() => navigation.navigate('SignUp')}
         >
-          회원가입
-        </Button>
+          <Text style={globalStyles.outlineButtonContent}>회원가입</Text>
+        </Pressable>
       </View>
     </View>
   );
