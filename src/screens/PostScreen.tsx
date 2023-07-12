@@ -28,6 +28,9 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
     return state.emotion.checkedEmotion;
   });
   const selectedCalendarNote = useAppSelector((state) => {
+    if (!state.diary.allDiary) {
+      return;
+    }
     return state.diary.allDiary.find((post: diary) => {
       return post.seq === route.params.postId;
     });

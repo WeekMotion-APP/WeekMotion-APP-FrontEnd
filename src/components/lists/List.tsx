@@ -111,52 +111,55 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
         setDatesPickerVisible={setDatesPickerVisible}
       />
       <ScrollView style={globalStyles.container}>
-        {selectedDiary
-          .filter((diary: diary) => {
-            return (
-              Number(diary.diaryDate.replaceAll('.', '')) >=
-                Number(selectedDates.startingDay.replaceAll('.', '')) &&
-              Number(diary.diaryDate.replaceAll('.', '')) <=
-                Number(selectedDates.endingDay.replaceAll('.', ''))
-            );
-          })
-          .map((diary: diary, index) => (
-            <TouchableHighlight
-              key={index}
-              underlayColor={'white'}
-              onPress={() =>
-                navigation.navigate('Post', {
-                  location:
-                    route.params.location === 'calendar' ? 'calendar' : 'trash',
-                  postId: diary.seq,
-                })
-              }
-            >
-              <View style={styles.listItem}>
-                <View style={styles.listItemHeaderGroup}>
-                  <Text style={globalStyles.dateText}>{diary.diaryDate}</Text>
-                  <View style={styles.emotionGroup}>
-                    {diary.tags.map((tag: diaryTag, index) =>
-                      emotionIconPicker(tag.tag.tagCategorySeq, index)
-                    )}
+        {selectedDiary &&
+          selectedDiary
+            .filter((diary: diary) => {
+              return (
+                Number(diary.diaryDate.replaceAll('.', '')) >=
+                  Number(selectedDates.startingDay.replaceAll('.', '')) &&
+                Number(diary.diaryDate.replaceAll('.', '')) <=
+                  Number(selectedDates.endingDay.replaceAll('.', ''))
+              );
+            })
+            .map((diary: diary, index) => (
+              <TouchableHighlight
+                key={index}
+                underlayColor={'white'}
+                onPress={() =>
+                  navigation.navigate('Post', {
+                    location:
+                      route.params.location === 'calendar'
+                        ? 'calendar'
+                        : 'trash',
+                    postId: diary.seq,
+                  })
+                }
+              >
+                <View style={styles.listItem}>
+                  <View style={styles.listItemHeaderGroup}>
+                    <Text style={globalStyles.dateText}>{diary.diaryDate}</Text>
+                    <View style={styles.emotionGroup}>
+                      {diary.tags.map((tag: diaryTag, index) =>
+                        emotionIconPicker(tag.tag.tagCategorySeq, index)
+                      )}
+                    </View>
+                  </View>
+                  <Text style={globalStyles.heading}>{diary.title}</Text>
+                  <View style={styles.chipGroup}>
+                    {diary.tags.map((tag: diaryTag, index) => (
+                      <View
+                        key={index}
+                        style={chipColorPicker(tag.tag.tagCategorySeq)}
+                      >
+                        <Text style={globalStyles.chipContent}>
+                          {tag.tag.tagName}
+                        </Text>
+                      </View>
+                    ))}
                   </View>
                 </View>
-                <Text style={globalStyles.heading}>{diary.title}</Text>
-                <View style={styles.chipGroup}>
-                  {diary.tags.map((tag: diaryTag, index) => (
-                    <View
-                      key={index}
-                      style={chipColorPicker(tag.tag.tagCategorySeq)}
-                    >
-                      <Text style={globalStyles.chipContent}>
-                        {tag.tag.tagName}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              </View>
-            </TouchableHighlight>
-          ))}
+              </TouchableHighlight>
+            ))}
         <SelectDatesModal
           setSelectedDates={setSelectedDates}
           visible={datesPickerVisible}

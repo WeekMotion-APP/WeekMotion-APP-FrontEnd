@@ -59,17 +59,20 @@ export const Calendar = () => {
     return state.diary.allDiary;
   });
   const dots = diary
-    .filter((post: diary) => {
-      return post.calenderYn === 'Y';
-    })
-    .reduce((acc: any, cur: diary) => {
-      acc[cur.diaryDate.replaceAll('.', '-')] = {
-        ['dots']: cur.tags.map((tag: diaryTag) => {
-          return { ['color']: tag.tag.tagCategory.tagCategoryName };
-        }),
-      };
-      return acc;
-    }, {});
+    ? diary
+        .filter((post: diary) => {
+          return post.calenderYn === 'Y';
+        })
+        .reduce((acc: any, cur: diary) => {
+          acc[cur.diaryDate.replaceAll('.', '-')] = {
+            ['dots']: cur.tags.map((tag: diaryTag) => {
+              return { ['color']: tag.tag.tagCategory.tagCategoryName };
+            }),
+          };
+          return acc;
+        }, {})
+    : {};
+
   return (
     <View style={styles.container}>
       <RNCalendar

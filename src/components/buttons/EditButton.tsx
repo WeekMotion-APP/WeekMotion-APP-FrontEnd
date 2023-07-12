@@ -28,6 +28,9 @@ export const EditButton = ({
     return state.note.updateTarget;
   });
   const targetDiary = useAppSelector((state) => {
+    if (!state.diary.allDiary) {
+      return;
+    }
     return state.diary.allDiary.find((post: diary) => {
       return post.seq === target;
     });

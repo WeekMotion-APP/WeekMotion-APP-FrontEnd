@@ -35,6 +35,9 @@ export const PostButton = ({
 }) => {
   const [isDateInCalendar, setIsDateInCalendar] = useState<boolean>(false);
   const updateTarget = useAppSelector((state) => {
+    if (!state.diary.allDiary) {
+      return;
+    }
     return state.diary.allDiary.find((diary: diary) => {
       return diary.seq === route.params.postId;
     });
