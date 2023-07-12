@@ -24,8 +24,6 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
 
   const checkWriteToday = async () => {
     const writeTodayOnStorage = await EncryptedStorage.getItem('isWriteToday');
-    console.log(writeTodayOnStorage);
-
     setWriteTodayModalVisible(
       writeTodayOnStorage && JSON.parse(writeTodayOnStorage).value === 'Y'
         ? false

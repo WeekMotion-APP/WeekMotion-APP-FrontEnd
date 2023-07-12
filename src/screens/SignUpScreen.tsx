@@ -25,13 +25,15 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
       const response = await axios.get(`/user/check/id/${id}`, {
         baseURL: requestURL,
       });
-      if (response.data.data.duplication === false) {
+      if (response.data.data.duplication === false && validationId.test(id)) {
         setInfo({ ...info, ['verify_id']: true });
         Toast.show({
           type: 'successToast',
           text1: '사용 가능한 ID입니다.',
           position: 'bottom',
         });
+      } else if (!validationId.test(id)) {
+        throw new Error('영문과 숫자로만 만들어주세요.');
       } else {
         throw new Error('중복된 아이디가 존재합니다.');
       }
@@ -62,6 +64,12 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
       }
       if (!info.verify_id || info.password !== info.verify_password) {
         throw new Error('ID 또는 비밀번호를 확인해주세요.');
+      }
+      if (!validationName.test(info.name)) {
+        throw new Error('국문 또는 영문 이름이 아닙니다.');
+      }
+      if (!validationPhone.test(info.phone)) {
+        throw new Error('휴대폰 번호 형식이 맞지 않습니다.');
       }
       const response = await axios.post(
         '/user',
