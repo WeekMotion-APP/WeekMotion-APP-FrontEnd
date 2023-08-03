@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
 import { SignInScreen } from './src/screens/SignInScreen';
 import { SignUpScreen } from './src/screens/SignUpScreen';
 import { EditScreen } from './src/screens/EditScreen';
 import { PostScreen } from './src/screens/PostScreen';
+import { MenuScreen } from './src/screens/MenuScreen';
 
 import { Provider } from 'react-redux';
 import { PaperProvider } from 'react-native-paper';
@@ -17,6 +19,7 @@ import { DiaryScreen } from './src/screens/DiaryScreen';
 import { toastConfig } from './src/styles/toastConfig';
 import SplashScreen from 'react-native-splash-screen';
 import { requestUserInfo } from './src/functions/asyncFunctions/requestUserInfo';
+import { TermsScreen } from './src/screens/TermsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -43,46 +46,58 @@ function App(): JSX.Element {
   }
   return (
     <Provider store={store}>
-      <PaperProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName={initialRoute ? initialRoute : 'SignIn'}
-          >
-            <Stack.Screen
-              name="SignIn"
-              component={SignInScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="SignUp"
-              component={SignUpScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="SelectEmotion"
-              component={SelectEmotionScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Edit"
-              component={EditScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Post"
-              component={PostScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Diary"
-              component={DiaryScreen}
-              initialParams={{ location: 'calendar', view: 'calendar' }}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-          <Toast config={toastConfig} />
-        </NavigationContainer>
-      </PaperProvider>
+      <SafeAreaProvider>
+        <PaperProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName={initialRoute ? initialRoute : 'SignIn'}
+            >
+              <Stack.Screen
+                name="SignIn"
+                component={SignInScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SignUp"
+                component={SignUpScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Terms"
+                component={TermsScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SelectEmotion"
+                component={SelectEmotionScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Edit"
+                component={EditScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Post"
+                component={PostScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Diary"
+                component={DiaryScreen}
+                initialParams={{ location: 'calendar', view: 'calendar' }}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Menu"
+                component={MenuScreen}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+            <Toast config={toastConfig} />
+          </NavigationContainer>
+        </PaperProvider>
+      </SafeAreaProvider>
     </Provider>
   );
 }

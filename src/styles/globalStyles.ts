@@ -50,6 +50,7 @@ export const globalStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    alignItems: 'center',
     gap: 8,
     width: '100%',
     marginBottom: 16,
@@ -131,6 +132,15 @@ export const globalStyles = StyleSheet.create({
     height: 56,
     borderRadius: 28,
     backgroundColor: '#FFD54A',
+  },
+  disabledButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#DCDCDC',
   },
   buttonGroup: {
     display: 'flex',
