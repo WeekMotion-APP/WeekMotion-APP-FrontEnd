@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import diarySlice from './slice/diarySlice';
 import emotionSlice from './slice/emotionSlice';
+import infoSlice from './slice/infoSlice';
 import noteSlice from './slice/noteSlice';
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
     emotion: emotionSlice.reducer,
     note: noteSlice.reducer,
     diary: diarySlice.reducer,
+    info: infoSlice.reducer,
   },
   middleware: [thunkMiddleware],
 });

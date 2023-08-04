@@ -6,6 +6,7 @@ export type RootStackParamList = {
   SignIn: undefined;
   SignUp: undefined;
   Terms: undefined;
+  Info: undefined;
   Diary: { view: 'calendar' | 'list'; location: 'calendar' | 'trash' };
   SelectEmotion: {
     status: 'before' | 'after' | 'update';
@@ -35,6 +36,10 @@ export type TermsScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'Terms'
 >;
+export type InfoScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Info'
+>;
 export type DiaryScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'Diary'
@@ -63,3 +68,17 @@ export type MenuScreenProps = NativeStackScreenProps<
   'Menu'
 >;
 export type MenuRouteProps = RouteProp<RootStackParamList, 'Menu'>;
+
+export type AnyNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  | 'Diary'
+  | 'Edit'
+  | 'Home'
+  | 'Menu'
+  | 'Post'
+  | 'SelectEmotion'
+  | 'SignIn'
+  | 'SignUp'
+  | 'Terms'
+  | 'Info'
+>['navigation'];

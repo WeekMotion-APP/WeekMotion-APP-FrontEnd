@@ -9,17 +9,18 @@ import { SignUpScreen } from './src/screens/SignUpScreen';
 import { EditScreen } from './src/screens/EditScreen';
 import { PostScreen } from './src/screens/PostScreen';
 import { MenuScreen } from './src/screens/MenuScreen';
+import { DiaryScreen } from './src/screens/DiaryScreen';
+import { TermsScreen } from './src/screens/TermsScreen';
 
 import { Provider } from 'react-redux';
 import { PaperProvider } from 'react-native-paper';
 import { RootStackParamList } from './src/types/navigation/type';
 import { SelectEmotionScreen } from './src/screens/SelectEmotionScreen';
 import store from './src/redux';
-import { DiaryScreen } from './src/screens/DiaryScreen';
 import { toastConfig } from './src/styles/toastConfig';
 import SplashScreen from 'react-native-splash-screen';
 import { requestUserInfo } from './src/functions/asyncFunctions/requestUserInfo';
-import { TermsScreen } from './src/screens/TermsScreen';
+import { InfoScreen } from './src/screens/InfoScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -65,6 +66,11 @@ function App(): JSX.Element {
               <Stack.Screen
                 name="Terms"
                 component={TermsScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Info"
+                component={InfoScreen}
                 options={{ headerShown: false }}
               />
               <Stack.Screen

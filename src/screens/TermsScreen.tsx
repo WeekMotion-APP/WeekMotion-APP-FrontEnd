@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import { globalStyles } from '../styles/globalStyles';
 import { TermsScreenProps } from '../types/navigation/type';
+import { useAppDispatch } from '../redux';
+import { updateInfo } from '../redux/slice/infoSlice';
 
 export const TermsScreen = ({
   navigation,
@@ -14,6 +16,7 @@ export const TermsScreen = ({
     service: false,
     marketing: false,
   });
+  const dispatch = useAppDispatch();
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.heading}>회원가입</Text>
@@ -63,7 +66,13 @@ export const TermsScreen = ({
               </Pressable>
               <Text>(필수) 개인정보 수집 및 이용 동의</Text>
             </View>
-            <Pressable style={styles.info}>
+            <Pressable
+              style={styles.info}
+              onPress={() => {
+                dispatch(updateInfo('personal'));
+                navigation.navigate('Info');
+              }}
+            >
               <Text>보기</Text>
               <Image
                 style={styles.arrow}
@@ -89,7 +98,13 @@ export const TermsScreen = ({
               </Pressable>
               <Text>(필수) 서비스 이용약관 동의</Text>
             </View>
-            <Pressable style={styles.info}>
+            <Pressable
+              style={styles.info}
+              onPress={() => {
+                dispatch(updateInfo('service'));
+                navigation.navigate('Info');
+              }}
+            >
               <Text>보기</Text>
               <Image
                 style={styles.arrow}
@@ -115,7 +130,13 @@ export const TermsScreen = ({
               </Pressable>
               <Text>(선택) 마케팅 수신 동의</Text>
             </View>
-            <Pressable style={styles.info}>
+            <Pressable
+              style={styles.info}
+              onPress={() => {
+                dispatch(updateInfo('marketing'));
+                navigation.navigate('Info');
+              }}
+            >
               <Text>보기</Text>
               <Image
                 style={styles.arrow}
