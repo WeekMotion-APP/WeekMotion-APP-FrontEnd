@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, StyleSheet, Text, Pressable } from 'react-native';
+import {
+  Image,
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  SafeAreaView,
+} from 'react-native';
 import { SelectEmotionScreenProps } from '../types/navigation/type';
 import { headingCondition } from '../functions/headingFunction';
 import { useThunkDispatch, useAppSelector, useAppDispatch } from '../redux';
@@ -47,7 +54,7 @@ export const SelectEmotionScreen = ({
   }, [dispatch, checked]);
 
   return (
-    <>
+    <SafeAreaView>
       <BackCancelHeader
         navigation={navigation}
         modalVisible={undefined}
@@ -141,7 +148,7 @@ export const SelectEmotionScreen = ({
         </View>
         <SelectEmotionButton navigation={navigation} route={route} />
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -34,11 +34,13 @@ export const InfoScreen = ({
       case 'service':
         return (
           <ScrollView style={styles.container}>
-            {termsOfUse.map((value) => (
-              <View style={styles.descView}>
+            {termsOfUse.map((value, index) => (
+              <View style={styles.descView} key={index}>
                 <Text style={styles.title}>{value.title}</Text>
-                {value.description.map((description) => (
-                  <Text style={styles.desc}>{description}</Text>
+                {value.description.map((description, index) => (
+                  <Text style={styles.desc} key={index}>
+                    {description}
+                  </Text>
                 ))}
               </View>
             ))}

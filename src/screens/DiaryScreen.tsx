@@ -68,7 +68,6 @@ export const DiaryScreen = ({ route, navigation }: DiaryScreenProps) => {
     <SafeAreaView style={styles.container}>
       <PaperProvider>
         <MainHeader
-          route={route}
           navigation={navigation}
           visible={selectDateModalVisible}
           setVisible={setSelectDateModalVisible}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { requestURL } from '../../requestURL';
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Text, Pressable, SafeAreaView } from 'react-native';
 import { SignUpScreenProps } from '../types/navigation/type';
 import { globalStyles } from '../styles/globalStyles';
 import Toast from 'react-native-toast-message';
@@ -100,7 +100,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
   };
 
   return (
-    <View style={globalStyles.container}>
+    <SafeAreaView style={globalStyles.container}>
       <Text style={globalStyles.heading}>회원가입</Text>
       <View style={styles.verify_id_form}>
         <Input
@@ -156,7 +156,7 @@ export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
           <Text style={globalStyles.outlineButtonContent}>돌아가기</Text>
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

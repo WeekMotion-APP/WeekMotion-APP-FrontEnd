@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet, Pressable, Text } from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  Pressable,
+  Text,
+  SafeAreaView,
+} from 'react-native';
 import { SignInScreenProps } from '../types/navigation/type';
 import { globalStyles } from '../styles/globalStyles';
 import { requestSignIn } from '../functions/asyncFunctions/requestSignIn';
@@ -12,7 +19,7 @@ export const SignInScreen = ({ navigation }: SignInScreenProps) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Image
         source={require('../assets/images/weekmotion.png')}
         style={globalStyles.main_image}
@@ -43,12 +50,12 @@ export const SignInScreen = ({ navigation }: SignInScreenProps) => {
         </Pressable>
         <Pressable
           style={globalStyles.outlineButton}
-          onPress={() => navigation.navigate('SignUp')}
+          onPress={() => navigation.navigate('Terms')}
         >
           <Text style={globalStyles.outlineButtonContent}>회원가입</Text>
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

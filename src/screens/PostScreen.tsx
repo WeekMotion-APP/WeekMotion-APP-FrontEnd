@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAppSelector } from '../redux';
 import { diary, diaryTag, tag } from '../types/data/type';
-import { Image, StyleSheet, View, Text } from 'react-native';
+import { Image, StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import { globalStyles } from '../styles/globalStyles';
 import { PostButton } from '../components/buttons/PostButton';
@@ -36,7 +36,7 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
     });
   });
   return (
-    <>
+    <SafeAreaView style={styles.container}>
       <PaperProvider>
         {route.params.location === 'created' ? (
           <BackCancelHeader
@@ -119,11 +119,17 @@ export const PostScreen = ({ route, navigation }: PostScreenProps) => {
           />
         )}
       </PaperProvider>
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    backgroundColor: 'white',
+  },
   date: {
     display: 'flex',
     flexDirection: 'row',

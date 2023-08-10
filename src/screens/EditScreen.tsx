@@ -5,6 +5,7 @@ import {
   TouchableHighlight,
   View,
   Text,
+  SafeAreaView,
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../redux';
 import { setNote } from '../redux/slice/noteSlice';
@@ -32,7 +33,7 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
     };
   });
   return (
-    <>
+    <SafeAreaView>
       <BackCancelHeader
         route={route}
         navigation={navigation}
@@ -97,7 +98,7 @@ export const EditScreen = ({ route, navigation }: EditScreenProps) => {
         </View>
         <EditButton content={content} route={route} navigation={navigation} />
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
