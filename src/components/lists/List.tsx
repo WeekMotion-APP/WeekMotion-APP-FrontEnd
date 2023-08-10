@@ -110,9 +110,25 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
         selected={selectedDates}
         setDatesPickerVisible={setDatesPickerVisible}
       />
-      <ScrollView style={globalStyles.container}>
-        {selectedDiary &&
-          selectedDiary
+      {selectedDiary &&
+      selectedDiary.filter((diary: diary) => {
+        return (
+          Number(diary.diaryDate.replaceAll('.', '')) >=
+            Number(selectedDates.startingDay.replaceAll('.', '')) &&
+          Number(diary.diaryDate.replaceAll('.', '')) <=
+            Number(selectedDates.endingDay.replaceAll('.', ''))
+        );
+      }).length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Image
+            style={styles.emptyImage}
+            source={require('../../assets/images/empty.png')}
+          />
+          <Text style={styles.emptyText}>소각장에 등록된 감정이 없어요.</Text>
+        </View>
+      ) : (
+        <ScrollView style={globalStyles.container}>
+          {selectedDiary
             .filter((diary: diary) => {
               return (
                 Number(diary.diaryDate.replaceAll('.', '')) >=
@@ -160,12 +176,13 @@ export const List = ({ route, navigation }: DiaryScreenProps) => {
                 </View>
               </TouchableHighlight>
             ))}
-        <SelectDatesModal
-          setSelectedDates={setSelectedDates}
-          visible={datesPickerVisible}
-          setVisible={setDatesPickerVisible}
-        />
-      </ScrollView>
+        </ScrollView>
+      )}
+      <SelectDatesModal
+        setSelectedDates={setSelectedDates}
+        visible={datesPickerVisible}
+        setVisible={setDatesPickerVisible}
+      />
     </>
   );
 };
@@ -200,5 +217,22 @@ const styles = StyleSheet.create({
     gap: 8,
     width: '100%',
     marginBottom: 16,
+  },
+  emptyContainer: {
+    height: '80%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+  },
+  emptyImage: {
+    width: 93,
+    height: 71,
+  },
+  emptyText: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: '#666666',
   },
 });

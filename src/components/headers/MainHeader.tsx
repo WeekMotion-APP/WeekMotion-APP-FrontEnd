@@ -4,12 +4,10 @@ import { globalStyles } from '../../styles/globalStyles';
 import { DiaryScreenProps } from '../../types/navigation/type';
 
 export const MainHeader = ({
-  route,
   navigation,
   visible,
   setVisible,
 }: {
-  route: DiaryScreenProps['route'];
   navigation: DiaryScreenProps['navigation'];
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
@@ -31,22 +29,6 @@ export const MainHeader = ({
         />
       </TouchableHighlight>
       <View style={styles.iconGroup}>
-        {route.params.location === 'calendar' && (
-          <TouchableHighlight
-            underlayColor={'white'}
-            onPress={() =>
-              navigation.navigate('Diary', {
-                view: 'list',
-                location: 'trash',
-              })
-            }
-          >
-            <Image
-              style={globalStyles.icon}
-              source={require('../../assets/images/fireIcon.png')}
-            />
-          </TouchableHighlight>
-        )}
         <TouchableHighlight
           underlayColor={'white'}
           onPress={() => setVisible(!visible)}
@@ -54,6 +36,15 @@ export const MainHeader = ({
           <Image
             style={globalStyles.icon}
             source={require('../../assets/images/addIcon.png')}
+          />
+        </TouchableHighlight>
+        <TouchableHighlight
+          underlayColor={'white'}
+          onPress={() => navigation.navigate('Menu')}
+        >
+          <Image
+            style={globalStyles.icon}
+            source={require('../../assets/images/hamburgerIcon.png')}
           />
         </TouchableHighlight>
       </View>
