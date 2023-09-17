@@ -14,7 +14,7 @@ export const TermsScreen = ({
   const [terms, setTerms] = useState({
     personal: false,
     service: false,
-    marketing: false,
+    marketing: { email: false, message: false, push: false },
   });
   const dispatch = useAppDispatch();
   return (
@@ -116,7 +116,7 @@ export const TermsScreen = ({
             <View style={styles.info}>
               <Pressable
                 onPress={() =>
-                  setTerms({ ...terms, ['marketing']: !terms.marketing })
+                  setTerms({ ...terms, ['marketing']: { ...terms } })
                 }
               >
                 <Image
@@ -128,21 +128,51 @@ export const TermsScreen = ({
                   }
                 />
               </Pressable>
-              <Text>(선택) 마케팅 수신 동의</Text>
+              <Text>
+                {'채용 소식, 컨텐츠, 이벤트 등\nWeekmotion 맞춤 정보 받기'}
+              </Text>
             </View>
-            <Pressable
-              style={styles.info}
-              onPress={() => {
-                dispatch(updateInfo('marketing'));
-                navigation.navigate('Info');
-              }}
-            >
-              <Text>보기</Text>
-              <Image
-                style={styles.arrow}
-                source={require('../assets/images/circleArrowRight.png')}
-              />
-            </Pressable>
+          </View>
+          <View style={styles.marketingView}>
+            <View style={styles.info}>
+              <Pressable>
+                <Image
+                  style={styles.checkbox}
+                  source={
+                    terms.marketing.email
+                      ? require('../assets/images/checkedBox.png')
+                      : require('../assets/images/unCheckedBox.png')
+                  }
+                />
+              </Pressable>
+              <Text>이메일</Text>
+            </View>
+            <View style={styles.info}>
+              <Pressable>
+                <Image
+                  style={styles.checkbox}
+                  source={
+                    terms.marketing.message
+                      ? require('../assets/images/checkedBox.png')
+                      : require('../assets/images/unCheckedBox.png')
+                  }
+                />
+              </Pressable>
+              <Text>문자 메세지</Text>
+            </View>
+            <View style={styles.info}>
+              <Pressable>
+                <Image
+                  style={styles.checkbox}
+                  source={
+                    terms.marketing.push
+                      ? require('../assets/images/checkedBox.png')
+                      : require('../assets/images/unCheckedBox.png')
+                  }
+                />
+              </Pressable>
+              <Text>앱 푸시</Text>
+            </View>
           </View>
         </View>
         <Text>선택항목은 동의하지 않으셔도 서비스를 이용할 수 있어요.</Text>
@@ -212,6 +242,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 8,
+  },
+  marketingView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     gap: 8,
   },
 });

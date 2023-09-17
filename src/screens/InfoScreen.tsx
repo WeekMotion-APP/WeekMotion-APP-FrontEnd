@@ -6,6 +6,7 @@ import { useAppSelector } from '../redux';
 import { infoString } from '../redux/slice/infoSlice';
 import { termsOfUse } from '../terms/termsOfUse';
 import { AnyNavigationProps } from '../types/navigation/type';
+import { termsOfPersonal } from '../terms/termsOfPersonal';
 
 export const InfoScreen = ({
   navigation,
@@ -18,7 +19,7 @@ export const InfoScreen = ({
   const titleFilter = (key: infoString) => {
     switch (key) {
       case 'personal':
-        return '개인정보 수집 및 이용 동의';
+        return '개인정보 수집 및 이용';
       case 'service':
         return '서비스 이용약관';
       case 'marketing':
@@ -30,7 +31,20 @@ export const InfoScreen = ({
   const desc = (key: infoString) => {
     switch (key) {
       case 'personal':
-        return <ScrollView style={styles.container}></ScrollView>;
+        return (
+          <ScrollView style={styles.container}>
+            {termsOfPersonal.map((value, index) => (
+              <View style={styles.descView} key={index}>
+                <Text style={styles.title}>{value.title}</Text>
+                {value.description.map((description, index) => (
+                  <Text style={styles.desc} key={index}>
+                    {description}
+                  </Text>
+                ))}
+              </View>
+            ))}
+          </ScrollView>
+        );
       case 'service':
         return (
           <ScrollView style={styles.container}>

@@ -1,5 +1,5 @@
 // import axios from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   Pressable,
@@ -30,7 +30,15 @@ export const MenuScreen = ({ navigation }: MenuScreenProps) => {
       eventHandler: () =>
         navigation.navigate('Diary', { view: 'list', location: 'trash' }),
     },
-    { value: '공지사항', source: require('../assets/images/menuIcon3.png') },
+    { value: '공지사항', source: require('../assets/images/menuIcon2.png') },
+    {
+      value: '개인 정보 수집 및 이용약관',
+      source: require('../assets/images/menuIcon3.png'),
+      eventHandler: () => {
+        dispatch(updateInfo('personal'));
+        navigation.navigate('Info');
+      },
+    },
     {
       value: '서비스 이용약관',
       source: require('../assets/images/menuIcon4.png'),
@@ -38,6 +46,10 @@ export const MenuScreen = ({ navigation }: MenuScreenProps) => {
         dispatch(updateInfo('service'));
         navigation.navigate('Info');
       },
+    },
+    {
+      value: '마케팅 수신',
+      source: require('../assets/images/menuIcon5.png'),
     },
   ];
   // const requestChangePassword = async () => {
@@ -82,6 +94,9 @@ export const MenuScreen = ({ navigation }: MenuScreenProps) => {
       </View>
       <View style={styles.textMenuView}>
         <Text style={styles.textLink}>회원 탈퇴</Text>
+      </View>
+      <View style={styles.textMenuView}>
+        <Text style={styles.textLink}>아이디 찾기</Text>
       </View>
       <View style={styles.textMenuView}>
         <Text style={styles.textLink}>비밀번호 재설정</Text>
